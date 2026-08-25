@@ -6,41 +6,41 @@
 
 ## Quick Stats
 
-| Metric               | Value  |
-| -------------------- | ------ |
-| Total Tasks          | 130    |
-| Completed            | 0      |
-| In Progress          | 0      |
-| Not Started          | 130    |
-| Blocked              | 0      |
-| **Overall Progress** | **0%** |
-| Last Updated         | —      |
+| Metric               | Value      |
+| -------------------- | ---------- |
+| Total Tasks          | 130        |
+| Completed            | 10         |
+| In Progress          | 0          |
+| Not Started          | 120        |
+| Blocked              | 0          |
+| **Overall Progress** | **8%**     |
+| Last Updated         | 2026-08-26 |
 
 ---
 
-## Current Phase: Phase 0 — Project Foundation
+## Current Phase: Phase 1 — Database & Schema
 
 **Phase Status:** Not Started
-**Phase Progress:** 0/10 (0%)
+**Phase Progress:** 0/26 (0%)
 
 ---
 
 ## Phase 0: Project Foundation
 
-| ID   | Task                                        | Status      | Started | Completed | Notes |
-| ---- | ------------------------------------------- | ----------- | ------- | --------- | ----- |
-| 0.1  | Initialize TanStack Start project           | Not Started | —       | —         |       |
-| 0.2  | Configure TypeScript (strict, path aliases) | Not Started | —       | —         |       |
-| 0.3  | Install & configure Tailwind CSS            | Not Started | —       | —         |       |
-| 0.4  | Set up ESLint + Prettier                    | Not Started | —       | —         |       |
-| 0.5  | Create folder structure                     | Not Started | —       | —         |       |
-| 0.6  | Set up Supabase CLI locally                 | Not Started | —       | —         |       |
-| 0.7  | Create `.env.example`                       | Not Started | —       | —         |       |
-| 0.8  | Configure Git hooks (husky)                 | Not Started | —       | —         |       |
-| 0.9  | Set up GitHub repo + branch protection      | Not Started | —       | —         |       |
-| 0.10 | Create Supabase client singleton            | Not Started | —       | —         |       |
+| ID   | Task                                        | Status | Started | Completed  | Notes                     |
+| ---- | ------------------------------------------- | ------ | ------- | ---------- | ------------------------- |
+| 0.1  | Initialize TanStack Start project           | Done   | —       | 2026-08-25 |                           |
+| 0.2  | Configure TypeScript (strict, path aliases) | Done   | —       | 2026-08-25 |                           |
+| 0.3  | Install & configure Tailwind CSS            | Done   | —       | 2026-08-25 |                           |
+| 0.4  | Set up ESLint + Prettier                    | Done   | —       | 2026-08-25 |                           |
+| 0.5  | Create folder structure                     | Done   | —       | 2026-08-25 |                           |
+| 0.6  | Set up Supabase CLI locally                 | Done   | —       | 2026-08-26 | Docker containers running |
+| 0.7  | Create `.env.example`                       | Done   | —       | 2026-08-25 |                           |
+| 0.8  | Configure Git hooks (husky)                 | Done   | —       | 2026-08-26 | husky + lint-staged       |
+| 0.9  | Set up GitHub repo + branch protection      | Done   | —       | 2026-08-26 | Branch protection manual  |
+| 0.10 | Create Supabase client singleton            | Done   | —       | 2026-08-25 |                           |
 
-**Phase 0 Status:** `Not Started`
+**Phase 0 Status:** `Done`
 
 ---
 

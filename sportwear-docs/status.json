@@ -1,6 +1,6 @@
 {
   "_v": 2,
-  "_generated": "2026-08-25T16:25:39.893Z",
+  "_generated": "2026-08-25T23:50:48.434Z",
   "0.1": {
     "status": "done",
     "notes": ""
@@ -22,7 +22,7 @@
     "notes": ""
   },
   "0.6": {
-    "status": "not-started",
+    "status": "done",
     "notes": ""
   },
   "0.7": {
@@ -30,11 +30,11 @@
     "notes": ""
   },
   "0.8": {
-    "status": "not-started",
+    "status": "done",
     "notes": ""
   },
   "0.9": {
-    "status": "not-started",
+    "status": "done",
     "notes": ""
   },
   "0.10": {
@@ -398,7 +398,7 @@
     "notes": ""
   },
   "8.2": {
-    "status": "not-started",
+    "status": "done",
     "notes": ""
   },
   "8.3": {
@@ -486,7 +486,7 @@
     "notes": ""
   },
   "10.11": {
-    "status": "not-started",
+    "status": "done",
     "notes": ""
   },
   "10.12": {

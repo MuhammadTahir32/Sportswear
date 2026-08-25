@@ -63,7 +63,7 @@ const tasks = {
   '0.6': exists('supabase/config.toml'),
   '0.7': exists('.env.example'),
   '0.8': exists('.husky/pre-commit'),
-  '0.9': false, // manual — can't auto-detect GitHub repo
+  '0.9': (() => { try { const { execSync } = require('child_process'); const remote = execSync('git remote -v', { cwd: ROOT, encoding: 'utf8' }); return remote.includes('github.com') } catch { return false } })(),
   '0.10': exists('app/lib/supabase.ts'),
 
   // Phase 1: Database & Schema — Migrations
