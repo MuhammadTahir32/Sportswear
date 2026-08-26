@@ -9,19 +9,19 @@
 | Metric               | Value      |
 | -------------------- | ---------- |
 | Total Tasks          | 130        |
-| Completed            | 10         |
+| Completed            | 40         |
 | In Progress          | 0          |
-| Not Started          | 120        |
+| Not Started          | 90         |
 | Blocked              | 0          |
-| **Overall Progress** | **8%**     |
+| **Overall Progress** | **31%**    |
 | Last Updated         | 2026-08-26 |
 
 ---
 
-## Current Phase: Phase 1 — Database & Schema
+## Current Phase: Phase 2 — Authentication & User Management
 
 **Phase Status:** Not Started
-**Phase Progress:** 0/26 (0%)
+**Phase Progress:** 0/11 (0%)
 
 ---
 
@@ -46,36 +46,36 @@
 
 ## Phase 1: Database & Schema
 
-| ID   | Task                                             | Status      | Started | Completed | Notes |
-| ---- | ------------------------------------------------ | ----------- | ------- | --------- | ----- |
-| 1.1  | Migration: `profiles` table                      | Not Started | —       | —         |       |
-| 1.2  | Migration: `addresses` table                     | Not Started | —       | —         |       |
-| 1.3  | Migration: `categories` table                    | Not Started | —       | —         |       |
-| 1.4  | Migration: `products` table                      | Not Started | —       | —         |       |
-| 1.5  | Migration: `product_variants` table              | Not Started | —       | —         |       |
-| 1.6  | Migration: `product_images` table                | Not Started | —       | —         |       |
-| 1.7  | Migration: `cart_items` table                    | Not Started | —       | —         |       |
-| 1.8  | Migration: `coupons` table                       | Not Started | —       | —         |       |
-| 1.9  | Migration: `orders` + `order_items`              | Not Started | —       | —         |       |
-| 1.10 | Migration: `order_status_history`                | Not Started | —       | —         |       |
-| 1.11 | Migration: `reviews` table                       | Not Started | —       | —         |       |
-| 1.12 | Migration: `wishlist_items` table                | Not Started | —       | —         |       |
-| 1.13 | Create all indexes                               | Not Started | —       | —         |       |
-| 1.14 | Enable RLS on ALL tables                         | Not Started | —       | —         |       |
-| 1.15 | RLS: `profiles` policies                         | Not Started | —       | —         |       |
-| 1.16 | RLS: `addresses` policies                        | Not Started | —       | —         |       |
-| 1.17 | RLS: `cart_items` policies                       | Not Started | —       | —         |       |
-| 1.18 | RLS: `orders` policies                           | Not Started | —       | —         |       |
-| 1.19 | RLS: `order_items` policies                      | Not Started | —       | —         |       |
-| 1.20 | RLS: `reviews` policies                          | Not Started | —       | —         |       |
-| 1.21 | RLS: `wishlist_items` policies                   | Not Started | —       | —         |       |
-| 1.22 | RLS: `products`/`categories`/`variants`/`images` | Not Started | —       | —         |       |
-| 1.23 | RLS: `coupons` policies                          | Not Started | —       | —         |       |
-| 1.24 | Trigger: avg_rating recalculation                | Not Started | —       | —         |       |
-| 1.25 | Generate Supabase TypeScript types               | Not Started | —       | —         |       |
-| 1.26 | Seed script: sample data                         | Not Started | —       | —         |       |
+| ID   | Task                                             | Status | Started    | Completed  | Notes                                                    |
+| ---- | ------------------------------------------------ | ------ | ---------- | ---------- | -------------------------------------------------------- |
+| 1.1  | Migration: `profiles` table                      | Done   | 2026-08-26 | 2026-08-26 | + handle_new_user trigger                                |
+| 1.2  | Migration: `addresses` table                     | Done   | 2026-08-26 | 2026-08-26 |                                                          |
+| 1.3  | Migration: `categories` table                    | Done   | 2026-08-26 | 2026-08-26 | self-referencing parent_id for sub-categories            |
+| 1.4  | Migration: `products` table                      | Done   | 2026-08-26 | 2026-08-26 |                                                          |
+| 1.5  | Migration: `product_variants` table              | Done   | 2026-08-26 | 2026-08-26 | unique (product_id, size, color)                         |
+| 1.6  | Migration: `product_images` table                | Done   | 2026-08-26 | 2026-08-26 |                                                          |
+| 1.7  | Migration: `cart_items` table                    | Done   | 2026-08-26 | 2026-08-26 | unique (user_id, variant_id)                             |
+| 1.8  | Migration: `coupons` table                       | Done   | 2026-08-26 | 2026-08-26 |                                                          |
+| 1.9  | Migration: `orders` + `order_items`              | Done   | 2026-08-26 | 2026-08-26 | both tables in single migration                          |
+| 1.10 | Migration: `order_status_history`                | Done   | 2026-08-26 | 2026-08-26 |                                                          |
+| 1.11 | Migration: `reviews` table                       | Done   | 2026-08-26 | 2026-08-26 | unique (product_id, user_id)                             |
+| 1.12 | Migration: `wishlist_items` table                | Done   | 2026-08-26 | 2026-08-26 |                                                          |
+| 1.13 | Create all indexes                               | Done   | 2026-08-26 | 2026-08-26 | FTS tsvector index on products (name + description)      |
+| 1.14 | Enable RLS on ALL tables                         | Done   | 2026-08-26 | 2026-08-26 | All 13 tables covered                                    |
+| 1.15 | RLS: `profiles` policies                         | Done   | 2026-08-26 | 2026-08-26 |                                                          |
+| 1.16 | RLS: `addresses` policies                        | Done   | 2026-08-26 | 2026-08-26 |                                                          |
+| 1.17 | RLS: `cart_items` policies                       | Done   | 2026-08-26 | 2026-08-26 |                                                          |
+| 1.18 | RLS: `orders` policies                           | Done   | 2026-08-26 | 2026-08-26 |                                                          |
+| 1.19 | RLS: `order_items` policies                      | Done   | 2026-08-26 | 2026-08-26 |                                                          |
+| 1.20 | RLS: `reviews` policies                          | Done   | 2026-08-26 | 2026-08-26 |                                                          |
+| 1.21 | RLS: `wishlist_items` policies                   | Done   | 2026-08-26 | 2026-08-26 |                                                          |
+| 1.22 | RLS: `products`/`categories`/`variants`/`images` | Done   | 2026-08-26 | 2026-08-26 |                                                          |
+| 1.23 | RLS: `coupons` policies                          | Done   | 2026-08-26 | 2026-08-26 |                                                          |
+| 1.24 | Trigger: avg_rating recalculation                | Done   | 2026-08-26 | 2026-08-26 | + order_status_history trigger + handle_new_user trigger |
+| 1.25 | Generate Supabase TypeScript types               | Done   | 2026-08-26 | 2026-08-26 | app/lib/types.ts — all tables + enriched join types      |
+| 1.26 | Seed script: sample data                         | Done   | 2026-08-26 | 2026-08-26 | 6 categories, 5 products, 17 variants, 3 coupons         |
 
-**Phase 1 Status:** `Not Started`
+**Phase 1 Status:** `Done`
 
 ---
 
