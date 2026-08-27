@@ -664,7 +664,7 @@
       <div class="header">
         <div>
           <h1>StrideWear Build Dashboard</h1>
-          <div class="subtitle">Sportswear E-Commerce — Development Progress Tracker</div>
+          <div class="subtitle">Sportswear E-Commerce — Auto-Scanned from Codebase</div>
         </div>
         <div class="header-actions">
           <span class="last-updated" id="lastUpdated">Last updated: —</span>
@@ -766,22 +766,30 @@
         </div>
       </div>
 
-      <!-- Recent Activity -->
+      <!-- How to Update -->
       <div class="activity-section">
-        <h3>Recent Activity</h3>
-        <div class="activity-list" id="activityList">
-          <div class="empty-state">
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-            >
-              <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <p>No activity yet. Start building to see progress here.</p>
+        <h3>How to Update Progress</h3>
+        <div class="activity-list">
+          <div class="activity-item">
+            <div class="activity-dot" style="background: var(--accent-green)"></div>
+            <div class="activity-text">
+              <strong>Auto-detect:</strong> Run <code style="background:var(--bg-primary);padding:2px 6px;border-radius:4px;font-size:12px;">npm run progress</code> to scan your codebase and regenerate status.json
+            </div>
+            <div class="activity-time">recommended</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot" style="background: var(--accent-blue)"></div>
+            <div class="activity-text">
+              <strong>Manual override:</strong> Click any task status in the table below to cycle through statuses (overrides scan until next scan)
+            </div>
+            <div class="activity-time">optional</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot" style="background: var(--accent-orange)"></div>
+            <div class="activity-text">
+              <strong>Note:</strong> Opening dashboard.html fetches status.json from the same directory. Keep both files together.
+            </div>
+            <div class="activity-time">tip</div>
           </div>
         </div>
       </div>
@@ -803,40 +811,26 @@
         { id: 10, name: 'Polish & Deploy', tasks: 19, p0: 10, p1: 7, p2: 2 },
       ]
 
-      // Load state — tries localStorage first, falls back to status.json
+      // Load state — auto-generated status.json from scan-progress.cjs
       async function loadState() {
-        // Always try to fetch fresh status.json first
         try {
           const res = await fetch('status.json?t=' + Date.now())
           if (res.ok) {
             const status = await res.json()
-            // Merge with localStorage notes (user may have added notes)
-            const saved = localStorage.getItem('stridewear_progress')
-            if (saved) {
-              const local = JSON.parse(saved)
-              for (const [id, val] of Object.entries(status)) {
-                if (id.startsWith('_')) continue
-                if (local[id] && local[id].notes) val.notes = local[id].notes
-              }
-            }
             saveState(status)
             return status
           }
         } catch (e) {}
 
-        // Fallback: use localStorage
         const saved = localStorage.getItem('stridewear_progress')
         if (saved) {
-          try {
-            return JSON.parse(saved)
-          } catch (e) {}
+          try { return JSON.parse(saved) } catch (e) {}
         }
 
-        // Last resort: all not started
-        const state = { _v: 3 }
-        phases.forEach((p) => {
-          for (let i = 1; i <= p.tasks; i++) {
-            state[`${p.id}.${i}`] = { status: 'not-started', notes: '' }
+        const state = { _v: 4 }
+        phases.forEach(function(p) {
+          for (var i = 1; i <= p.tasks; i++) {
+            state[p.id + '.' + i] = { status: 'not-started', notes: '' }
           }
         })
         saveState(state)
@@ -1012,14 +1006,14 @@
 
       function getTaskName(id) {
         const taskNames = {
-          0.1: 'Initialize TanStack Start project',
+          0.1: 'TanStack Router project',
           0.2: 'Configure TypeScript',
-          0.3: 'Install Tailwind CSS',
+          0.3: 'Install Tailwind CSS v4',
           0.4: 'Set up ESLint + Prettier',
           0.5: 'Create folder structure',
           0.6: 'Set up Supabase CLI',
           0.7: 'Create .env.example',
-          0.8: 'Configure Git hooks',
+          0.8: 'Configure Git hooks (Husky)',
           0.9: 'Set up GitHub repo',
           '0.10': 'Create Supabase client',
           1.1: 'Migration: profiles',
@@ -1045,8 +1039,8 @@
           1.21: 'RLS: wishlist_items',
           1.22: 'RLS: products/categories/variants/images',
           1.23: 'RLS: coupons',
-          1.24: 'Trigger: avg_rating',
-          1.25: 'Generate TypeScript types',
+          1.24: 'Trigger: avg_rating + order_status + new_user',
+          1.25: 'TypeScript types (manual)',
           1.26: 'Seed script',
           2.1: 'Configure Supabase Auth',
           2.2: 'Sign-up page',
@@ -1054,38 +1048,38 @@
           2.4: 'Email verification flow',
           2.5: 'Reset password flow',
           2.6: 'Auth state listener',
-          2.7: 'Protected route wrapper',
+          2.7: 'Protected route guards',
           2.8: 'Role-based route guards',
           2.9: 'Profile page',
           '2.10': 'Addresses CRUD',
           2.11: 'Logout flow',
-          3.1: 'Query hooks: useProducts',
+          3.1: 'useProducts hook',
           3.2: 'Product listing page',
           3.3: 'ProductCard component',
           3.4: 'Category navigation',
-          3.5: 'Filter UI',
-          3.6: 'Sort UI',
-          3.7: 'Debounced search',
+          3.5: 'Filter UI (category, gender, price)',
+          3.6: 'Sort UI (newest, rated, price)',
+          3.7: 'Debounced search (300ms)',
           3.8: 'Product detail page',
-          3.9: 'Variant selector',
-          '3.10': 'Reviews section',
+          3.9: 'Variant selector (size + color)',
+          '3.10': 'Reviews section (ReviewCard + RatingBreakdown)',
           3.11: 'Size guide modal',
-          3.12: 'SEO meta tags + sitemap',
+          3.12: 'SEO meta tags (no sitemap yet)',
           4.1: 'useCart hook',
-          4.2: 'Cart UI',
-          4.3: 'Cart persistence',
-          4.4: 'Cart item component',
-          4.5: 'Price calculations',
-          4.6: 'Coupon input',
-          4.7: 'Checkout: address step',
-          4.8: 'Checkout: shipping step',
-          4.9: 'Edge: create-checkout-session',
-          '4.10': 'Stripe redirect',
-          4.11: 'Edge: stripe-webhook',
-          4.12: 'Order creation in webhook',
-          4.13: 'Stock decrement logic',
-          4.14: 'Order confirmation page',
-          4.15: 'Clear cart after checkout',
+          4.2: 'Cart page / route',
+          4.3: 'Add to cart logic',
+          4.4: 'Checkout page / route',
+          4.5: 'Stripe SDK + integration',
+          4.6: 'Stripe webhook handler',
+          4.7: 'Coupon validation',
+          4.8: 'Checkout: address step',
+          4.9: 'Checkout: shipping step',
+          '4.10': 'Checkout: Stripe redirect',
+          4.11: 'Edge: create-checkout-session',
+          4.12: 'Order confirmation page',
+          4.13: 'Clear cart after checkout',
+          4.14: 'Stock decrement logic',
+          4.15: 'Checkout success flow',
           5.1: 'useOrders hook',
           5.2: 'Order history page',
           5.3: 'Order detail page',
@@ -1098,62 +1092,61 @@
           6.1: 'useAdminProducts hook',
           6.2: 'Admin product list',
           6.3: 'Product create/edit form',
-          6.4: 'Image upload',
-          6.5: 'Variant manager',
+          6.4: 'Image upload component',
+          6.5: 'Variant manager component',
           6.6: 'Stock management',
           6.7: 'Low-stock alerts',
           6.8: 'Category CRUD',
           6.9: 'Coupon CRUD',
-          7.1: 'useReviews hook',
-          7.2: 'Review form',
-          7.3: 'Reviews list',
+          7.1: 'useReviews hook (read)',
+          7.2: 'Review form (submit)',
+          7.3: 'Reviews list (on product page)',
           7.4: 'useWishlist hook',
           7.5: 'Wishlist page',
-          7.6: 'Add to Wishlist button',
+          7.6: 'Wishlist button (on ProductCard)',
           8.1: 'Edge: send-order-email',
-          8.2: 'Configure email provider',
+          8.2: 'Configure Resend email provider',
           8.3: 'Confirmation email template',
           8.4: 'Shipped email template',
           8.5: 'Delivered email template',
           8.6: 'Cancelled email template',
           8.7: 'Trigger emails from webhook',
           8.8: 'Low stock notification',
-          9.1: 'Admin dashboard home',
+          9.1: 'Admin dashboard (metrics)',
           9.2: 'Revenue chart',
           9.3: 'Top products widget',
           9.4: 'Recent orders widget',
           9.5: 'Low stock widget',
-          10.1: 'Unit tests (Vitest)',
-          10.2: 'Component tests',
-          10.3: 'Integration tests (RLS)',
-          10.4: 'E2E: checkout flow',
-          10.5: 'E2E: auth flow',
-          10.6: 'Manual RLS verification',
-          10.7: 'Accessibility audit',
-          10.8: 'Lighthouse audit',
-          10.9: 'Cross-browser testing',
-          '10.10': 'Responsive testing',
-          10.11: 'Staging Supabase',
-          10.12: 'Deploy Edge Functions',
-          10.13: 'Deploy frontend to Vercel',
+          '10.1': 'Error boundary / 404 page',
+          10.2: 'Loading skeletons',
+          10.3: 'Responsive design',
+          10.4: 'Accessibility (ARIA)',
+          10.5: 'Toast / notification system',
+          10.6: 'Lazy loading (images)',
+          10.7: 'Brand theme guide',
+          10.8: 'Documentation suite',
+          10.9: 'CI/CD (GitHub Actions)',
+          '10.10': 'Unit tests (Vitest)',
+          10.11: 'E2E tests',
+          10.12: 'Staging Supabase',
+          10.13: 'Deploy frontend (Vercel)',
           10.14: 'Stripe webhook staging',
-          10.15: 'Staging smoke test',
-          10.16: 'Production Supabase',
-          10.17: 'Deploy to production',
-          10.18: 'Production smoke test',
-          10.19: 'Final README + CHANGELOG',
+          10.15: 'Changelog maintained',
+          10.16: 'README',
+          10.17: 'GitHub config',
+          10.18: 'CI/CD workflow',
+          10.19: 'Issue/PR templates',
         }
-        return taskNames[id] || `Task ${id}`
+        return taskNames[id] || 'Task ' + id
       }
 
       // ============ INTERACTIONS ============
       function cycleTaskStatus(id) {
-        const statuses = ['not-started', 'in-progress', 'done', 'blocked']
-        const current = taskState[id]?.status || 'not-started'
-        const nextIndex = (statuses.indexOf(current) + 1) % statuses.length
+        var statuses = ['not-started', 'in-progress', 'done', 'blocked']
+        var current = taskState[id] ? taskState[id].status : 'not-started'
+        var nextIndex = (statuses.indexOf(current) + 1) % statuses.length
         taskState[id].status = statuses[nextIndex]
         saveState(taskState)
-        addActivity(`Task ${id} marked as "${statuses[nextIndex].replace('-', ' ')}"`)
         render()
       }
 
@@ -1181,22 +1174,6 @@
           renderTaskTable(currentFilter)
         })
       })
-
-      // Activity log
-      function addActivity(text) {
-        const list = document.getElementById('activityList')
-        const empty = list.querySelector('.empty-state')
-        if (empty) empty.remove()
-
-        const item = document.createElement('div')
-        item.className = 'activity-item'
-        item.innerHTML = `
-                <div class="activity-dot"></div>
-                <div class="activity-text">${text}</div>
-                <div class="activity-time">just now</div>
-            `
-        list.insertBefore(item, list.firstChild)
-      }
 
       // Initial render handled by init()
     </script>
