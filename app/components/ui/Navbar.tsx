@@ -42,7 +42,7 @@ export function Navbar({ cartCount = 0 }: NavbarProps): React.JSX.Element {
         scrolled ? 'shadow-md' : 'shadow-sm'
       )}
     >
-      <div className="max-w-[1440px] mx-auto px-8 h-20 flex items-center justify-between gap-6 relative left-8">
+      <div className="max-w-[1440px] mx-auto px-8 h-20 flex items-center justify-between gap-6 relative left-12">
         {/* Logo */}
         <a
           href="/"

@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { ProductCard } from '@/components/ui/ProductCard'
 import { CategoryTile } from '@/components/ui/CategoryTile'
@@ -150,23 +150,19 @@ function HomePage(): React.JSX.Element {
             >
               Level Up Your <span className="text-[#C6FF3D]">Kicks</span>
             </h1>
-            <div className="flex flex-wrap gap-4 justify-start md:justify-start mt-10">
-              <a href="/products">
-                <Button variant="primary" size="lg" className="text-[16px] px-10 py-5 font-bold">
-                  Shop Now
-                  <ArrowRight size={20} className="ml-2" />
-                </Button>
-              </a>
-              <a href="/products">
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  className="text-[16px] px-10 py-5 font-bold text-white border-white/40 hover:bg-white hover:text-[#0D0D0D]"
-                >
-                  View Catalog
-                </Button>
-              </a>
-            </div>
+            <p className="text-white text-[14px] md:text-[16px] font-semibold uppercase tracking-[3px] mt-12 mb-6">
+              Replacement Laces for Sneakers
+            </p>
+            <a href="/products?category=laces-by-brand">
+              <Button
+                variant="primary"
+                size="lg"
+                className="text-[16px] px-10 py-5 font-bold rounded-[4px]"
+              >
+                Shop Shoelaces
+                <ArrowUpRight size={18} className="ml-2" />
+              </Button>
+            </a>
           </div>
         </div>
       </section>
