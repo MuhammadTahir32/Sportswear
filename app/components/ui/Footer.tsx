@@ -109,8 +109,8 @@ export function Footer(): React.JSX.Element {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/10 pt-6 text-center">
-          <p className="text-[11px] text-[#9A9A9A] uppercase tracking-wide">
+        <div className="border-t border-[#EFEFEF] pt-8 pb-4 bg-[#1A1A1A] -mx-6 md:-mx-10 px-6 md:px-10 text-center mt-8">
+          <p className="text-[13px] text-[#9A9A9A] uppercase tracking-widest font-medium">
             © {new Date().getFullYear()} StrideWear. All rights reserved.
           </p>
         </div>

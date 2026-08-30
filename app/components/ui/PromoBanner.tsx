@@ -60,16 +60,11 @@ export function PromoBanner({
             headline
           )}
         </h2>
-        <Button
-          variant="primary"
-          size="lg"
-          icon={<ArrowUpRight size={18} />}
-          onClick={() => {
-            window.location.href = ctaHref
-          }}
-        >
-          {ctaLabel}
-        </Button>
+        <a href={ctaHref}>
+          <Button variant="primary" size="lg" icon={<ArrowUpRight size={18} />}>
+            {ctaLabel}
+          </Button>
+        </a>
       </div>
     </section>
   )

@@ -11,12 +11,12 @@ type NavLink = {
 }
 
 const NAV_LINKS: NavLink[] = [
-  { label: 'Home', href: '/' },
+  { label: 'Laces by Shoe Brand', href: '/brands', hasDropdown: true },
   { label: 'Shoe Laces', href: '/laces', hasDropdown: true },
-  { label: 'Laces by Brand', href: '/brands', hasDropdown: true },
-  { label: 'Accessories', href: '/accessories', hasDropdown: true },
+  { label: 'Accessories', href: '/accessories' },
   { label: 'Custom Shoelaces', href: '/custom' },
   { label: 'Size Chart', href: '/size-chart' },
+  { label: 'Reviews', href: '/reviews' },
 ]
 
 type NavbarProps = {
@@ -42,18 +42,18 @@ export function Navbar({ cartCount = 0 }: NavbarProps): React.JSX.Element {
         scrolled ? 'shadow-md' : 'shadow-sm'
       )}
     >
-      <div className="max-w-[1440px] mx-auto px-6 h-16 flex items-center justify-between gap-4">
+      <div className="max-w-[1440px] mx-auto px-8 h-20 flex items-center justify-between gap-6">
         {/* Logo */}
         <a
           href="/"
           id="nav-logo"
-          className="flex flex-col leading-none flex-shrink-0 group"
+          className="flex flex-col leading-none flex-shrink-0 group ml-2 md:ml-6"
           aria-label="StrideWear Home"
         >
-          <span className="font-[Anton,sans-serif] text-[26px] tracking-[-0.5px] uppercase text-[#0D0D0D] group-hover:text-[#C6FF3D] transition-colors duration-200">
+          <span className="font-[Anton,sans-serif] text-[32px] tracking-[-0.5px] uppercase text-[#0D0D0D] group-hover:text-[#C6FF3D] transition-colors duration-200">
             StrideWear
           </span>
-          <span className="text-[9px] font-semibold uppercase tracking-[2px] text-[#9A9A9A] -mt-0.5">
+          <span className="text-[10px] font-bold uppercase tracking-[3px] text-[#9A9A9A] -mt-0.5">
             Athletic Gear
           </span>
         </a>
@@ -61,23 +61,23 @@ export function Navbar({ cartCount = 0 }: NavbarProps): React.JSX.Element {
         {/* Center Nav Links (desktop) */}
         <nav
           id="main-nav-links"
-          className="hidden lg:flex items-center gap-6"
+          className="hidden lg:flex items-center gap-8"
           aria-label="Main navigation"
         >
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="flex items-center gap-0.5 text-[13px] font-[500] text-[#0D0D0D] uppercase tracking-wide hover:text-[#C6FF3D] transition-colors duration-200 group relative"
+              className="flex items-center gap-1 text-[15px] font-[700] text-[#0D0D0D] uppercase tracking-wide hover:text-[#C6FF3D] transition-colors duration-200 group relative"
             >
               {link.label}
               {link.hasDropdown && (
                 <ChevronDown
-                  size={13}
+                  size={15}
                   className="text-[#9A9A9A] group-hover:text-[#C6FF3D] transition-colors"
                 />
               )}
-              <span className="absolute bottom-[-2px] left-0 w-0 h-[2px] bg-[#C6FF3D] transition-all duration-200 group-hover:w-full" />
+              <span className="absolute bottom-[-4px] left-0 w-0 h-[2px] bg-[#C6FF3D] transition-all duration-200 group-hover:w-full" />
             </a>
           ))}
         </nav>

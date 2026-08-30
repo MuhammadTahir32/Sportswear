@@ -21,9 +21,9 @@ const variantStyles: Record<ButtonVariant, string> = {
 }
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'text-xs px-4 py-2 gap-1.5',
-  md: 'text-sm px-6 py-3 gap-2',
-  lg: 'text-base px-8 py-4 gap-2.5',
+  sm: 'text-[13px] px-5 py-2.5 gap-1.5 font-bold',
+  md: 'text-[15px] px-7 py-3.5 gap-2 font-bold',
+  lg: 'text-[17px] px-9 py-4.5 gap-2.5 font-bold',
 }
 
 const radiusStyles: Record<ButtonVariant, string> = {

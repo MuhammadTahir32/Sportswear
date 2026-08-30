@@ -7,6 +7,7 @@ type CategoryTileProps = {
   label: string
   href?: string
   aspectRatio?: '4/5' | '3/4' | '16/9'
+  imageStyle?: React.CSSProperties
   className?: string
 }
 
@@ -15,6 +16,7 @@ export function CategoryTile({
   label,
   href = '#',
   aspectRatio = '4/5',
+  imageStyle,
   className,
 }: CategoryTileProps): React.JSX.Element {
   const aspectMap = {
@@ -39,6 +41,7 @@ export function CategoryTile({
         src={image}
         alt={label}
         className="absolute inset-0 w-full h-full object-cover"
+        style={imageStyle}
         loading="lazy"
       />
 
@@ -46,8 +49,8 @@ export function CategoryTile({
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
       {/* Bottom overlay content */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end justify-between">
-        <h3 className="font-[Anton,sans-serif] text-white text-[22px] uppercase tracking-wide leading-tight max-w-[70%]">
+      <div className="absolute bottom-0 left-0 right-0 p-6 flex items-end justify-between">
+        <h3 className="font-[Anton,sans-serif] text-white text-[32px] md:text-[40px] uppercase tracking-wide leading-tight max-w-[80%]">
           {label}
         </h3>
         <div className="opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300">

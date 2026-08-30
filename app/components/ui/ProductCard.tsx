@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { ArrowUpRight } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { StarRating } from '@/components/ui/StarRating'
 import { SwatchGroup } from '@/components/ui/SwatchGroup'
@@ -57,10 +56,20 @@ export function ProductCard({
           {isNew && <Badge variant="black">New</Badge>}
           {isSale && <Badge variant="lime">Sale</Badge>}
         </div>
-        {/* Quick view arrow */}
+        {/* Quick add button */}
         <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-          <Button variant="icon-circle" aria-label={`Quick view ${name}`}>
-            <ArrowUpRight size={16} />
+          <Button
+            variant="primary"
+            size="sm"
+            className="rounded-full px-4 font-bold tracking-wide shadow-md"
+            aria-label={`Quick add ${name}`}
+            onClick={(e) => {
+              e.preventDefault()
+              // Prevent default link behavior for quick add
+              console.log('Quick add triggered for', id)
+            }}
+          >
+            + Quick add
           </Button>
         </div>
       </a>

@@ -26,14 +26,14 @@ export function SwatchGroup({
   const overflow = swatches.length - maxVisible
 
   return (
-    <div className={cn('flex items-center gap-1.5', className)}>
+    <div className={cn('flex items-center gap-2', className)}>
       {visible.map((swatch) => (
         <button
           key={swatch.id}
           title={swatch.label}
           onClick={() => onSelect?.(swatch.id)}
           className={cn(
-            'w-5 h-5 rounded-sm border-2 transition-all duration-150 cursor-pointer flex-shrink-0',
+            'w-6 h-6 rounded-sm border-2 transition-all duration-150 cursor-pointer flex-shrink-0',
             selected === swatch.id
               ? 'border-[#0D0D0D] scale-110 shadow-sm'
               : 'border-[#EFEFEF] hover:border-[#9A9A9A]'
@@ -46,7 +46,7 @@ export function SwatchGroup({
         />
       ))}
       {overflow > 0 && (
-        <span className="text-[10px] text-[#9A9A9A] font-semibold bg-[#F7F7F7] border border-[#EFEFEF] rounded-sm px-1.5 py-0.5 leading-none">
+        <span className="text-[11px] text-[#9A9A9A] font-bold bg-[#F7F7F7] border border-[#EFEFEF] rounded-sm px-2 py-1 leading-none">
           +{overflow}
         </span>
       )}
