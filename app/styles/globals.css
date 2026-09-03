@@ -52,6 +52,29 @@ html {
   scroll-behavior: smooth;
 }
 
+.marquee-wrapper {
+  overflow: hidden;
+}
+
+.marquee-track {
+  animation: marquee 24s linear infinite;
+  width: max-content;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
 body {
   min-height: 100vh;
   line-height: 1.5;
