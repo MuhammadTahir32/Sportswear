@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useEffect, useRef } from 'react'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { ProductCard } from '@/components/ui/ProductCard'
@@ -110,7 +111,209 @@ const NEW_ARRIVALS = [
 
 const BRAND_NAMES = ['Nike', 'Adidas', 'New Balance', 'Jordan', 'Hoka', 'Vans', 'Converse', 'Puma']
 
-/* ─── Page ────────────────────────────────────────────────────── */
+/* ── Brand Marquee ──────────────────────────────────────────── */
+function BrandMarquee() {
+  const trackRef = useRef<HTMLDivElement>(null)
+  const stageRef = useRef<HTMLDivElement>(null)
+  const xRef = useRef(0)
+  const pausedRef = useRef(false)
+  const setWRef = useRef(0)
+  const rafRef = useRef<number | null>(null)
+
+  useEffect(() => {
+    const track = trackRef.current
+    const stage = stageRef.current
+    if (!track || !stage) return
+
+    const SPEED = 0.6
+
+    function measure() {
+      if (!track) return
+      const items = track.querySelectorAll<HTMLElement>('.bi')
+      let w = 0
+      for (let i = 0; i < BRAND_NAMES.length; i++) {
+        w += items[i]?.getBoundingClientRect().width ?? 0
+      }
+      setWRef.current = w
+      xRef.current = 0
+      track.style.transform = 'translateX(0px)'
+    }
+
+    function tick() {
+      if (!pausedRef.current && setWRef.current > 0) {
+        xRef.current -= SPEED
+        if (xRef.current <= -setWRef.current) xRef.current += setWRef.current
+        if (track) track.style.transform = `translateX(${xRef.current}px)`
+      }
+      rafRef.current = requestAnimationFrame(tick)
+    }
+
+    const pause = () => {
+      pausedRef.current = true
+    }
+    const resume = () => {
+      pausedRef.current = false
+    }
+
+    stage.addEventListener('mouseenter', pause)
+    stage.addEventListener('mouseleave', resume)
+    stage.addEventListener('touchstart', pause, { passive: true })
+    stage.addEventListener('touchend', resume, { passive: true })
+    window.addEventListener('resize', measure)
+
+    const timer = setTimeout(() => {
+      measure()
+      rafRef.current = requestAnimationFrame(tick)
+    }, 80)
+
+    return () => {
+      clearTimeout(timer)
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+      stage.removeEventListener('mouseenter', pause)
+      stage.removeEventListener('mouseleave', resume)
+      stage.removeEventListener('touchstart', pause)
+      stage.removeEventListener('touchend', resume)
+      window.removeEventListener('resize', measure)
+    }
+  }, [])
+
+  function renderBrandSet(keyPrefix: string) {
+    return BRAND_NAMES.map((brand, index) => (
+      <a
+        key={`${keyPrefix}-${brand}`}
+        href={`/products?brand=${encodeURIComponent(brand.toLowerCase())}`}
+        className="bi"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          flexShrink: 0,
+          textDecoration: 'none',
+          padding: '0 36px',
+          height: '72px',
+        }}
+      >
+        <span
+          style={{
+            fontFamily: '"Anton", sans-serif',
+            fontSize: '28px',
+            letterSpacing: '0.03em',
+            textTransform: 'uppercase',
+            color: '#9A9A9A',
+            transition: 'color 0.18s ease',
+            whiteSpace: 'nowrap',
+          }}
+          onMouseEnter={(e) => {
+            ;(e.currentTarget as HTMLElement).style.color = '#0D0D0D'
+          }}
+          onMouseLeave={(e) => {
+            ;(e.currentTarget as HTMLElement).style.color = '#9A9A9A'
+          }}
+        >
+          {brand}
+        </span>
+        {index !== BRAND_NAMES.length - 1 && (
+          <span
+            aria-hidden="true"
+            style={{
+              display: 'inline-block',
+              width: '4px',
+              height: '4px',
+              borderRadius: '50%',
+              background: '#D9D9D9',
+              flexShrink: 0,
+              marginLeft: '36px',
+            }}
+          />
+        )}
+      </a>
+    ))
+  }
+
+  return (
+    <section
+      style={{
+        padding: '40px 0',
+        borderTop: '1px solid #EFEFEF',
+        borderBottom: '1px solid #EFEFEF',
+        background: '#fff',
+        overflow: 'hidden',
+      }}
+    >
+      <p
+        style={{
+          textAlign: 'center',
+          fontSize: '16px',
+          fontWeight: 700,
+          letterSpacing: '0.22em',
+          textTransform: 'uppercase',
+          color: '#9A9A9A',
+          margin: '0 0 28px',
+        }}
+      >
+        Compatible with Popular Sneaker Brands
+      </p>
+
+      {/* stage */}
+      <div
+        ref={stageRef}
+        style={{
+          position: 'relative',
+          overflow: 'hidden',
+          borderTop: '1px solid #E5E5E5',
+          borderBottom: '1px solid #E5E5E5',
+        }}
+      >
+        {/* left fade */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            width: 120,
+            background: 'linear-gradient(to right, #ffffff 0%, transparent 100%)',
+            zIndex: 2,
+            pointerEvents: 'none',
+          }}
+        />
+        {/* right fade */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            width: 120,
+            background: 'linear-gradient(to left, #ffffff 0%, transparent 100%)',
+            zIndex: 2,
+            pointerEvents: 'none',
+          }}
+        />
+
+        {/* viewport */}
+        <div style={{ display: 'flex', alignItems: 'center', height: 72, userSelect: 'none' }}>
+          <div
+            ref={trackRef}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              flexShrink: 0,
+              willChange: 'transform',
+            }}
+          >
+            {renderBrandSet('a')}
+            {renderBrandSet('b')}
+            {renderBrandSet('c')}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ── Page ────────────────────────────────────────────────────── */
 function HomePage(): React.JSX.Element {
   return (
     <>
@@ -125,14 +328,12 @@ function HomePage(): React.JSX.Element {
         id="hero"
         className="relative min-h-[600px] md:min-h-[720px] flex items-center overflow-hidden"
       >
-        {/* Real photo background */}
         <img
           src="/hero-bg.jpg"
           alt=""
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
-        {/* Dark gradient scrim — left side */}
         <div
           className="absolute inset-0"
           style={{
@@ -141,23 +342,27 @@ function HomePage(): React.JSX.Element {
           }}
           aria-hidden="true"
         />
-
-        <div className="relative max-w-[1440px] mx-auto px-6 md:px-10 py-24 w-full">
-          <div className="max-w-[640px]">
+        <div className="relative max-w-[1440px] mx-auto px-6 md:px-16 py-24 w-full">
+          <div className="max-w-[600px]">
             <h1
-              className="font-[Anton,sans-serif] text-white uppercase leading-[0.92] tracking-tight mb-8"
-              style={{ fontSize: 'clamp(64px, 10vw, 120px)' }}
+              className="font-[Anton,sans-serif] text-white uppercase leading-[0.92] tracking-tight"
+              style={{
+                fontSize: 'clamp(64px, 10vw, 120px)',
+                marginLeft: '65px',
+                marginBottom: '10px',
+              }}
             >
               Level Up Your <span className="text-[#C6FF3D]">Kicks</span>
             </h1>
-            <p className="text-white text-[14px] md:text-[16px] font-semibold uppercase tracking-[3px] mt-12 mb-6">
-              Replacement Laces for Sneakers
+            <p className="text-white text-[13px] font-semibold uppercase tracking-[3px] mt-10 mb-8">
+              <span style={{ marginLeft: '65px' }}>Replacement Laces for Sneakers</span>
             </p>
             <a href="/products?category=laces-by-brand">
               <Button
                 variant="primary"
                 size="lg"
-                className="text-[16px] px-10 py-5 font-bold rounded-[4px]"
+                className="text-[15px] px-10 py-4 font-bold rounded-[4px]"
+                style={{ marginLeft: '65px', padding: '10px', marginTop: '10px' }}
               >
                 Shop Shoelaces
                 <ArrowUpRight size={18} className="ml-2" />
@@ -167,32 +372,23 @@ function HomePage(): React.JSX.Element {
         </div>
       </section>
 
-      {/* ── BRAND STRIP ─────────────────────────────────────────── */}
-      <section className="py-16 border-y border-[#EFEFEF] bg-white overflow-hidden mt-4">
-        <p className="text-center text-[12px] font-bold uppercase tracking-[3px] text-[#9A9A9A] mb-8">
-          Compatible with Popular Sneaker Brands
-        </p>
-        <div className="flex items-center justify-center flex-wrap gap-x-12 gap-y-6 px-6">
-          {BRAND_NAMES.map((brand) => (
-            <a
-              key={brand}
-              href={`/products?brand=${brand.toLowerCase()}`}
-              className="font-[Anton,sans-serif] text-[24px] md:text-[32px] uppercase tracking-wide text-[#9A9A9A] hover:text-[#0D0D0D] transition-colors duration-200"
-            >
-              {brand}
-            </a>
-          ))}
-        </div>
-      </section>
+      {/* ── BRAND MARQUEE ───────────────────────────────────────── */}
+      <BrandMarquee />
 
       {/* ── CATEGORY TILES ──────────────────────────────────────── */}
-      <section id="categories" className="w-full max-w-[1440px] mx-auto px-6 md:px-10 py-20 mt-8">
-        <div className="flex items-end justify-between mb-10">
-          <h2 className="font-[Anton,sans-serif] text-[#0D0D0D] text-[48px] md:text-[64px] uppercase tracking-tight leading-none">
+      <section id="categories" className="w-full max-w-[1440px] mx-auto px-6 md:px-16 py-24">
+        <div className="flex items-end justify-between mb-12">
+          <h2
+            className="font-[Anton,sans-serif] text-[#0D0D0D] text-[30px] md:text-[50px] uppercase tracking-tight leading-none "
+            style={{ marginTop: '65px', marginBottom: '20px', marginLeft: '65px' }}
+          >
             Shop by Category
           </h2>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4"
+          style={{ marginLeft: '65px', marginBottom: '90px' }}
+        >
           <CategoryTile
             label="Laces by Brand"
             image="/cat_brand.jpg"
@@ -217,20 +413,29 @@ function HomePage(): React.JSX.Element {
       </section>
 
       {/* ── BEST SELLERS ────────────────────────────────────────── */}
-      <section id="best-sellers" className="w-full max-w-[1440px] mx-auto px-6 md:px-10 py-20 mt-8">
-        <div className="flex items-end justify-between mb-10">
-          <h2 className="font-[Anton,sans-serif] text-[#0D0D0D] text-[48px] md:text-[64px] uppercase tracking-tight leading-none">
+      <section
+        id="best-sellers"
+        className="w-full max-w-[1440px] mx-auto px-6 md:px-16 py-24 border-t border-[#EFEFEF]"
+      >
+        <div className="flex items-end justify-between mb-12">
+          <h2
+            className="font-[Anton,sans-serif] text-[#0D0D0D] text-[48px] md:text-[64px] uppercase tracking-tight leading-none"
+            style={{ marginLeft: '65px', marginTop: '10px', marginBottom: '20px' }}
+          >
             Best Sellers
           </h2>
           <a
             href="/products"
-            className="flex items-center gap-2 text-[15px] font-bold text-[#0D0D0D] hover:text-[#C6FF3D] transition-colors group"
+            className="flex items-center gap-2 text-[14px] font-bold text-[#0D0D0D] hover:text-[#C6FF3D] transition-colors group"
           >
             Shop Best Sellers
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </a>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8"
+          style={{ marginLeft: '65px', marginBottom: '90px' }}
+        >
           {BEST_SELLERS.map((product) => (
             <ProductCard key={product.id} {...product} href={`/products/${product.id}`} />
           ))}
@@ -238,32 +443,39 @@ function HomePage(): React.JSX.Element {
       </section>
 
       {/* ── PROMO BANNER ─────────────────────────────────────────── */}
-      <section className="w-full max-w-[1440px] mx-auto px-6 md:px-10 py-20">
+      <section
+        className="w-full max-w-[1440px] mx-auto px-6 md:px-16 py-24"
+        style={{ marginLeft: '50px', marginBottom: '90px' }}
+      >
         <PromoBanner
-          kicker="Limited Time Offer"
-          headline="Custom Sneaker"
-          highlightedWord="Laces"
-          ctaLabel="Customise Now"
+          kicker="A simple, powerful way to elevate your brand!"
+          headline="Custom Sneaker Laces"
+          highlightedWord="Sneaker"
+          ctaLabel="Explore"
           ctaHref="/custom"
-          backgroundImage="https://placehold.co/1440x480/111111/333333?text=Custom+Sneaker+Laces"
+          backgroundImage="/custom_laces_banner.jpg"
         />
       </section>
 
       {/* ── NEW ARRIVALS ─────────────────────────────────────────── */}
-      <section id="new-arrivals" className="w-full max-w-[1440px] mx-auto px-6 md:px-10 py-20">
-        <div className="flex items-end justify-between mb-10">
+      <section
+        id="new-arrivals"
+        className="w-full max-w-[1440px] mx-auto px-6 md:px-16 py-24 border-t border-[#EFEFEF] "
+        style={{ marginLeft: '65px', marginBottom: '90px' }}
+      >
+        <div className="flex items-end justify-between mb-12" style={{ marginBottom: '25px' }}>
           <h2 className="font-[Anton,sans-serif] text-[#0D0D0D] text-[48px] md:text-[64px] uppercase tracking-tight leading-none">
             New Arrivals
           </h2>
           <a
             href="/products?sort=newest"
-            className="flex items-center gap-2 text-[15px] font-bold text-[#0D0D0D] hover:text-[#C6FF3D] transition-colors group"
+            className="flex items-center gap-2 text-[14px] font-bold text-[#0D0D0D] hover:text-[#C6FF3D] transition-colors group"
           >
             See All New
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </a>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
           {NEW_ARRIVALS.map((product) => (
             <ProductCard
               key={`new-${product.id}`}
@@ -274,19 +486,27 @@ function HomePage(): React.JSX.Element {
           ))}
         </div>
       </section>
-      {/* ── WHY CHOOSE US (TRUST STRIP) ────────────────────────── */}
-      <section className="bg-white py-20 w-full mt-8 border-t border-[#EFEFEF]">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-10">
-          <h2 className="font-[Anton,sans-serif] text-[#0D0D0D] text-[48px] md:text-[64px] uppercase tracking-tight leading-none text-center mb-16">
-            Why Choose Us
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
-            <div className="flex flex-col items-center text-center gap-4">
-              <span className="text-[#C6FF3D] mb-2">
+
+      {/* ── WHY CHOOSE US ────────────────────────────────────────── */}
+      <section className="why-choose-us">
+        <div className="why-choose-us__inner">
+          <div className="why-choose-us__header">
+            <span className="why-choose-us__kicker">Our Promise</span>
+            <h2 className="why-choose-us__title">
+              Why Choose <span className="why-choose-us__title-accent">Us</span>
+            </h2>
+            <p className="why-choose-us__subtitle">
+              Trusted by over 50,000 sneaker enthusiasts worldwide
+            </p>
+          </div>
+
+          <div className="why-choose-us__grid">
+            <div className="why-choose-us__card">
+              <div className="why-choose-us__icon-wrap">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="48"
-                  height="48"
+                  width="28"
+                  height="28"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -300,18 +520,17 @@ function HomePage(): React.JSX.Element {
                   <circle cx="17" cy="18" r="2" />
                   <circle cx="7" cy="18" r="2" />
                 </svg>
-              </span>
-              <p className="text-[#0D0D0D] font-bold text-[18px] uppercase tracking-wide">
-                Free Shipping
-              </p>
-              <p className="text-[#9A9A9A] text-[15px]">On orders over $50</p>
+              </div>
+              <h3 className="why-choose-us__card-title">Free Shipping</h3>
+              <p className="why-choose-us__card-desc">On orders over $50</p>
             </div>
-            <div className="flex flex-col items-center text-center gap-4">
-              <span className="text-[#C6FF3D] mb-2">
+
+            <div className="why-choose-us__card">
+              <div className="why-choose-us__icon-wrap">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="48"
-                  height="48"
+                  width="28"
+                  height="28"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -322,18 +541,17 @@ function HomePage(): React.JSX.Element {
                   <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
                   <path d="M3 3v5h5" />
                 </svg>
-              </span>
-              <p className="text-[#0D0D0D] font-bold text-[18px] uppercase tracking-wide">
-                30-Day Returns
-              </p>
-              <p className="text-[#9A9A9A] text-[15px]">Hassle-free returns</p>
+              </div>
+              <h3 className="why-choose-us__card-title">30-Day Returns</h3>
+              <p className="why-choose-us__card-desc">Hassle-free returns</p>
             </div>
-            <div className="flex flex-col items-center text-center gap-4">
-              <span className="text-[#C6FF3D] mb-2">
+
+            <div className="why-choose-us__card">
+              <div className="why-choose-us__icon-wrap">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="48"
-                  height="48"
+                  width="28"
+                  height="28"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -343,18 +561,17 @@ function HomePage(): React.JSX.Element {
                 >
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                 </svg>
-              </span>
-              <p className="text-[#0D0D0D] font-bold text-[18px] uppercase tracking-wide">
-                50,000+ Reviews
-              </p>
-              <p className="text-[#9A9A9A] text-[15px]">Verified customers</p>
+              </div>
+              <h3 className="why-choose-us__card-title">50,000+ Reviews</h3>
+              <p className="why-choose-us__card-desc">Verified customers</p>
             </div>
-            <div className="flex flex-col items-center text-center gap-4">
-              <span className="text-[#C6FF3D] mb-2">
+
+            <div className="why-choose-us__card">
+              <div className="why-choose-us__icon-wrap">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="48"
-                  height="48"
+                  width="28"
+                  height="28"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -365,11 +582,9 @@ function HomePage(): React.JSX.Element {
                   <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2-1 4-2 7-2 2.5 0 4.5 1 6 2a1 1 0 0 1 1 1z" />
                   <path d="m9 12 2 2 4-4" />
                 </svg>
-              </span>
-              <p className="text-[#0D0D0D] font-bold text-[18px] uppercase tracking-wide">
-                Secure Checkout
-              </p>
-              <p className="text-[#9A9A9A] text-[15px]">SSL encrypted</p>
+              </div>
+              <h3 className="why-choose-us__card-title">Secure Checkout</h3>
+              <p className="why-choose-us__card-desc">SSL encrypted</p>
             </div>
           </div>
         </div>
