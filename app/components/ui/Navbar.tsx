@@ -53,7 +53,10 @@ export function Navbar({ cartCount = 0 }: NavbarProps): React.JSX.Element {
           <span className="font-[Anton,sans-serif] text-[32px] tracking-[-0.5px] uppercase text-[#0D0D0D] group-hover:text-[#C6FF3D] transition-colors duration-200">
             StrideWear
           </span>
-          <span className="text-[10px] font-bold uppercase tracking-[3px] text-[#9A9A9A] -mt-0.5">
+          <span
+            className="text-[12px] font-bold uppercase tracking-[3px] text-[#9A9A9A] -mt-1"
+            style={{ marginTop: '5px' }}
+          >
             Athletic Gear
           </span>
         </a>
