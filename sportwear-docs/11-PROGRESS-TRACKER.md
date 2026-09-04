@@ -9,19 +9,19 @@
 | Metric               | Value      |
 | -------------------- | ---------- |
 | Total Tasks          | 126        |
-| Completed            | 40         |
-| In Progress          | 0          |
-| Not Started          | 86         |
+| Completed            | 42         |
+| In Progress          | 3          |
+| Not Started          | 81         |
 | Blocked              | 0          |
-| **Overall Progress** | **32%**    |
+| **Overall Progress** | **33%**    |
 | Last Updated         | 2026-09-04 |
 
 ---
 
-## Current Phase: Phase 2 — Authentication & User Management
+## Current Phase: Phase 4 — Cart & Checkout
 
-**Phase Status:** Not Started
-**Phase Progress:** 0/11 (0%)
+**Phase Status:** In Progress
+**Phase Progress:** 2/12 Done (17%)
 
 ---
 
@@ -122,22 +122,22 @@
 
 ## Phase 4: Cart & Checkout
 
-| ID   | Task                                        | Status      | Started | Completed | Notes |
-| ---- | ------------------------------------------- | ----------- | ------- | --------- | ----- |
-| 4.1  | `useCart` hook                              | Not Started | —       | —         |       |
-| 4.2  | Cart page/drawer UI                         | Not Started | —       | —         |       |
-| 4.3  | Cart persistence (DB + guest sync)          | Not Started | —       | —         |       |
-| 4.4  | Cart item component                         | Not Started | —       | —         |       |
-| 4.5  | Subtotal, tax, shipping, discount calc      | Not Started | —       | —         |       |
-| 4.6  | Coupon/promo code input                     | Not Started | —       | —         |       |
-| 4.7  | Checkout: shipping address step             | Not Started | —       | —         |       |
-| 4.8  | Checkout: shipping method step              | Not Started | —       | —         |       |
-| 4.9  | COD order creation (direct Supabase insert) | Not Started | —       | —         |       |
-| 4.10 | Stock decrement (race condition protection) | Not Started | —       | —         |       |
-| 4.11 | Order confirmation page (COD instructions)  | Not Started | —       | —         |       |
-| 4.12 | Clear cart after checkout                   | Not Started | —       | —         |       |
+| ID   | Task                                        | Status      | Started    | Completed  | Notes                                        |
+| ---- | ------------------------------------------- | ----------- | ---------- | ---------- | -------------------------------------------- |
+| 4.1  | `useCart` hook                              | Done        | 2026-09-04 | 2026-09-04 | Auth + guest cart with merge                 |
+| 4.2  | Cart page/drawer UI                         | In Progress | 2026-09-04 | —          | CartDrawer exists, no dedicated route        |
+| 4.3  | Cart persistence (DB + guest sync)          | In Progress | 2026-09-04 | —          | Hook has addToCart; product page stub        |
+| 4.4  | Cart item component                         | Done        | 2026-09-04 | 2026-09-04 | CartItemRow component exists                 |
+| 4.5  | Subtotal, tax, shipping, discount calc      | Done        | 2026-09-04 | 2026-09-04 | cartCalculations.ts                          |
+| 4.6  | Coupon/promo code input                     | In Progress | 2026-09-04 | —          | Calc exists; no coupon lookup by code        |
+| 4.7  | Checkout: shipping address step             | Not Started | —          | —          | No checkout page exists                      |
+| 4.8  | Checkout: shipping method step              | Not Started | —          | —          | SHIPPING_METHODS constant exists             |
+| 4.9  | COD order creation (direct Supabase insert) | Not Started | —          | —          | No order creation logic                      |
+| 4.10 | Stock decrement (race condition protection) | Not Started | —          | —          | No stock decrement logic                     |
+| 4.11 | Order confirmation page (COD instructions)  | Not Started | —          | —          | No confirmation page                         |
+| 4.12 | Clear cart after checkout                   | In Progress | 2026-09-04 | —          | clearCart exists; never called post-checkout |
 
-**Phase 4 Status:** `Not Started`
+**Phase 4 Status:** `In Progress` (2 DONE, 3 PARTIAL, 7 NOT DONE)
 
 ---
 

@@ -239,52 +239,52 @@
     "notes": "SEO meta tags present"
   },
   "4.1": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "useCart hook with auth + guest support"
   },
   "4.2": {
     "status": "not-started",
-    "notes": ""
+    "notes": "Cart only via CartDrawer, no dedicated route"
   },
   "4.3": {
-    "status": "not-started",
-    "notes": ""
+    "status": "in-progress",
+    "notes": "Hook has addToCart; product page still stub"
   },
   "4.4": {
     "status": "not-started",
-    "notes": ""
+    "notes": "No checkout route exists"
   },
   "4.5": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "cartCalculations.ts with tax, shipping, discount"
   },
   "4.6": {
-    "status": "not-started",
-    "notes": ""
+    "status": "in-progress",
+    "notes": "Calc exists; no coupon lookup by code from DB"
   },
   "4.7": {
     "status": "not-started",
-    "notes": ""
+    "notes": "No checkout page exists"
   },
   "4.8": {
     "status": "not-started",
-    "notes": ""
+    "notes": "SHIPPING_METHODS constant exists, no UI"
   },
   "4.9": {
     "status": "not-started",
-    "notes": ""
+    "notes": "No order creation logic"
   },
   "4.10": {
     "status": "not-started",
-    "notes": ""
+    "notes": "No stock decrement logic"
   },
   "4.11": {
     "status": "not-started",
-    "notes": ""
+    "notes": "No order confirmation page"
   },
   "4.12": {
-    "status": "not-started",
-    "notes": ""
+    "status": "in-progress",
+    "notes": "clearCart function exists; never called post-checkout"
   },
   "5.1": {
     "status": "not-started",
