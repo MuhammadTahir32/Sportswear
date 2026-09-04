@@ -246,14 +246,14 @@
 | 1: Database         | 26      | 14     | 9      | 0      | (3 implicit) |
 | 2: Auth             | 11      | 7      | 3      | 1      |
 | 3: Catalog          | 12      | 8      | 3      | 1      |
-| 4: Cart/Checkout    | 12      | 9      | 2      | 1      |
+| 4: Cart/Checkout    | 12      | 10     | 2      | 0      |
 | 5: Orders           | 9       | 5      | 2      | 2      |
 | 6: Admin Products   | 9       | 5      | 4      | 0      |
 | 7: Reviews/Wishlist | 6       | 0      | 6      | 0      |
 | 8: Notifications    | 8       | 3      | 3      | 2      |
 | 9: Analytics        | 5       | 0      | 3      | 2      |
-| 10: Polish/Deploy   | 18      | 9      | 7      | 2      |
-| **TOTAL**           | **126** | **66** | **44** | **13** | (3 implicit) |
+| 10: Polish/Deploy   | 18      | 12     | 6      | 0      |
+| **TOTAL**           | **126** | **70** | **43** | **13** | (3 implicit) |
 
 ---
 
