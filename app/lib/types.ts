@@ -1,7 +1,8 @@
 export type UserRole = 'customer' | 'admin' | 'super_admin'
 export type Gender = 'men' | 'women' | 'unisex' | 'kids'
 export type ProductStatus = 'draft' | 'active' | 'archived'
-export type OrderStatus = 'pending' | 'paid' | 'processing' | 'shipped' | 'delivered' | 'cancelled' | 'refunded'
+export type OrderStatus =
+  'pending' | 'paid' | 'processing' | 'shipped' | 'delivered' | 'cancelled' | 'refunded'
 export type DiscountType = 'percent' | 'fixed'
 
 export interface Profile {
@@ -99,7 +100,6 @@ export interface Order {
   total: number
   applied_coupon_id: string | null
   shipping_address: ShippingAddressSnapshot
-  stripe_session_id: string | null
   tracking_number: string | null
   created_at: string
 }

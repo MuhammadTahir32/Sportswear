@@ -17,7 +17,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 - Database migrations for core schema
 - Auth flow (sign up / sign in / roles)
 - Product catalog UI + admin CRUD
-- Cart + Stripe checkout
+- Cart + Cash on Delivery (COD) checkout
 - Order management + email notifications
 
 ---

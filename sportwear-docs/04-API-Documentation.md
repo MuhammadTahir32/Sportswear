@@ -32,16 +32,17 @@ These are wrapped in typed hooks, e.g. `useProducts()`, `useCart()`, `useWishlis
 
 ## 3. Custom Edge Functions
 
-### 3.1 `POST /create-checkout-session`
+### 3.1 `POST /create-order`
 
-Creates a Stripe Checkout Session for the current user's cart.
+Creates a COD order for the current user's cart.
 
 **Auth required:** Yes
 **Request body:**
 
 ```json
 {
-  "coupon_code": "SAVE10"
+  "coupon_code": "SAVE10",
+  "shipping_address": { ... }
 }
 ```
 
@@ -49,7 +50,8 @@ Creates a Stripe Checkout Session for the current user's cart.
 
 ```json
 {
-  "checkout_url": "https://checkout.stripe.com/c/pay/..."
+  "order_id": "uuid-here",
+  "status": "pending"
 }
 ```
 
@@ -61,28 +63,44 @@ Creates a Stripe Checkout Session for the current user's cart.
 1. Verify JWT, load user's `cart_items` with variant + price
 2. Validate stock availability per variant
 3. Validate coupon if provided
-4. Create Stripe line items + session (server-side, using Stripe secret key)
-5. Return session URL
+4. Create order + order_items rows directly in Supabase
+5. Decrement stock with race condition protection
+6. Clear cart
+7. Return order confirmation
 
 ---
 
-### 3.2 `POST /stripe-webhook`
+### 3.2 `POST /admin/update-order-status`
 
-Receives Stripe webhook events.
+Updates order status (admin only).
 
-**Auth:** Verified via Stripe signature header (`Stripe-Signature`), not user auth
-**Handles events:**
+**Auth required:** Yes (admin role)
+**Request body:**
 
-- `checkout.session.completed` → creates `orders` + `order_items` rows, decrements `product_variants.stock_qty`, inserts `order_status_history`, triggers confirmation email
-- `charge.refunded` → updates order status to `refunded`
+```json
+{
+  "order_id": "uuid",
+  "status": "shipped",
+  "tracking_number": "TRK123"
+}
+```
 
-**Response:** `200 { "received": true }` (must always return 200 quickly per Stripe requirements, log errors internally)
+**Response 200:** Order status updated
+**Response 403:** Non-admin user
+**Response 404:** Order not found
+
+**Logic:**
+
+1. Verify JWT + admin role
+2. Update order status
+3. Insert into order_status_history
+4. Trigger confirmation email
 
 ---
 
 ### 3.3 `POST /send-order-email`
 
-Internal function called by `stripe-webhook` (or directly for status updates).
+Internal function called when order status is updated.
 
 **Request body:**
 

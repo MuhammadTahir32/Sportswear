@@ -123,17 +123,14 @@ if (exists('app/hooks/useCart.ts') || exists('app/hooks/useCart.tsx')) { done('4
 if (exists('app/routes/cart.tsx') || exists('app/routes/cart.ts')) { done('4.2') } else { todo('4.2') }
 if (exists('app/hooks/useCart.ts') && fileContains('app/hooks/useCart.ts', 'addToCart')) { done('4.3') } else { todo('4.3') }
 if (exists('app/routes/checkout.tsx') || exists('app/routes/_checkout.tsx')) { done('4.4') } else { todo('4.4') }
-if (fileContains('package.json', 'stripe') && exists('app/lib/stripe.ts')) { done('4.5') } else { todo('4.5') }
-if (exists('supabase/functions/stripe-webhook') || exists('app/routes/api/stripe-webhook.ts')) { done('4.6') } else { todo('4.6') }
-if (exists('app/hooks/useCart.ts') && fileContains('app/hooks/useCart.ts', 'coupon')) { done('4.7') } else { todo('4.7') }
-if (exists('app/routes/checkout.tsx') && fileContains('app/routes/checkout.tsx', 'address')) { done('4.8') } else { todo('4.8') }
-if (exists('app/routes/checkout.tsx') && fileContains('app/routes/checkout.tsx', 'shipping')) { done('4.9') } else { todo('4.9') }
-if (exists('app/routes/checkout.tsx') && fileContains('app/routes/checkout.tsx', 'stripe')) { done('4.10') } else { todo('4.10') }
-if (exists('supabase/functions/create-checkout-session')) { done('4.11') } else { todo('4.11') }
-if (exists('app/routes/order-confirmation.tsx')) { done('4.12') } else { todo('4.12') }
-if (exists('app/hooks/useCart.ts') && fileContains('app/hooks/useCart.ts', 'clear')) { done('4.13') } else { todo('4.13') }
-if (hasMigration('stock') || hasMigration('inventory')) { done('4.14') } else { todo('4.14') }
-if (exists('app/routes/checkout.tsx') && fileContains('app/routes/checkout.tsx', 'success')) { done('4.15') } else { todo('4.15') }
+if (exists('app/hooks/useCart.ts') && fileContains('app/hooks/useCart.ts', 'coupon')) { done('4.5') } else { todo('4.5') }
+if (exists('app/routes/checkout.tsx') && fileContains('app/routes/checkout.tsx', 'address')) { done('4.6') } else { todo('4.6') }
+if (exists('app/routes/checkout.tsx') && fileContains('app/routes/checkout.tsx', 'shipping')) { done('4.7') } else { todo('4.7') }
+if (exists('app/routes/checkout.tsx') && fileContains('app/routes/checkout.tsx', 'cod')) { done('4.8') } else { todo('4.8') }
+if (exists('app/routes/checkout.tsx') && fileContains('app/routes/checkout.tsx', 'order')) { done('4.9') } else { todo('4.9') }
+if (exists('app/routes/order-confirmation.tsx')) { done('4.10') } else { todo('4.10') }
+if (exists('app/hooks/useCart.ts') && fileContains('app/hooks/useCart.ts', 'clear')) { done('4.11') } else { todo('4.11') }
+if (hasMigration('stock') || hasMigration('inventory')) { done('4.12') } else { todo('4.12') }
 
 // ─── Phase 5: Order Management ──────────────────────────────────────────────
 if (exists('app/hooks/useOrders.ts')) { done('5.1') } else { todo('5.1') }
@@ -172,7 +169,7 @@ if (exists('supabase/functions/send-order-email/templates/confirmation')) { done
 if (exists('supabase/functions/send-order-email/templates/shipped')) { done('8.4') } else { todo('8.4') }
 if (exists('supabase/functions/send-order-email/templates/delivered')) { done('8.5') } else { todo('8.5') }
 if (exists('supabase/functions/send-order-email/templates/cancelled')) { done('8.6') } else { todo('8.6') }
-if (exists('supabase/functions/stripe-webhook') && fileContains('supabase/functions/stripe-webhook/index.ts', 'email')) { done('8.7') } else { todo('8.7') }
+if (exists('app/routes/_admin/orders.tsx') && fileContains('app/routes/_admin/orders.tsx', 'status')) { done('8.7') } else { todo('8.7') }
 if (exists('supabase/functions/low-stock-notification') || exists('app/components/ui/LowStockAlert.tsx')) { done('8.8') } else { todo('8.8') }
 
 // ─── Phase 9: Analytics ─────────────────────────────────────────────────────

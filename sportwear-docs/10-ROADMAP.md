@@ -7,7 +7,7 @@
 ## Overview
 
 - **Total Phases:** 10
-- **Total Tasks:** 87
+- **Total Tasks:** 126
 - **Estimated Duration:** 8–10 weeks (solo/small team)
 - **Status Legend:** `Not Started` | `In Progress` | `Done` | `Blocked`
 
@@ -110,7 +110,7 @@
 
 ## PHASE 4: Cart & Checkout
 
-> Goal: Full cart management + Stripe checkout flow
+> Goal: Full cart management + Cash on Delivery (COD) checkout flow
 
 | ID   | Task                                                                                 | Priority | Status      |
 | ---- | ------------------------------------------------------------------------------------ | -------- | ----------- |
@@ -122,13 +122,10 @@
 | 4.6  | Build coupon/promo code input + validation                                           | P1       | Not Started |
 | 4.7  | Build checkout page: shipping address step                                           | P0       | Not Started |
 | 4.8  | Build checkout page: shipping method step                                            | P1       | Not Started |
-| 4.9  | Create Edge Function: `create-checkout-session`                                      | P0       | Not Started |
-| 4.10 | Integrate Stripe Checkout redirect                                                   | P0       | Not Started |
-| 4.11 | Create Edge Function: `stripe-webhook`                                               | P0       | Not Started |
-| 4.12 | Implement order creation logic in webhook handler                                    | P0       | Not Started |
-| 4.13 | Implement stock decrement logic (with race condition protection)                     | P0       | Not Started |
-| 4.14 | Build order confirmation page (poll order status)                                    | P0       | Not Started |
-| 4.15 | Clear cart after successful checkout                                                 | P0       | Not Started |
+| 4.9  | Implement COD order creation (direct Supabase insert, status = `pending`)            | P0       | Not Started |
+| 4.10 | Implement stock decrement with race condition protection (DB transaction)            | P0       | Not Started |
+| 4.11 | Build order confirmation page (show order ID + COD instructions)                     | P0       | Not Started |
+| 4.12 | Clear cart after successful checkout                                                 | P0       | Not Started |
 
 ---
 
@@ -195,7 +192,7 @@
 | 8.4 | Build order shipped email template (with tracking)           | P1       | Not Started |
 | 8.5 | Build order delivered email template                         | P2       | Not Started |
 | 8.6 | Build order cancelled email template                         | P1       | Not Started |
-| 8.7 | Trigger emails from webhook handler + admin status update    | P0       | Not Started |
+| 8.7 | Trigger emails from admin status update                      | P0       | Not Started |
 | 8.8 | (Optional) Low stock admin notification                      | P2       | Not Started |
 
 ---
@@ -231,14 +228,13 @@
 | 10.9  | Cross-browser testing (Chrome, Firefox, Safari, Edge)       | P1       | Not Started |
 | 10.10 | Responsive testing (mobile, tablet, desktop)                | P1       | Not Started |
 | 10.11 | Set up staging Supabase project                             | P0       | Not Started |
-| 10.12 | Deploy Edge Functions to staging                            | P0       | Not Started |
+| 10.12 | Deploy Edge Functions to staging (emails)                   | P0       | Not Started |
 | 10.13 | Deploy frontend to Vercel (staging)                         | P0       | Not Started |
-| 10.14 | Stripe webhook configured for staging                       | P0       | Not Started |
-| 10.15 | End-to-end smoke test on staging                            | P0       | Not Started |
-| 10.16 | Set up production Supabase project                          | P0       | Not Started |
-| 10.17 | Deploy to production                                        | P0       | Not Started |
-| 10.18 | Production smoke test                                       | P0       | Not Started |
-| 10.19 | Final README + CHANGELOG update                             | P1       | Not Started |
+| 10.14 | End-to-end smoke test on staging                            | P0       | Not Started |
+| 10.15 | Set up production Supabase project                          | P0       | Not Started |
+| 10.16 | Deploy to production                                        | P0       | Not Started |
+| 10.17 | Production smoke test                                       | P0       | Not Started |
+| 10.18 | Final README + CHANGELOG update                             | P1       | Not Started |
 
 ---
 
@@ -250,14 +246,14 @@
 | 1: Database         | 26      | 14     | 9      | 0      | (3 implicit) |
 | 2: Auth             | 11      | 7      | 3      | 1      |
 | 3: Catalog          | 12      | 8      | 3      | 1      |
-| 4: Cart/Checkout    | 15      | 12     | 2      | 1      |
+| 4: Cart/Checkout    | 12      | 9      | 2      | 1      |
 | 5: Orders           | 9       | 5      | 2      | 2      |
 | 6: Admin Products   | 9       | 5      | 4      | 0      |
 | 7: Reviews/Wishlist | 6       | 0      | 6      | 0      |
 | 8: Notifications    | 8       | 3      | 3      | 2      |
 | 9: Analytics        | 5       | 0      | 3      | 2      |
-| 10: Polish/Deploy   | 19      | 10     | 7      | 2      |
-| **TOTAL**           | **130** | **70** | **44** | **13** |
+| 10: Polish/Deploy   | 18      | 9      | 7      | 2      |
+| **TOTAL**           | **126** | **66** | **44** | **13** | (3 implicit) |
 
 ---
 
@@ -268,7 +264,7 @@ Phase 0 → Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 10
                               ↓
                          Phase 6 (Admin parallel)
                          Phase 7 (can start after Phase 4)
-                         Phase 8 (starts at Phase 4, continues)
+                         Phase 8 (starts after Phase 4)
                          Phase 9 (starts after Phase 5)
 ```
 
@@ -280,3 +276,25 @@ Phase 0 → Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 10
 - **Phase 4** blocks Phase 5, 8 (checkout flow needed for orders/emails)
 - **Phase 6** can run in parallel with Phase 4-5
 - **Phase 10** can only fully start after Phase 4-5 complete
+
+---
+
+## Payment Method: Cash on Delivery (COD)
+
+> **Note:** Stripe is not available in Pakistan. The project uses Cash on Delivery (COD) as the payment method.
+
+**How COD works in this project:**
+
+1. Customer adds items to cart → proceeds to checkout
+2. Customer fills shipping address + selects shipping method
+3. Customer reviews order and clicks "Place Order"
+4. Order is created directly in Supabase with status `pending`
+5. Stock is decremented in a DB transaction (race condition protection)
+6. Customer sees order confirmation with COD instructions
+7. Admin can later update order status (paid, shipped, delivered, etc.)
+
+**Future:** Stripe can be added later when available in Pakistan by:
+
+- Adding Stripe Edge Functions (4.9-4.12 equivalent)
+- Adding webhook handler for payment confirmation
+- Keeping COD as an alternative payment option

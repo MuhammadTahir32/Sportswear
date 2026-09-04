@@ -8,13 +8,13 @@
 
 | Metric               | Value      |
 | -------------------- | ---------- |
-| Total Tasks          | 130        |
+| Total Tasks          | 126        |
 | Completed            | 40         |
 | In Progress          | 0          |
-| Not Started          | 90         |
+| Not Started          | 86         |
 | Blocked              | 0          |
-| **Overall Progress** | **31%**    |
-| Last Updated         | 2026-08-26 |
+| **Overall Progress** | **32%**    |
+| Last Updated         | 2026-09-04 |
 
 ---
 
@@ -132,13 +132,10 @@
 | 4.6  | Coupon/promo code input                     | Not Started | —       | —         |       |
 | 4.7  | Checkout: shipping address step             | Not Started | —       | —         |       |
 | 4.8  | Checkout: shipping method step              | Not Started | —       | —         |       |
-| 4.9  | Edge Function: `create-checkout-session`    | Not Started | —       | —         |       |
-| 4.10 | Stripe Checkout redirect                    | Not Started | —       | —         |       |
-| 4.11 | Edge Function: `stripe-webhook`             | Not Started | —       | —         |       |
-| 4.12 | Order creation in webhook                   | Not Started | —       | —         |       |
-| 4.13 | Stock decrement (race condition protection) | Not Started | —       | —         |       |
-| 4.14 | Order confirmation page                     | Not Started | —       | —         |       |
-| 4.15 | Clear cart after checkout                   | Not Started | —       | —         |       |
+| 4.9  | COD order creation (direct Supabase insert) | Not Started | —       | —         |       |
+| 4.10 | Stock decrement (race condition protection) | Not Started | —       | —         |       |
+| 4.11 | Order confirmation page (COD instructions)  | Not Started | —       | —         |       |
+| 4.12 | Clear cart after checkout                   | Not Started | —       | —         |       |
 
 **Phase 4 Status:** `Not Started`
 
@@ -205,7 +202,7 @@
 | 8.4 | Order shipped email template               | Not Started | —       | —         |       |
 | 8.5 | Order delivered email template             | Not Started | —       | —         |       |
 | 8.6 | Order cancelled email template             | Not Started | —       | —         |       |
-| 8.7 | Trigger emails from webhook + admin        | Not Started | —       | —         |       |
+| 8.7 | Trigger emails from admin status update    | Not Started | —       | —         |       |
 | 8.8 | Low stock admin notification               | Not Started | —       | —         |       |
 
 **Phase 8 Status:** `Not Started`
@@ -243,12 +240,11 @@
 | 10.11 | Set up staging Supabase project       | Not Started | —       | —         |       |
 | 10.12 | Deploy Edge Functions to staging      | Not Started | —       | —         |       |
 | 10.13 | Deploy frontend to Vercel (staging)   | Not Started | —       | —         |       |
-| 10.14 | Stripe webhook configured for staging | Not Started | —       | —         |       |
-| 10.15 | End-to-end smoke test on staging      | Not Started | —       | —         |       |
-| 10.16 | Set up production Supabase project    | Not Started | —       | —         |       |
-| 10.17 | Deploy to production                  | Not Started | —       | —         |       |
-| 10.18 | Production smoke test                 | Not Started | —       | —         |       |
-| 10.19 | Final README + CHANGELOG update       | Not Started | —       | —         |       |
+| 10.14 | End-to-end smoke test on staging      | Not Started | —       | —         |       |
+| 10.15 | Set up production Supabase project    | Not Started | —       | —         |       |
+| 10.16 | Deploy to production                  | Not Started | —       | —         |       |
+| 10.17 | Production smoke test                 | Not Started | —       | —         |       |
+| 10.18 | Final README + CHANGELOG update       | Not Started | —       | —         |       |
 
 **Phase 10 Status:** `Not Started`
 
@@ -275,5 +271,9 @@
 
 <!-- Record important architectural/technical decisions here -->
 
-| Date | Decision | Rationale |
-| ---- | -------- | --------- |
+| Date       | Decision                                             | Rationale                                    |
+| ---------- | ---------------------------------------------------- | -------------------------------------------- |
+| 2026-09-04 | Use Cash on Delivery (COD) instead of Stripe         | Stripe not available in Pakistan             |
+| 2026-09-04 | Remove Stripe Edge Functions from Phase 4 (4.9-4.12) | Replaced with direct Supabase order creation |
+| 2026-09-04 | Remove Stripe webhook task from Phase 10 (10.14)     | Not needed for COD payment flow              |
+| 2026-09-04 | Create migration to drop stripe_session_id column    | Schema cleanup for COD                       |

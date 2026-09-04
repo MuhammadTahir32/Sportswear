@@ -106,7 +106,6 @@ import type { Product } from '@/lib/types'
 ### Rule 3.1: Keys & Secrets
 
 - **NEVER** put `SUPABASE_SERVICE_ROLE_KEY` in frontend code
-- **NEVER** put `STRIPE_SECRET_KEY` in frontend code
 - **NEVER** commit `.env` files to git
 - All secrets go in Edge Function environment only
 
@@ -131,9 +130,9 @@ import type { Product } from '@/lib/types'
 
 ### Rule 3.5: Payments
 
-- No card data touches our servers
-- Stripe webhook signature **must** be verified before processing
-- Check idempotency: don't create duplicate orders for same `stripe_session_id`
+- Cash on Delivery (COD) — no online payment processing
+- Order creation uses DB transactions to prevent race conditions
+- Stock decrement must be atomic (single transaction)
 
 ---
 
@@ -326,11 +325,11 @@ Always return consistent error format:
 }
 ```
 
-### Rule 7.3: Webhook Handling
+### Rule 7.3: Order Creation
 
-- Always return `200` quickly (Stripe requires this)
-- Log errors internally, don't return 500 to webhooks
-- Verify Stripe signature before processing
+- Use DB transactions for stock decrement (race condition protection)
+- Validate stock before creating order
+- Clear cart after successful order creation
 
 ---
 
@@ -370,13 +369,11 @@ expect(data).toHaveLength(0) // RLS blocks access
 
 - Staging must mirror production (same Supabase schema, same Edge Functions)
 - Test everything on staging before production deploy
-- Use Stripe test mode on staging, live mode on production
 
 ### Rule 9.2: Pre-Deploy Checklist
 
 - [ ] All migrations applied
 - [ ] Edge Function secrets set
-- [ ] Stripe webhook points to correct URL
 - [ ] Smoke test completed (signup → browse → cart → checkout)
 - [ ] RLS spot-checked
 - [ ] Changelog updated

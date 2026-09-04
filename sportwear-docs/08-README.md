@@ -5,7 +5,7 @@ A full-stack sportwear e-commerce platform built with **TanStack** (Start, Route
 ## Features
 
 - Product catalog with variants (size/color), filtering, search
-- Cart, checkout via Stripe, order tracking
+- Cart, checkout via Cash on Delivery (COD), order tracking
 - Customer accounts, wishlist, reviews
 - Admin dashboard: product/inventory/order management, basic analytics
 
@@ -13,7 +13,7 @@ A full-stack sportwear e-commerce platform built with **TanStack** (Start, Route
 
 - **Frontend:** TanStack Start, TanStack Router, TanStack Query, TanStack Table, Tailwind CSS, TypeScript
 - **Backend:** Supabase (Postgres + RLS, Auth, Storage, Edge Functions)
-- **Payments:** Stripe
+- **Payments:** Cash on Delivery (COD)
 - **Hosting:** Vercel + Supabase Cloud
 
 ## Getting Started
@@ -44,7 +44,7 @@ All project documents live in `/docs`:
 | [06-Security-Requirements.md](./06-Security-Requirements.md) | Security checklist, OWASP mapping          |
 | [07-Deployment-Guide.md](./07-Deployment-Guide.md)           | Setup, deployment, rollback runbook        |
 | [09-CHANGELOG.md](./09-CHANGELOG.md)                         | Version history                            |
-| [10-ROADMAP.md](./10-ROADMAP.md)                             | Full build roadmap — 10 phases, 130 tasks  |
+| [10-ROADMAP.md](./10-ROADMAP.md)                             | Full build roadmap — 10 phases, 126 tasks  |
 | [11-PROGRESS-TRACKER.md](./11-PROGRESS-TRACKER.md)           | Real-time progress tracking                |
 | [RULES.md](./RULES.md)                                       | Build rules — mandatory guidelines         |
 | [BRAND_THEME_GUIDE.md](../BRAND_THEME_GUIDE.md)              | Brand colors, typography, components       |
@@ -64,8 +64,6 @@ stridewear/
 ├── supabase/
 │   ├── migrations/
 │   └── functions/
-│       ├── create-checkout-session/
-│       ├── stripe-webhook/
 │       ├── send-order-email/
 │       └── admin-update-order-status/
 ├── docs/                     # this documentation set

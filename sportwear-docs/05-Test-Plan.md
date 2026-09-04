@@ -21,7 +21,7 @@ Verify every functional requirement in `01-SRS.md` works correctly, the app is s
 ## 3. Test Environment
 
 - Local: Supabase CLI (`supabase start`) for isolated DB + Auth + Storage emulation
-- Staging: Separate Supabase project + Vercel preview deployment, Stripe **test mode**
+- Staging: Separate Supabase project + Vercel preview deployment
 - CI: Run unit + integration tests on every PR (GitHub Actions); run E2E against a preview deployment before merge to `main`
 
 ## 4. Test Cases (Sample — expand per FR)
@@ -33,7 +33,7 @@ Verify every functional requirement in `01-SRS.md` works correctly, the app is s
 | TC-3  | FR-2.4                | Filter products by size M + color Black                           | Only matching variants shown                                         |
 | TC-4  | FR-3.1                | Add product variant to cart, refresh page                         | Cart persists (logged-in)                                            |
 | TC-5  | FR-3.3                | Apply expired coupon code                                         | Error: "Coupon expired"                                              |
-| TC-6  | FR-3.5                | Complete checkout with Stripe test card `4242...`                 | Order created with status `paid`, stock decremented                  |
+| TC-6  | FR-3.5                | Complete checkout with COD                                        | Order created with status `pending`, stock decremented               |
 | TC-7  | FR-3.5                | Checkout with a variant that just went out of stock               | Checkout blocked with stock error before payment                     |
 | TC-8  | FR-4.1                | View order history as Customer A                                  | Only Customer A's orders visible (RLS check)                         |
 | TC-9  | Security              | Customer A attempts to query Customer B's orders via API directly | Request denied by RLS, empty result                                  |

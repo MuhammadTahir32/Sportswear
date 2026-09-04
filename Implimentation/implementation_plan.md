@@ -2,8 +2,8 @@
 
 ## Background
 
-StrideWear is a full-stack sportswear e-commerce web app using **TanStack Start + Supabase + Stripe**.
-All 130 tasks across 10 phases are currently `Not Started`.
+StrideWear is a full-stack sportswear e-commerce web app using **TanStack Start + Supabase + Cash on Delivery (COD)**.
+All 126 tasks across 10 phases are currently `Not Started`.
 
 This plan covers the critical **Phase 0** work — scaffolding the TanStack Start project, establishing the brand design system from `BRAND_THEME_GUIDE.md`, and building every reusable UI component needed across the entire app.
 
@@ -197,8 +197,6 @@ Sale badge, New badge, category pill — lime or black bg
 VITE_SUPABASE_URL=
 VITE_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=   # Server/Edge only
-STRIPE_SECRET_KEY=            # Server/Edge only
-STRIPE_WEBHOOK_SECRET=        # Server/Edge only
 RESEND_API_KEY=               # Server/Edge only
 ```
 

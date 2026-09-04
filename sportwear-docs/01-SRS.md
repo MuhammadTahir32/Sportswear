@@ -72,7 +72,7 @@ A standalone full-stack web app. Frontend: TanStack Start (SSR) + TanStack Route
 - FR-3.2: Cart shows subtotal, estimated tax, shipping, discount
 - FR-3.3: Apply promo/discount codes
 - FR-3.4: Checkout flow: shipping address → shipping method → payment → order confirmation
-- FR-3.5: Payment integration (e.g., Stripe) via Supabase Edge Function to keep secret keys server-side
+- FR-3.5: Cash on Delivery (COD) checkout — order created directly in Supabase
 - FR-3.6: Order confirmation email (Supabase Edge Function + email provider, e.g., Resend)
 
 ### FR-4: Orders

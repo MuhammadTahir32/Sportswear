@@ -34,11 +34,10 @@
                         │  └─────────────────────────┘  │
                         └──────────────┬───────────────┘
                                        │
-                        ┌──────────────▼───────────────┐
-                        │  Third-Party Services          │
-                        │  Stripe (payments)              │
-                        │  Resend/SendGrid (emails)       │
-                        └───────────────────────────────┘
+                         ┌──────────────▼───────────────┐
+                         │  Third-Party Services          │
+                         │  Resend/SendGrid (emails)       │
+                         └───────────────────────────────┘
 ```
 
 ## 2. Technology Stack
@@ -53,15 +52,15 @@
 | Backend/DB          | Supabase Postgres                     | Relational data storage                        |
 | Auth                | Supabase Auth                         | Email/password + OAuth                         |
 | File storage        | Supabase Storage                      | Product images                                 |
-| Serverless logic    | Supabase Edge Functions (Deno)        | Payment webhook handling, emails               |
-| Payments            | Stripe                                | Checkout + payment processing                  |
+| Serverless logic    | Supabase Edge Functions (Deno)        | Emails                                         |
+| Payments            | Cash on Delivery (COD)                | No online payment processing                   |
 | Hosting             | Vercel or Netlify                     | SSR-compatible deployment                      |
 | Type safety         | TypeScript + Supabase generated types | End-to-end type safety                         |
 
 ## 3. Module Breakdown
 
 1. **Storefront module** — catalog browsing, product detail, search/filter
-2. **Cart & Checkout module** — cart state, promo codes, Stripe checkout session
+2. **Cart & Checkout module** — cart state, promo codes, COD order creation
 3. **Account module** — auth, profile, addresses, order history, wishlist
 4. **Admin module** — product/category/inventory CRUD, order management, analytics
 5. **Notification module** — transactional emails via Edge Functions
@@ -69,19 +68,17 @@
 ## 4. Data Flow (Checkout Example)
 
 1. User adds items to cart (stored in `cart_items` table, keyed by `user_id`)
-2. On checkout, frontend calls a TanStack Start server function
-3. Server function calls a Supabase Edge Function `create-checkout-session`
-4. Edge Function creates a Stripe Checkout Session (service-role key stays server-side) and returns the session URL
-5. User completes payment on Stripe-hosted page
-6. Stripe sends a webhook to another Edge Function `stripe-webhook`, which verifies the signature and writes the `orders` + `order_items` rows, decrements stock, and triggers a confirmation email
-7. User is redirected back to an order confirmation page which polls order status via TanStack Query
+2. On checkout, user fills shipping address and selects shipping method
+3. Frontend creates order directly in Supabase (status = `pending`)
+4. Stock is decremented with race condition protection (DB transaction)
+5. Cart is cleared
+6. User sees order confirmation page with COD instructions
 
 ## 5. Security Model
 
 - All client-side Supabase calls use the **anon key** — never the service-role key
 - **Row Level Security (RLS)** enforced on every table: customers can only read/write their own rows (cart, orders, wishlist, profile); admins bypass via a `role = 'admin'` check policy
-- Payment secret keys and service-role key live only in server environment variables (Edge Functions / server functions), never shipped to the client
-- Stripe webhook signature verification required before writing order data
+- Service-role key lives only in server environment variables (Edge Functions / server functions), never shipped to the client
 
 ## 6. Deployment Topology
 

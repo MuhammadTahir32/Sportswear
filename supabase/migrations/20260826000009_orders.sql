@@ -9,7 +9,6 @@ create table public.orders (
   total             numeric(10,2) not null,
   applied_coupon_id uuid references public.coupons(id) on delete set null,
   shipping_address  jsonb not null,
-  stripe_session_id text,
   tracking_number   text,
   created_at        timestamptz not null default now()
 );

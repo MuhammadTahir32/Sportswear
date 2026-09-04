@@ -122,7 +122,6 @@ Extends `auth.users` (1:1 via `id`).
 | subtotal, tax, shipping_fee, discount, total | numeric(10,2)                 |                                                              |
 | applied_coupon_id                            | uuid FK → coupons.id nullable |                                                              |
 | shipping_address                             | jsonb                         | snapshot at time of order                                    |
-| stripe_session_id                            | text nullable                 |                                                              |
 | tracking_number                              | text nullable                 |                                                              |
 | created_at                                   | timestamptz default now()     |                                                              |
 

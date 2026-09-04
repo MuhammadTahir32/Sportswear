@@ -26,9 +26,9 @@
 
 ## 4. Payments
 
-- No card data ever touches the app's own servers — handled entirely by Stripe Checkout (PCI compliance offloaded to Stripe)
-- Stripe webhook signature verified on every request to `/stripe-webhook`
-- Idempotency: webhook handler checks if an order for a given `stripe_session_id` already exists before creating a duplicate
+- Cash on Delivery (COD) — no online payment processing
+- Order creation happens directly in Supabase (RLS-protected)
+- Stock decrement uses DB transactions to prevent race conditions
 
 ## 5. OWASP Top 10 Checklist (Applied)
 
@@ -43,17 +43,15 @@
 | Auth Failures             | Rely on Supabase Auth (rate-limited, secure by default) rather than custom auth              |
 | Data Integrity Failures   | Webhook signature checks; DB constraints (foreign keys, check constraints)                   |
 | Logging Failures          | Log Edge Function errors (without PII/card data) for debugging                               |
-| SSRF                      | Edge Functions only call known, allow-listed external hosts (Stripe, email provider)         |
+| SSRF                      | Edge Functions only call known, allow-listed external hosts (email provider)                 |
 
 ## 6. Secrets Management
 
-| Secret                        | Location                                    |
-| ----------------------------- | ------------------------------------------- |
-| Supabase anon key             | Frontend env var (safe — RLS protects data) |
-| Supabase service-role key     | Edge Function / server env only             |
-| Stripe secret key             | Edge Function env only                      |
-| Stripe webhook signing secret | Edge Function env only                      |
-| Email provider API key        | Edge Function env only                      |
+| Secret                    | Location                                    |
+| ------------------------- | ------------------------------------------- |
+| Supabase anon key         | Frontend env var (safe — RLS protects data) |
+| Supabase service-role key | Edge Function / server env only             |
+| Email provider API key    | Edge Function env only                      |
 
 ## 7. Data Privacy
 
