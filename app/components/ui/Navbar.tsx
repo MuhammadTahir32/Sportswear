@@ -3,6 +3,8 @@ import { Search, User, ShoppingBag, ChevronDown, X, Menu } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { CartDrawer } from '@/components/ui/CartDrawer'
+import { useCartContext } from '@/components/CartProvider'
 
 type NavLink = {
   label: string
@@ -23,10 +25,20 @@ type NavbarProps = {
   cartCount?: number
 }
 
-export function Navbar({ cartCount = 0 }: NavbarProps): React.JSX.Element {
+export function Navbar({ cartCount: _cartCount }: NavbarProps): React.JSX.Element {
   const [scrolled, setScrolled] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [cartOpen, setCartOpen] = useState(false)
+
+  // Try to use CartContext, fall back to prop if provider not available
+  let cartCount = _cartCount ?? 0
+  try {
+    const cart = useCartContext()
+    cartCount = cart.itemCount
+  } catch {
+    // CartProvider not mounted yet — use prop fallback
+  }
 
   useEffect((): (() => void) => {
     const handleScroll = (): void => setScrolled(window.scrollY > 8)
@@ -119,9 +131,9 @@ export function Navbar({ cartCount = 0 }: NavbarProps): React.JSX.Element {
           </a>
 
           {/* Cart */}
-          <a
-            href="/cart"
+          <button
             id="nav-cart"
+            onClick={() => setCartOpen(true)}
             className="relative p-2 hover:bg-[#F7F7F7] rounded-full transition-colors duration-200"
             aria-label={`Shopping cart, ${cartCount} items`}
           >
@@ -131,7 +143,9 @@ export function Navbar({ cartCount = 0 }: NavbarProps): React.JSX.Element {
                 {cartCount > 99 ? '99+' : cartCount}
               </span>
             )}
-          </a>
+          </button>
+
+          <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
 
           {/* Mobile menu toggle */}
           <button
