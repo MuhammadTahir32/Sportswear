@@ -91,11 +91,12 @@ const AuthVerifyRoute = AuthVerifyRouteImport.update({
   path: '/verify',
   getParentRoute: () => AuthRoute,
 } as any)
-const OrderConfirmationOrderIdRoute = OrderConfirmationOrderIdRouteImport.update({
-  id: '/order-confirmation/$orderId',
-  path: '/order-confirmation/$orderId',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const OrderConfirmationOrderIdRoute =
+  OrderConfirmationOrderIdRouteImport.update({
+    id: '/order-confirmation/$orderId',
+    path: '/order-confirmation/$orderId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const OrdersOrderIdRoute = OrdersOrderIdRouteImport.update({
   id: '/$orderId',
   path: '/$orderId',
@@ -384,9 +385,8 @@ const AdminAdminOrdersRouteChildren: AdminAdminOrdersRouteChildren = {
   AdminAdminOrdersOrderIdRoute: AdminAdminOrdersOrderIdRoute,
 }
 
-const AdminAdminOrdersRouteWithChildren = AdminAdminOrdersRoute._addFileChildren(
-  AdminAdminOrdersRouteChildren
-)
+const AdminAdminOrdersRouteWithChildren =
+  AdminAdminOrdersRoute._addFileChildren(AdminAdminOrdersRouteChildren)
 
 interface AdminRouteRouteChildren {
   AdminDashboardRoute: typeof AdminDashboardRoute
@@ -398,7 +398,9 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminAdminOrdersRoute: AdminAdminOrdersRouteWithChildren,
 }
 
-const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(AdminRouteRouteChildren)
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
 
 interface AuthRouteChildren {
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
@@ -424,7 +426,8 @@ const OrdersRouteChildren: OrdersRouteChildren = {
   OrdersOrderIdRoute: OrdersOrderIdRoute,
 }
 
-const OrdersRouteWithChildren = OrdersRoute._addFileChildren(OrdersRouteChildren)
+const OrdersRouteWithChildren =
+  OrdersRoute._addFileChildren(OrdersRouteChildren)
 
 interface ProductsRouteChildren {
   ProductsSlugRoute: typeof ProductsSlugRoute
@@ -434,7 +437,9 @@ const ProductsRouteChildren: ProductsRouteChildren = {
   ProductsSlugRoute: ProductsSlugRoute,
 }
 
-const ProductsRouteWithChildren = ProductsRoute._addFileChildren(ProductsRouteChildren)
+const ProductsRouteWithChildren = ProductsRoute._addFileChildren(
+  ProductsRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
