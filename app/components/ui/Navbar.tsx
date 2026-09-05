@@ -31,14 +31,8 @@ export function Navbar({ cartCount: _cartCount }: NavbarProps): React.JSX.Elemen
   const [mobileOpen, setMobileOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
 
-  // Try to use CartContext, fall back to prop if provider not available
-  let cartCount = _cartCount ?? 0
-  try {
-    const cart = useCartContext()
-    cartCount = cart.itemCount
-  } catch {
-    // CartProvider not mounted yet — use prop fallback
-  }
+  const { itemCount } = useCartContext()
+  const cartCount = itemCount || _cartCount || 0
 
   useEffect((): (() => void) => {
     const handleScroll = (): void => setScrolled(window.scrollY > 8)

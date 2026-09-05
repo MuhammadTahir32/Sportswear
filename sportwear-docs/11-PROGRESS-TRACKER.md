@@ -9,12 +9,12 @@
 | Metric               | Value      |
 | -------------------- | ---------- |
 | Total Tasks          | 126        |
-| Completed            | 42         |
-| In Progress          | 3          |
-| Not Started          | 81         |
+| Completed            | 54         |
+| In Progress          | 0          |
+| Not Started          | 72         |
 | Blocked              | 0          |
-| **Overall Progress** | **33%**    |
-| Last Updated         | 2026-09-04 |
+| **Overall Progress** | **43%**    |
+| Last Updated         | 2026-09-05 |
 
 ---
 
@@ -122,22 +122,22 @@
 
 ## Phase 4: Cart & Checkout
 
-| ID   | Task                                        | Status      | Started    | Completed  | Notes                                        |
-| ---- | ------------------------------------------- | ----------- | ---------- | ---------- | -------------------------------------------- |
-| 4.1  | `useCart` hook                              | Done        | 2026-09-04 | 2026-09-04 | Auth + guest cart with merge                 |
-| 4.2  | Cart page/drawer UI                         | In Progress | 2026-09-04 | —          | CartDrawer exists, no dedicated route        |
-| 4.3  | Cart persistence (DB + guest sync)          | In Progress | 2026-09-04 | —          | Hook has addToCart; product page stub        |
-| 4.4  | Cart item component                         | Done        | 2026-09-04 | 2026-09-04 | CartItemRow component exists                 |
-| 4.5  | Subtotal, tax, shipping, discount calc      | Done        | 2026-09-04 | 2026-09-04 | cartCalculations.ts                          |
-| 4.6  | Coupon/promo code input                     | In Progress | 2026-09-04 | —          | Calc exists; no coupon lookup by code        |
-| 4.7  | Checkout: shipping address step             | Not Started | —          | —          | No checkout page exists                      |
-| 4.8  | Checkout: shipping method step              | Not Started | —          | —          | SHIPPING_METHODS constant exists             |
-| 4.9  | COD order creation (direct Supabase insert) | Not Started | —          | —          | No order creation logic                      |
-| 4.10 | Stock decrement (race condition protection) | Not Started | —          | —          | No stock decrement logic                     |
-| 4.11 | Order confirmation page (COD instructions)  | Not Started | —          | —          | No confirmation page                         |
-| 4.12 | Clear cart after checkout                   | In Progress | 2026-09-04 | —          | clearCart exists; never called post-checkout |
+| ID   | Task                                        | Status | Started    | Completed  | Notes                                |
+| ---- | ------------------------------------------- | ------ | ---------- | ---------- | ------------------------------------ |
+| 4.1  | `useCart` hook                              | Done   | 2026-09-04 | 2026-09-04 | DB + localStorage, guest sync        |
+| 4.2  | Cart page/drawer UI                         | Done   | 2026-09-04 | 2026-09-04 | CartDrawer using existing Drawer     |
+| 4.3  | Cart persistence (DB + guest sync)          | Done   | 2026-09-04 | 2026-09-04 | Built into useCart hook              |
+| 4.4  | Cart item component                         | Done   | 2026-09-04 | 2026-09-04 | CartItemRow with qty stepper         |
+| 4.5  | Subtotal, tax, shipping, discount calc      | Done   | 2026-09-04 | 2026-09-04 | cartCalculations.ts pure functions   |
+| 4.6  | Coupon/promo code input                     | Done   | 2026-09-05 | 2026-09-05 | CouponInput with Supabase validation |
+| 4.7  | Checkout: shipping address step             | Done   | 2026-09-05 | 2026-09-05 | AddressSelector + inline form        |
+| 4.8  | Checkout: shipping method step              | Done   | 2026-09-05 | 2026-09-05 | Standard/Express radio cards         |
+| 4.9  | COD order creation (direct Supabase insert) | Done   | 2026-09-05 | 2026-09-05 | useCheckout hook                     |
+| 4.10 | Stock decrement (race condition protection) | Done   | 2026-09-05 | 2026-09-05 | PG function with FOR UPDATE locks    |
+| 4.11 | Order confirmation page (COD instructions)  | Done   | 2026-09-05 | 2026-09-05 | Success animation + copy order ID    |
+| 4.12 | Clear cart after checkout                   | Done   | 2026-09-05 | 2026-09-05 | Built into useCheckout               |
 
-**Phase 4 Status:** `In Progress` (2 DONE, 3 PARTIAL, 7 NOT DONE)
+**Phase 4 Status:** `Done`
 
 ---
 
