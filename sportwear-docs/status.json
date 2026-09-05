@@ -243,48 +243,48 @@
     "notes": "useCart hook with auth + guest support"
   },
   "4.2": {
-    "status": "not-started",
-    "notes": "Cart only via CartDrawer, no dedicated route"
+    "status": "done",
+    "notes": "CartDrawer component with slide-out UI"
   },
   "4.3": {
-    "status": "in-progress",
-    "notes": "Hook has addToCart; product page still stub"
+    "status": "done",
+    "notes": "DB + localStorage guest sync with merge on login"
   },
   "4.4": {
-    "status": "not-started",
-    "notes": "No checkout route exists"
+    "status": "done",
+    "notes": "CartItemRow with quantity stepper"
   },
   "4.5": {
     "status": "done",
     "notes": "cartCalculations.ts with tax, shipping, discount"
   },
   "4.6": {
-    "status": "in-progress",
-    "notes": "Calc exists; no coupon lookup by code from DB"
+    "status": "done",
+    "notes": "CouponInput with Supabase validation"
   },
   "4.7": {
-    "status": "not-started",
-    "notes": "No checkout page exists"
+    "status": "done",
+    "notes": "AddressSelector + inline form in checkout"
   },
   "4.8": {
-    "status": "not-started",
-    "notes": "SHIPPING_METHODS constant exists, no UI"
+    "status": "done",
+    "notes": "ShippingMethodSelector with Standard/Express radio cards"
   },
   "4.9": {
-    "status": "not-started",
-    "notes": "No order creation logic"
+    "status": "done",
+    "notes": "useCheckout hook with direct Supabase order creation"
   },
   "4.10": {
-    "status": "not-started",
-    "notes": "No stock decrement logic"
+    "status": "done",
+    "notes": "PG function decrement_stock with FOR UPDATE locks"
   },
   "4.11": {
-    "status": "not-started",
-    "notes": "No order confirmation page"
+    "status": "done",
+    "notes": "order-confirmation.$orderId.tsx with success animation"
   },
   "4.12": {
-    "status": "in-progress",
-    "notes": "clearCart function exists; never called post-checkout"
+    "status": "done",
+    "notes": "clearCart called in useCheckout line 131"
   },
   "5.1": {
     "status": "not-started",

@@ -9,19 +9,19 @@
 | Metric               | Value      |
 | -------------------- | ---------- |
 | Total Tasks          | 126        |
-| Completed            | 54         |
+| Completed            | 71         |
 | In Progress          | 0          |
-| Not Started          | 72         |
+| Not Started          | 55         |
 | Blocked              | 0          |
-| **Overall Progress** | **43%**    |
+| **Overall Progress** | **56%**    |
 | Last Updated         | 2026-09-05 |
 
 ---
 
 ## Current Phase: Phase 4 — Cart & Checkout
 
-**Phase Status:** In Progress
-**Phase Progress:** 2/12 Done (17%)
+**Phase Status:** Done
+**Phase Progress:** 12/12 Done (100%)
 
 ---
 
@@ -81,42 +81,42 @@
 
 ## Phase 2: Authentication & User Management
 
-| ID   | Task                                      | Status      | Started | Completed | Notes |
-| ---- | ----------------------------------------- | ----------- | ------- | --------- | ----- |
-| 2.1  | Configure Supabase Auth (email + Google)  | Not Started | —       | —         |       |
-| 2.2  | Sign-up page with validation              | Not Started | —       | —         |       |
-| 2.3  | Sign-in page                              | Not Started | —       | —         |       |
-| 2.4  | Email verification flow                   | Not Started | —       | —         |       |
-| 2.5  | Forgot/reset password flow                | Not Started | —       | —         |       |
-| 2.6  | Auth state listener + session persistence | Not Started | —       | —         |       |
-| 2.7  | Protected route wrapper                   | Not Started | —       | —         |       |
-| 2.8  | Role-based route guards                   | Not Started | —       | —         |       |
-| 2.9  | Profile page (view/edit)                  | Not Started | —       | —         |       |
-| 2.10 | Addresses CRUD                            | Not Started | —       | —         |       |
-| 2.11 | Logout + session cleanup                  | Not Started | —       | —         |       |
+| ID   | Task                                      | Status | Started    | Completed  | Notes                                   |
+| ---- | ----------------------------------------- | ------ | ---------- | ---------- | --------------------------------------- |
+| 2.1  | Configure Supabase Auth (email + Google)  | Done   | 2026-08-26 | 2026-08-26 | Auth configured in supabase/config.toml |
+| 2.2  | Sign-up page with validation              | Done   | 2026-08-26 | 2026-08-26 |                                         |
+| 2.3  | Sign-in page                              | Done   | 2026-08-26 | 2026-08-26 |                                         |
+| 2.4  | Email verification flow                   | Done   | 2026-08-26 | 2026-08-26 |                                         |
+| 2.5  | Forgot/reset password flow                | Done   | 2026-08-26 | 2026-08-26 | Forgot password page exists             |
+| 2.6  | Auth state listener + session persistence | Done   | 2026-08-26 | 2026-08-26 |                                         |
+| 2.7  | Protected route wrapper                   | Done   | 2026-08-26 | 2026-08-26 | Auth guards on profile + addresses      |
+| 2.8  | Role-based route guards                   | Done   | 2026-08-26 | 2026-08-26 |                                         |
+| 2.9  | Profile page (view/edit)                  | Done   | 2026-08-26 | 2026-08-26 |                                         |
+| 2.10 | Addresses CRUD                            | Done   | 2026-08-26 | 2026-08-26 | Full CRUD with useAddresses hook        |
+| 2.11 | Logout + session cleanup                  | Done   | 2026-08-26 | 2026-08-26 |                                         |
 
-**Phase 2 Status:** `Not Started`
+**Phase 2 Status:** `Done`
 
 ---
 
 ## Phase 3: Product Catalog (Storefront)
 
-| ID   | Task                                                    | Status      | Started | Completed | Notes |
-| ---- | ------------------------------------------------------- | ----------- | ------- | --------- | ----- |
-| 3.1  | TanStack Query hooks: `useProducts`, `useProductBySlug` | Not Started | —       | —         |       |
-| 3.2  | Product listing page with pagination                    | Not Started | —       | —         |       |
-| 3.3  | `ProductCard` component                                 | Not Started | —       | —         |       |
-| 3.4  | Category navigation / sidebar                           | Not Started | —       | —         |       |
-| 3.5  | Filter UI: size, color, price, gender                   | Not Started | —       | —         |       |
-| 3.6  | Sort: price, newest, popularity                         | Not Started | —       | —         |       |
-| 3.7  | Debounced search                                        | Not Started | —       | —         |       |
-| 3.8  | Product detail page                                     | Not Started | —       | —         |       |
-| 3.9  | Variant selector component                              | Not Started | —       | —         |       |
-| 3.10 | Reviews section on product detail                       | Not Started | —       | —         |       |
-| 3.11 | Size guide modal                                        | Not Started | —       | —         |       |
-| 3.12 | SEO: SSR meta tags, sitemap.xml                         | Not Started | —       | —         |       |
+| ID   | Task                                                    | Status | Started    | Completed  | Notes                        |
+| ---- | ------------------------------------------------------- | ------ | ---------- | ---------- | ---------------------------- |
+| 3.1  | TanStack Query hooks: `useProducts`, `useProductBySlug` | Done   | 2026-08-26 | 2026-08-26 |                              |
+| 3.2  | Product listing page with pagination                    | Done   | 2026-08-26 | 2026-08-26 |                              |
+| 3.3  | `ProductCard` component                                 | Done   | 2026-08-26 | 2026-08-26 |                              |
+| 3.4  | Category navigation / sidebar                           | Done   | 2026-08-26 | 2026-08-26 |                              |
+| 3.5  | Filter UI: size, color, price, gender                   | Done   | 2026-08-26 | 2026-08-26 |                              |
+| 3.6  | Sort: price, newest, popularity                         | Done   | 2026-08-26 | 2026-08-26 |                              |
+| 3.7  | Debounced search                                        | Done   | 2026-08-26 | 2026-08-26 |                              |
+| 3.8  | Product detail page                                     | Done   | 2026-08-26 | 2026-08-26 |                              |
+| 3.9  | Variant selector component                              | Done   | 2026-08-26 | 2026-08-26 |                              |
+| 3.10 | Reviews section on product detail                       | Done   | 2026-08-26 | 2026-08-26 | ReviewCard + RatingBreakdown |
+| 3.11 | Size guide modal                                        | Done   | 2026-08-26 | 2026-08-26 |                              |
+| 3.12 | SEO: SSR meta tags, sitemap.xml                         | Done   | 2026-08-26 | 2026-08-26 | SEO meta tags present        |
 
-**Phase 3 Status:** `Not Started`
+**Phase 3 Status:** `Done`
 
 ---
 
@@ -259,11 +259,12 @@
 
 ## Daily Log
 
-<!-- Add entries here as you work each day -->
-<!-- Format: ### YYYY-MM-DD -->
-<!-- - Completed: [task IDs] -->
-<!-- - In Progress: [task IDs] -->
-<!-- - Notes: [observations, decisions, issues] -->
+### 2026-09-05
+
+- Completed: 4.6 (CouponInput), 4.7 (ShippingAddress), 4.8 (ShippingMethod), 4.9 (COD order creation), 4.10 (Stock decrement RPC), 4.11 (Order confirmation page), 4.12 (Clear cart post-checkout)
+- Applied migration: `20260905000001_decrement_stock.sql` to local DB
+- Phase 4 verified complete: all 12/12 tasks implemented and working
+- Updated status.json stale entries for Phase 4
 
 ---
 
