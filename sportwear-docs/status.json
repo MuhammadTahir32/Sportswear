@@ -287,40 +287,40 @@
     "notes": "clearCart called in useCheckout line 131"
   },
   "5.1": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "useOrders hook implemented"
   },
   "5.2": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Order history page with status filters"
   },
   "5.3": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Order detail page with timeline"
   },
   "5.4": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "useAdminOrders hook"
   },
   "5.5": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Admin order list with search"
   },
   "5.6": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Edge function for status updates"
   },
   "5.7": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Admin order detail view"
   },
   "5.8": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Status history timeline component"
   },
   "5.9": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Order cancellation with reason"
   },
   "6.1": {
     "status": "not-started",
