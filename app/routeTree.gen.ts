@@ -14,6 +14,7 @@ import { Route as AdminRouteRouteImport } from './routes/_admin/route'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AddressesRouteImport } from './routes/addresses'
 import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as AdminDashboardRouteImport } from './routes/_admin/dashboard'
@@ -22,7 +23,10 @@ import { Route as AuthSignInRouteImport } from './routes/_auth.sign-in'
 import { Route as AuthSignUpRouteImport } from './routes/_auth.sign-up'
 import { Route as AuthVerifyRouteImport } from './routes/_auth.verify'
 import { Route as OrderConfirmationOrderIdRouteImport } from './routes/order-confirmation.$orderId'
+import { Route as OrdersOrderIdRouteImport } from './routes/orders.$orderId'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
+import { Route as AdminAdminOrdersRouteImport } from './routes/_admin/admin.orders'
+import { Route as AdminAdminOrdersOrderIdRouteImport } from './routes/_admin/admin.orders.$orderId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -45,6 +49,11 @@ const AddressesRoute = AddressesRouteImport.update({
 const CheckoutRoute = CheckoutRouteImport.update({
   id: '/checkout',
   path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrdersRoute = OrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsRoute = ProductsRouteImport.update({
@@ -82,22 +91,37 @@ const AuthVerifyRoute = AuthVerifyRouteImport.update({
   path: '/verify',
   getParentRoute: () => AuthRoute,
 } as any)
-const OrderConfirmationOrderIdRoute =
-  OrderConfirmationOrderIdRouteImport.update({
-    id: '/order-confirmation/$orderId',
-    path: '/order-confirmation/$orderId',
-    getParentRoute: () => rootRouteImport,
-  } as any)
+const OrderConfirmationOrderIdRoute = OrderConfirmationOrderIdRouteImport.update({
+  id: '/order-confirmation/$orderId',
+  path: '/order-confirmation/$orderId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrdersOrderIdRoute = OrdersOrderIdRouteImport.update({
+  id: '/$orderId',
+  path: '/$orderId',
+  getParentRoute: () => OrdersRoute,
+} as any)
 const ProductsSlugRoute = ProductsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => ProductsRoute,
+} as any)
+const AdminAdminOrdersRoute = AdminAdminOrdersRouteImport.update({
+  id: '/admin/orders',
+  path: '/admin/orders',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminOrdersOrderIdRoute = AdminAdminOrdersOrderIdRouteImport.update({
+  id: '/$orderId',
+  path: '/$orderId',
+  getParentRoute: () => AdminAdminOrdersRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/addresses': typeof AddressesRoute
   '/checkout': typeof CheckoutRoute
+  '/orders': typeof OrdersRouteWithChildren
   '/products': typeof ProductsRouteWithChildren
   '/profile': typeof ProfileRoute
   '/dashboard': typeof AdminDashboardRoute
@@ -106,12 +130,16 @@ export interface FileRoutesByFullPath {
   '/sign-up': typeof AuthSignUpRoute
   '/verify': typeof AuthVerifyRoute
   '/order-confirmation/$orderId': typeof OrderConfirmationOrderIdRoute
+  '/orders/$orderId': typeof OrdersOrderIdRoute
   '/products/$slug': typeof ProductsSlugRoute
+  '/admin/orders': typeof AdminAdminOrdersRouteWithChildren
+  '/admin/orders/$orderId': typeof AdminAdminOrdersOrderIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/addresses': typeof AddressesRoute
   '/checkout': typeof CheckoutRoute
+  '/orders': typeof OrdersRouteWithChildren
   '/products': typeof ProductsRouteWithChildren
   '/profile': typeof ProfileRoute
   '/dashboard': typeof AdminDashboardRoute
@@ -120,7 +148,10 @@ export interface FileRoutesByTo {
   '/sign-up': typeof AuthSignUpRoute
   '/verify': typeof AuthVerifyRoute
   '/order-confirmation/$orderId': typeof OrderConfirmationOrderIdRoute
+  '/orders/$orderId': typeof OrdersOrderIdRoute
   '/products/$slug': typeof ProductsSlugRoute
+  '/admin/orders': typeof AdminAdminOrdersRouteWithChildren
+  '/admin/orders/$orderId': typeof AdminAdminOrdersOrderIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -129,6 +160,7 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/addresses': typeof AddressesRoute
   '/checkout': typeof CheckoutRoute
+  '/orders': typeof OrdersRouteWithChildren
   '/products': typeof ProductsRouteWithChildren
   '/profile': typeof ProfileRoute
   '/_admin/dashboard': typeof AdminDashboardRoute
@@ -137,7 +169,10 @@ export interface FileRoutesById {
   '/_auth/sign-up': typeof AuthSignUpRoute
   '/_auth/verify': typeof AuthVerifyRoute
   '/order-confirmation/$orderId': typeof OrderConfirmationOrderIdRoute
+  '/orders/$orderId': typeof OrdersOrderIdRoute
   '/products/$slug': typeof ProductsSlugRoute
+  '/_admin/admin/orders': typeof AdminAdminOrdersRouteWithChildren
+  '/_admin/admin/orders/$orderId': typeof AdminAdminOrdersOrderIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -145,6 +180,7 @@ export interface FileRouteTypes {
     | '/'
     | '/addresses'
     | '/checkout'
+    | '/orders'
     | '/products'
     | '/profile'
     | '/dashboard'
@@ -153,12 +189,16 @@ export interface FileRouteTypes {
     | '/sign-up'
     | '/verify'
     | '/order-confirmation/$orderId'
+    | '/orders/$orderId'
     | '/products/$slug'
+    | '/admin/orders'
+    | '/admin/orders/$orderId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/addresses'
     | '/checkout'
+    | '/orders'
     | '/products'
     | '/profile'
     | '/dashboard'
@@ -167,7 +207,10 @@ export interface FileRouteTypes {
     | '/sign-up'
     | '/verify'
     | '/order-confirmation/$orderId'
+    | '/orders/$orderId'
     | '/products/$slug'
+    | '/admin/orders'
+    | '/admin/orders/$orderId'
   id:
     | '__root__'
     | '/'
@@ -175,6 +218,7 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/addresses'
     | '/checkout'
+    | '/orders'
     | '/products'
     | '/profile'
     | '/_admin/dashboard'
@@ -183,7 +227,10 @@ export interface FileRouteTypes {
     | '/_auth/sign-up'
     | '/_auth/verify'
     | '/order-confirmation/$orderId'
+    | '/orders/$orderId'
     | '/products/$slug'
+    | '/_admin/admin/orders'
+    | '/_admin/admin/orders/$orderId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -192,6 +239,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRouteWithChildren
   AddressesRoute: typeof AddressesRoute
   CheckoutRoute: typeof CheckoutRoute
+  OrdersRoute: typeof OrdersRouteWithChildren
   ProductsRoute: typeof ProductsRouteWithChildren
   ProfileRoute: typeof ProfileRoute
   OrderConfirmationOrderIdRoute: typeof OrderConfirmationOrderIdRoute
@@ -232,6 +280,13 @@ declare module '@tanstack/react-router' {
       path: '/checkout'
       fullPath: '/checkout'
       preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/orders': {
+      id: '/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof OrdersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products': {
@@ -290,6 +345,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrderConfirmationOrderIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/orders/$orderId': {
+      id: '/orders/$orderId'
+      path: '/$orderId'
+      fullPath: '/orders/$orderId'
+      preLoaderRoute: typeof OrdersOrderIdRouteImport
+      parentRoute: typeof OrdersRoute
+    }
     '/products/$slug': {
       id: '/products/$slug'
       path: '/$slug'
@@ -297,20 +359,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsSlugRouteImport
       parentRoute: typeof ProductsRoute
     }
+    '/_admin/admin/orders': {
+      id: '/_admin/admin/orders'
+      path: '/admin/orders'
+      fullPath: '/admin/orders'
+      preLoaderRoute: typeof AdminAdminOrdersRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin/orders/$orderId': {
+      id: '/_admin/admin/orders/$orderId'
+      path: '/$orderId'
+      fullPath: '/admin/orders/$orderId'
+      preLoaderRoute: typeof AdminAdminOrdersOrderIdRouteImport
+      parentRoute: typeof AdminAdminOrdersRoute
+    }
   }
 }
 
+interface AdminAdminOrdersRouteChildren {
+  AdminAdminOrdersOrderIdRoute: typeof AdminAdminOrdersOrderIdRoute
+}
+
+const AdminAdminOrdersRouteChildren: AdminAdminOrdersRouteChildren = {
+  AdminAdminOrdersOrderIdRoute: AdminAdminOrdersOrderIdRoute,
+}
+
+const AdminAdminOrdersRouteWithChildren = AdminAdminOrdersRoute._addFileChildren(
+  AdminAdminOrdersRouteChildren
+)
+
 interface AdminRouteRouteChildren {
   AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminAdminOrdersRoute: typeof AdminAdminOrdersRouteWithChildren
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminDashboardRoute: AdminDashboardRoute,
+  AdminAdminOrdersRoute: AdminAdminOrdersRouteWithChildren,
 }
 
-const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
-  AdminRouteRouteChildren,
-)
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(AdminRouteRouteChildren)
 
 interface AuthRouteChildren {
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
@@ -328,6 +416,16 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
+interface OrdersRouteChildren {
+  OrdersOrderIdRoute: typeof OrdersOrderIdRoute
+}
+
+const OrdersRouteChildren: OrdersRouteChildren = {
+  OrdersOrderIdRoute: OrdersOrderIdRoute,
+}
+
+const OrdersRouteWithChildren = OrdersRoute._addFileChildren(OrdersRouteChildren)
+
 interface ProductsRouteChildren {
   ProductsSlugRoute: typeof ProductsSlugRoute
 }
@@ -336,9 +434,7 @@ const ProductsRouteChildren: ProductsRouteChildren = {
   ProductsSlugRoute: ProductsSlugRoute,
 }
 
-const ProductsRouteWithChildren = ProductsRoute._addFileChildren(
-  ProductsRouteChildren,
-)
+const ProductsRouteWithChildren = ProductsRoute._addFileChildren(ProductsRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -346,6 +442,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRouteWithChildren,
   AddressesRoute: AddressesRoute,
   CheckoutRoute: CheckoutRoute,
+  OrdersRoute: OrdersRouteWithChildren,
   ProductsRoute: ProductsRouteWithChildren,
   ProfileRoute: ProfileRoute,
   OrderConfirmationOrderIdRoute: OrderConfirmationOrderIdRoute,
