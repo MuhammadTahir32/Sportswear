@@ -7,6 +7,11 @@ create policy "rls_reviews_insert_own"
   on public.reviews for insert
   with check (auth.uid() = user_id);
 
+create policy "rls_reviews_update_own"
+  on public.reviews for update
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
+
 create policy "rls_reviews_delete_own"
   on public.reviews for delete
   using (auth.uid() = user_id);

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Search, User, ShoppingBag, ChevronDown, X, Menu } from 'lucide-react'
+import { Search, User, ShoppingBag, Heart, ChevronDown, X, Menu } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
@@ -124,6 +124,16 @@ export function Navbar({ cartCount: _cartCount }: NavbarProps): React.JSX.Elemen
             <User size={20} />
           </a>
 
+          {/* Wishlist */}
+          <a
+            href="/wishlist"
+            id="nav-wishlist"
+            className="p-2 hover:bg-[#F7F7F7] rounded-full transition-colors duration-200"
+            aria-label="My wishlist"
+          >
+            <Heart size={20} />
+          </a>
+
           {/* Cart */}
           <button
             id="nav-cart"
@@ -196,6 +206,14 @@ export function Navbar({ cartCount: _cartCount }: NavbarProps): React.JSX.Elemen
               Shop Now ↗
             </Button>
           </div>
+          <a
+            href="/wishlist"
+            className="flex items-center gap-2 py-3 text-[14px] font-[500] uppercase tracking-wide text-[#0D0D0D] hover:text-[#C6FF3D] transition-colors"
+            onClick={() => setMobileOpen(false)}
+          >
+            <Heart size={16} />
+            My Wishlist
+          </a>
         </nav>
       </div>
     </header>

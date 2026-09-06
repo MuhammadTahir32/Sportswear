@@ -1,17 +1,29 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useState } from 'react'
-import { ShoppingBag, Heart, Share2, Ruler, ChevronRight, Star, AlertCircle } from 'lucide-react'
+import {
+  ShoppingBag,
+  Heart,
+  Share2,
+  Ruler,
+  ChevronRight,
+  Star,
+  AlertCircle,
+  Loader2,
+} from 'lucide-react'
 import {
   useProduct,
   useProductReviews,
   useRelatedProducts,
   getProductImageUrl,
 } from '@/hooks/useProducts'
+import { useReviewEligibility } from '@/hooks/useReviews'
+import { useToggleWishlist } from '@/hooks/useWishlist'
 import { ImageGallery } from '@/components/ui/ImageGallery'
 import { VariantSelector } from '@/components/ui/VariantSelector'
 import { SizeGuideModal } from '@/components/ui/SizeGuideModal'
 import { ReviewCard } from '@/components/ui/ReviewCard'
 import { RatingBreakdown } from '@/components/ui/RatingBreakdown'
+import { ReviewForm } from '@/components/ui/ReviewForm'
 import { Pagination } from '@/components/ui/Pagination'
 import { ProductCard } from '@/components/ui/ProductCard'
 import { Button } from '@/components/ui/Button'
@@ -135,8 +147,10 @@ function ProductInfoPanel({
   )
   const [quantity, setQuantity] = useState(1)
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false)
-  const [wishlisted, setWishlisted] = useState(false)
   const [addedToCart, setAddedToCart] = useState(false)
+
+  const toggleWishlist = useToggleWishlist()
+  const [isWishlisted, setIsWishlisted] = useState(false)
 
   const selectedVariant = product.variants?.find((v) => v.id === selectedVariantId) ?? null
   const price = selectedVariant?.price_override ?? product.sale_price ?? product.base_price
@@ -145,9 +159,21 @@ function ProductInfoPanel({
 
   const handleAddToCart = () => {
     if (!selectedVariantId || isOutOfStock) return
-    // Cart integration comes in Phase 4 — stub for now
     setAddedToCart(true)
     setTimeout(() => setAddedToCart(false), 2000)
+  }
+
+  const handleToggleWishlist = async () => {
+    const newState = !isWishlisted
+    setIsWishlisted(newState)
+    try {
+      await toggleWishlist.mutateAsync({
+        productId: product.id,
+        isWishlisted: !newState,
+      })
+    } catch {
+      setIsWishlisted(!newState)
+    }
   }
 
   return (
@@ -266,15 +292,16 @@ function ProductInfoPanel({
 
         <Button
           variant="icon-circle"
-          onClick={() => setWishlisted((w) => !w)}
-          aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-          className={cn('!rounded-[10px] !p-3', wishlisted && '!bg-[#C6FF3D] !border-[#C6FF3D]')}
+          onClick={handleToggleWishlist}
+          disabled={toggleWishlist.isPending}
+          aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+          className={cn('!rounded-[10px] !p-3', isWishlisted && '!bg-[#C6FF3D] !border-[#C6FF3D]')}
         >
-          <Heart
-            size={18}
-            className={wishlisted ? 'text-[#0D0D0D]' : 'text-[#0D0D0D]'}
-            fill={wishlisted ? '#0D0D0D' : 'none'}
-          />
+          {toggleWishlist.isPending ? (
+            <Loader2 size={18} className="animate-spin" />
+          ) : (
+            <Heart size={18} className="text-[#0D0D0D]" fill={isWishlisted ? '#0D0D0D' : 'none'} />
+          )}
         </Button>
 
         <Button
@@ -312,6 +339,7 @@ function ReviewsSection({
 }): React.JSX.Element {
   const [page, setPage] = useState(1)
   const { data, isLoading } = useProductReviews(productId, page)
+  const { data: eligibility, isLoading: eligibilityLoading } = useReviewEligibility(productId)
 
   const reviews = data?.reviews ?? []
   const totalPages = data?.totalPages ?? 1
@@ -336,6 +364,11 @@ function ReviewsSection({
         <div className="mb-8 p-6 bg-[#F7F7F7] rounded-[12px]">
           <RatingBreakdown avgRating={avgRating} totalCount={total} />
         </div>
+      )}
+
+      {/* Review Form (only if eligible) */}
+      {!eligibilityLoading && eligibility?.canReview && (
+        <ReviewForm productId={productId} existingReview={eligibility.existingReview} />
       )}
 
       {/* Review list */}
