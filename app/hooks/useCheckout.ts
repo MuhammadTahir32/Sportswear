@@ -54,7 +54,7 @@ export function useCheckout() {
           quantity: item.quantity,
         }))
 
-        const { error: stockErr } = await supabase.rpc('decrement_stock', {
+        const { data: lowStockAlerts, error: stockErr } = await supabase.rpc('decrement_stock', {
           items: stockItems,
         })
 
@@ -129,6 +129,44 @@ export function useCheckout() {
 
         // 7. Clear cart (Task 4.12)
         await clearCart()
+
+        // 8. Trigger Email Notification (Task 8.3)
+        if (user.email) {
+          supabase.functions
+            .invoke('send-email', {
+              body: {
+                eventType: 'order_confirmation',
+                to: user.email,
+                data: {
+                  orderId: order.id,
+                  customerName: shippingAddress.full_name,
+                  total,
+                },
+              },
+            })
+            .catch((err) =>
+              console.error('[useCheckout] Failed to invoke order_confirmation email:', err)
+            )
+        }
+
+        // 9. Trigger Low Stock Alerts (Task 8.8)
+        if (Array.isArray(lowStockAlerts) && lowStockAlerts.length > 0) {
+          for (const alert of lowStockAlerts) {
+            supabase.functions
+              .invoke('send-email', {
+                body: {
+                  eventType: 'low_stock',
+                  to: 'admin@stridewear.com',
+                  data: {
+                    productName: alert.product_name,
+                    variantInfo: alert.variant_info,
+                    stockQty: alert.stock_qty,
+                  },
+                },
+              })
+              .catch((err) => console.error('[useCheckout] Failed to invoke low_stock email:', err))
+          }
+        }
 
         setIsPlacing(false)
         return { orderId: order.id, error: null }
