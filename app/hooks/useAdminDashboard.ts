@@ -39,6 +39,12 @@ export interface LowStockItem {
   stock_qty: number
 }
 
+export interface RevenueChartData {
+  date: string
+  label: string
+  revenue: number
+}
+
 // ─── Query Keys ───────────────────────────────────────────────────────────────
 
 export const dashboardKeys = {
@@ -46,6 +52,7 @@ export const dashboardKeys = {
   recentOrders: ['admin-dashboard', 'recent-orders'] as const,
   topProducts: ['admin-dashboard', 'top-products'] as const,
   lowStock: ['admin-dashboard', 'low-stock'] as const,
+  revenueChart: ['admin-dashboard', 'revenue-chart'] as const,
 }
 
 // ─── Dashboard Stats ──────────────────────────────────────────────────────────
@@ -240,5 +247,50 @@ export function useDashboardLowStock() {
       }))
     },
     staleTime: 1000 * 30,
+  })
+}
+
+// ─── Revenue Chart ────────────────────────────────────────────────────────────
+
+export function useDashboardRevenueChart() {
+  return useQuery({
+    queryKey: dashboardKeys.revenueChart,
+    queryFn: async (): Promise<RevenueChartData[]> => {
+      const now = new Date()
+      // Get the date 7 days ago
+      const sevenDaysAgo = new Date(now)
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6)
+      sevenDaysAgo.setHours(0, 0, 0, 0)
+
+      const { data, error } = await supabase
+        .from('orders')
+        .select('total, created_at')
+        .gte('created_at', sevenDaysAgo.toISOString())
+        .order('created_at', { ascending: true })
+
+      if (error) throw new Error(error.message)
+
+      // Initialize map with last 7 days (0 revenue)
+      const dailyMap = new Map<string, RevenueChartData>()
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(sevenDaysAgo)
+        d.setDate(d.getDate() + i)
+        const dateKey = d.toISOString().split('T')[0] // YYYY-MM-DD
+        const label = d.toLocaleDateString('en-US', { weekday: 'short' }) // e.g., 'Mon'
+        dailyMap.set(dateKey, { date: dateKey, label, revenue: 0 })
+      }
+
+      // Populate with actual order data
+      for (const order of data ?? []) {
+        const dateKey = order.created_at.split('T')[0]
+        const existing = dailyMap.get(dateKey)
+        if (existing) {
+          existing.revenue += order.total
+        }
+      }
+
+      return Array.from(dailyMap.values())
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes
   })
 }
