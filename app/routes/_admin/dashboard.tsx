@@ -15,6 +15,7 @@ import {
   useDashboardRecentOrders,
   useDashboardTopProducts,
   useDashboardLowStock,
+  useDashboardRevenueChart,
 } from '@/hooks/useAdminDashboard'
 import { formatCurrency } from '@/lib/cartCalculations'
 import type { OrderStatus } from '@/lib/types'
@@ -38,8 +39,9 @@ function AdminDashboardPage(): React.JSX.Element {
   const { data: recentOrders = [], isLoading: ordersLoading } = useDashboardRecentOrders()
   const { data: topProducts = [], isLoading: productsLoading } = useDashboardTopProducts()
   const { data: lowStock = [], isLoading: stockLoading } = useDashboardLowStock()
+  const { data: chartData = [], isLoading: chartLoading } = useDashboardRevenueChart()
 
-  const isLoading = statsLoading || ordersLoading || productsLoading || stockLoading
+  const isLoading = statsLoading || ordersLoading || productsLoading || stockLoading || chartLoading
 
   if (isLoading) {
     return (
@@ -243,6 +245,14 @@ function AdminDashboardPage(): React.JSX.Element {
                 </span>
               </div>
             </div>
+
+            {/* Revenue Chart */}
+            <div className="mt-6 pt-6 border-t border-[#EFEFEF]">
+              <h4 className="text-[12px] font-bold text-[#9A9A9A] uppercase tracking-wider mb-4">
+                Last 7 Days
+              </h4>
+              <RevenueChart data={chartData} />
+            </div>
           </div>
 
           {/* Low Stock Alerts */}
@@ -367,6 +377,44 @@ function StatCard({
       <p className={`text-[12px] ${alert ? 'text-red-500 font-semibold' : 'text-[#9A9A9A]'}`}>
         {sub}
       </p>
+    </div>
+  )
+}
+
+// ─── Revenue Chart ────────────────────────────────────────────────────────────
+
+function RevenueChart({ data }: { data: { label: string; revenue: number }[] }) {
+  if (!data || data.length === 0) {
+    return (
+      <div className="h-[120px] bg-[#FAFAFA] rounded-[8px] flex items-center justify-center text-[12px] text-[#9A9A9A]">
+        No data
+      </div>
+    )
+  }
+
+  const maxRevenue = Math.max(...data.map((d) => d.revenue), 100) // minimum scale of 100
+
+  return (
+    <div className="h-[120px] flex items-end justify-between gap-2">
+      {data.map((item, idx) => {
+        const heightPct = Math.max((item.revenue / maxRevenue) * 100, 4) // min 4% height so it's visible
+        return (
+          <div key={idx} className="flex-1 flex flex-col items-center gap-2 group">
+            <div className="w-full flex-1 flex items-end rounded-t-[4px] relative">
+              {/* Tooltip */}
+              <div className="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-[#0D0D0D] text-white text-[10px] font-bold py-1 px-2 rounded-[4px] pointer-events-none transition-opacity z-10 whitespace-nowrap">
+                {formatCurrency(item.revenue)}
+              </div>
+
+              <div
+                className="w-full bg-[#C6FF3D] rounded-[4px] transition-all duration-500 ease-out group-hover:bg-[#b0e633]"
+                style={{ height: `${heightPct}%` }}
+              />
+            </div>
+            <span className="text-[10px] font-semibold text-[#9A9A9A]">{item.label}</span>
+          </div>
+        )
+      })}
     </div>
   )
 }
