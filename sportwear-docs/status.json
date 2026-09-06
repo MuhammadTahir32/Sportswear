@@ -359,28 +359,28 @@
     "notes": "Coupon CRUD with code, discount, expiry, active toggle"
   },
   "7.1": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "useReviewEligibility + useSubmitReview + useDeleteReview hooks"
   },
   "7.2": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "ReviewForm component + can_review_product RPC + RLS UPDATE policy"
   },
   "7.3": {
     "status": "done",
-    "notes": ""
+    "notes": "ReviewCard + RatingBreakdown in Phase 3"
   },
   "7.4": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "useWishlistItems + useToggleWishlist with optimistic updates"
   },
   "7.5": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Full wishlist page with auth guard, empty state, product grid"
   },
   "7.6": {
     "status": "done",
-    "notes": ""
+    "notes": "Heart button on product detail connected to DB + navbar link"
   },
   "8.1": {
     "status": "not-started",

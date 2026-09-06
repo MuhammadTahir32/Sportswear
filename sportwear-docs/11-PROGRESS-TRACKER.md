@@ -9,12 +9,12 @@
 | Metric               | Value      |
 | -------------------- | ---------- |
 | Total Tasks          | 126        |
-| Completed            | 89         |
+| Completed            | 95         |
 | In Progress          | 0          |
-| Not Started          | 37         |
+| Not Started          | 31         |
 | Blocked              | 0          |
-| **Overall Progress** | **71%**    |
-| Last Updated         | 2026-09-06 |
+| **Overall Progress** | **75%**    |
+| Last Updated         | 2026-09-07 |
 
 ---
 
@@ -179,16 +179,16 @@
 
 ## Phase 7: Reviews & Wishlist
 
-| ID  | Task                                   | Status      | Started | Completed | Notes                                   |
-| --- | -------------------------------------- | ----------- | ------- | --------- | --------------------------------------- |
-| 7.1 | `useReviews` hook                      | Not Started | —       | —         |                                         |
-| 7.2 | Review form with purchase verification | Not Started | —       | —         |                                         |
-| 7.3 | Reviews list on product detail         | Done        | —       | —         | ReviewCard + RatingBreakdown in Phase 3 |
-| 7.4 | `useWishlist` hook                     | Not Started | —       | —         |                                         |
-| 7.5 | Wishlist page                          | Not Started | —       | —         |                                         |
-| 7.6 | "Add to Wishlist" button               | Done        | —       | —         | Used in product detail page             |
+| ID  | Task                                   | Status | Started    | Completed  | Notes                                                        |
+| --- | -------------------------------------- | ------ | ---------- | ---------- | ------------------------------------------------------------ |
+| 7.1 | `useReviews` hook                      | Done   | 2026-09-07 | 2026-09-07 | useReviewEligibility + useSubmitReview + useDeleteReview     |
+| 7.2 | Review form with purchase verification | Done   | 2026-09-07 | 2026-09-07 | ReviewForm + can_review_product RPC + RLS UPDATE policy      |
+| 7.3 | Reviews list on product detail         | Done   | —          | 2026-08-26 | ReviewCard + RatingBreakdown in Phase 3                      |
+| 7.4 | `useWishlist` hook                     | Done   | 2026-09-07 | 2026-09-07 | useWishlistItems + useToggleWishlist with optimistic updates |
+| 7.5 | Wishlist page                          | Done   | 2026-09-07 | 2026-09-07 | Full page with auth guard, empty state, product grid         |
+| 7.6 | "Add to Wishlist" button               | Done   | 2026-09-07 | 2026-09-07 | Heart button on product detail connected to DB + nav link    |
 
-**Phase 7 Status:** `Partially Done` (2/6 tasks complete)
+**Phase 7 Status:** `Done`
 
 ---
 
@@ -258,6 +258,15 @@
 ---
 
 ## Daily Log
+
+### 2026-09-07
+
+- Completed Phase 7: All 6 tasks verified and committed
+- Wired useReviewEligibility + ReviewForm into product detail page
+- Connected wishlist button to database with optimistic updates
+- Added wishlist link to Navbar (desktop + mobile)
+- Added RLS UPDATE policy for reviews table
+- Fixed useReviews cache invalidation bug (slug vs UUID key mismatch)
 
 ### 2026-09-06
 
