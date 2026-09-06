@@ -164,7 +164,7 @@
   },
   "2.5": {
     "status": "done",
-    "notes": "Forgot password page exists (no /reset-password route)"
+    "notes": "Both forgot-password and reset-password pages fully implemented"
   },
   "2.6": {
     "status": "done",
@@ -288,75 +288,75 @@
   },
   "5.1": {
     "status": "done",
-    "notes": "useOrders hook implemented"
+    "notes": "useOrders + useOrderDetail + useOrderStatusHistory hooks"
   },
   "5.2": {
     "status": "done",
-    "notes": "Order history page with status filters"
+    "notes": "Order history page with status badges, dates, totals"
   },
   "5.3": {
     "status": "done",
-    "notes": "Order detail page with timeline"
+    "notes": "Order detail page with status timeline, items, price breakdown"
   },
   "5.4": {
     "status": "done",
-    "notes": "useAdminOrders hook"
+    "notes": "useAdminOrders hook with profile join, status filter, search, sort"
   },
   "5.5": {
     "status": "done",
-    "notes": "Admin order list with search"
+    "notes": "Admin order list with search, status filter, stats cards"
   },
   "5.6": {
     "status": "done",
-    "notes": "Edge function for status updates"
+    "notes": "Deno edge function with auth + role check for status updates"
   },
   "5.7": {
     "status": "done",
-    "notes": "Admin order detail view"
+    "notes": "Admin order detail with allowed transitions, tracking number"
   },
   "5.8": {
     "status": "done",
-    "notes": "Status history timeline component"
+    "notes": "Visual progress bar + detailed history log with timestamps"
   },
   "5.9": {
     "status": "done",
-    "notes": "Order cancellation with reason"
+    "notes": "Order cancellation with stock restoration"
   },
   "6.1": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Full CRUD for products, variants, images, categories, coupons"
   },
   "6.2": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Admin product list with search, filters, stats cards"
   },
   "6.3": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Product create/edit form with name, slug, description, pricing, status"
   },
   "6.4": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Image upload to Supabase Storage with delete"
   },
   "6.5": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Variant manager with SKU, size, color, stock_qty"
   },
   "6.6": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Editable stock_qty per variant"
   },
   "6.7": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Low-stock warning icon + stats card"
   },
   "6.8": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Category CRUD with hierarchical parent/child"
   },
   "6.9": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Coupon CRUD with code, discount, expiry, active toggle"
   },
   "7.1": {
     "status": "not-started",

@@ -9,19 +9,19 @@
 | Metric               | Value      |
 | -------------------- | ---------- |
 | Total Tasks          | 126        |
-| Completed            | 71         |
+| Completed            | 89         |
 | In Progress          | 0          |
-| Not Started          | 55         |
+| Not Started          | 37         |
 | Blocked              | 0          |
-| **Overall Progress** | **56%**    |
-| Last Updated         | 2026-09-05 |
+| **Overall Progress** | **71%**    |
+| Last Updated         | 2026-09-06 |
 
 ---
 
-## Current Phase: Phase 4 — Cart & Checkout
+## Current Phase: Phase 6 — Admin Dashboard — Products & Inventory
 
 **Phase Status:** Done
-**Phase Progress:** 12/12 Done (100%)
+**Phase Progress:** 9/9 Done (100%)
 
 ---
 
@@ -87,7 +87,7 @@
 | 2.2  | Sign-up page with validation              | Done   | 2026-08-26 | 2026-08-26 |                                         |
 | 2.3  | Sign-in page                              | Done   | 2026-08-26 | 2026-08-26 |                                         |
 | 2.4  | Email verification flow                   | Done   | 2026-08-26 | 2026-08-26 |                                         |
-| 2.5  | Forgot/reset password flow                | Done   | 2026-08-26 | 2026-08-26 | Forgot password page exists             |
+| 2.5  | Forgot/reset password flow                | Done   | 2026-08-26 | 2026-08-26 | Both pages fully implemented            |
 | 2.6  | Auth state listener + session persistence | Done   | 2026-08-26 | 2026-08-26 |                                         |
 | 2.7  | Protected route wrapper                   | Done   | 2026-08-26 | 2026-08-26 | Auth guards on profile + addresses      |
 | 2.8  | Role-based route guards                   | Done   | 2026-08-26 | 2026-08-26 |                                         |
@@ -143,52 +143,52 @@
 
 ## Phase 5: Order Management
 
-| ID  | Task                                       | Status      | Started | Completed | Notes |
-| --- | ------------------------------------------ | ----------- | ------- | --------- | ----- |
-| 5.1 | `useOrders` hook                           | Not Started | —       | —         |       |
-| 5.2 | Order history page                         | Not Started | —       | —         |       |
-| 5.3 | Order detail page                          | Not Started | —       | —         |       |
-| 5.4 | `useAdminOrders` hook                      | Not Started | —       | —         |       |
-| 5.5 | Admin order list (TanStack Table)          | Not Started | —       | —         |       |
-| 5.6 | Edge Function: `admin-update-order-status` | Not Started | —       | —         |       |
-| 5.7 | Admin order detail: status + tracking      | Not Started | —       | —         |       |
-| 5.8 | Order status history timeline              | Not Started | —       | —         |       |
-| 5.9 | Order cancellation request flow            | Not Started | —       | —         |       |
+| ID  | Task                                       | Status | Started    | Completed  | Notes                                              |
+| --- | ------------------------------------------ | ------ | ---------- | ---------- | -------------------------------------------------- |
+| 5.1 | `useOrders` hook                           | Done   | 2026-09-05 | 2026-09-05 | useOrders + useOrderDetail + useOrderStatusHistory |
+| 5.2 | Order history page                         | Done   | 2026-09-05 | 2026-09-05 | orders.tsx with status badges, dates, totals       |
+| 5.3 | Order detail page                          | Done   | 2026-09-05 | 2026-09-05 | Status timeline, items, price breakdown            |
+| 5.4 | `useAdminOrders` hook                      | Done   | 2026-09-05 | 2026-09-05 | Profile join, status filter, search, sort          |
+| 5.5 | Admin order list (TanStack Table)          | Done   | 2026-09-05 | 2026-09-05 | Table with search, status filter, stats            |
+| 5.6 | Edge Function: `admin-update-order-status` | Done   | 2026-09-06 | 2026-09-06 | Deno edge function with auth + role check          |
+| 5.7 | Admin order detail: status + tracking      | Done   | 2026-09-05 | 2026-09-05 | Allowed transitions, tracking number input         |
+| 5.8 | Order status history timeline              | Done   | 2026-09-05 | 2026-09-05 | Visual progress bar + detailed history log         |
+| 5.9 | Order cancellation request flow            | Done   | 2026-09-05 | 2026-09-05 | Cancel button, status update, stock restore        |
 
-**Phase 5 Status:** `Not Started`
+**Phase 5 Status:** `Done`
 
 ---
 
 ## Phase 6: Admin Dashboard — Products & Inventory
 
-| ID  | Task                                | Status      | Started | Completed | Notes |
-| --- | ----------------------------------- | ----------- | ------- | --------- | ----- |
-| 6.1 | `useAdminProducts` hook             | Not Started | —       | —         |       |
-| 6.2 | Admin product list (TanStack Table) | Not Started | —       | —         |       |
-| 6.3 | Product create/edit form            | Not Started | —       | —         |       |
-| 6.4 | Image upload to Supabase Storage    | Not Started | —       | —         |       |
-| 6.5 | Variant manager (size×color)        | Not Started | —       | —         |       |
-| 6.6 | Stock quantity management           | Not Started | —       | —         |       |
-| 6.7 | Low-stock alerts                    | Not Started | —       | —         |       |
-| 6.8 | Category CRUD                       | Not Started | —       | —         |       |
-| 6.9 | Coupon CRUD                         | Not Started | —       | —         |       |
+| ID  | Task                                | Status | Started    | Completed  | Notes                                                         |
+| --- | ----------------------------------- | ------ | ---------- | ---------- | ------------------------------------------------------------- |
+| 6.1 | `useAdminProducts` hook             | Done   | 2026-09-06 | 2026-09-06 | Full CRUD for products, variants, images, categories, coupons |
+| 6.2 | Admin product list (TanStack Table) | Done   | 2026-09-06 | 2026-09-06 | Table with search, filters, stats cards                       |
+| 6.3 | Product create/edit form            | Done   | 2026-09-06 | 2026-09-06 | Name, slug, description, pricing, status                      |
+| 6.4 | Image upload to Supabase Storage    | Done   | 2026-09-06 | 2026-09-06 | Upload + delete from storage bucket                           |
+| 6.5 | Variant manager (size×color)        | Done   | 2026-09-06 | 2026-09-06 | Add/edit/delete with SKU, size, color, stock                  |
+| 6.6 | Stock quantity management           | Done   | 2026-09-06 | 2026-09-06 | Editable stock_qty per variant                                |
+| 6.7 | Low-stock alerts                    | Done   | 2026-09-06 | 2026-09-06 | Warning icon + stats card for low stock                       |
+| 6.8 | Category CRUD                       | Done   | 2026-09-06 | 2026-09-06 | Hierarchical list with parent/child                           |
+| 6.9 | Coupon CRUD                         | Done   | 2026-09-06 | 2026-09-06 | Table with code, discount, expiry, active                     |
 
-**Phase 6 Status:** `Not Started`
+**Phase 6 Status:** `Done`
 
 ---
 
 ## Phase 7: Reviews & Wishlist
 
-| ID  | Task                                   | Status      | Started | Completed | Notes |
-| --- | -------------------------------------- | ----------- | ------- | --------- | ----- |
-| 7.1 | `useReviews` hook                      | Not Started | —       | —         |       |
-| 7.2 | Review form with purchase verification | Not Started | —       | —         |       |
-| 7.3 | Reviews list on product detail         | Not Started | —       | —         |       |
-| 7.4 | `useWishlist` hook                     | Not Started | —       | —         |       |
-| 7.5 | Wishlist page                          | Not Started | —       | —         |       |
-| 7.6 | "Add to Wishlist" button               | Not Started | —       | —         |       |
+| ID  | Task                                   | Status      | Started | Completed | Notes                                   |
+| --- | -------------------------------------- | ----------- | ------- | --------- | --------------------------------------- |
+| 7.1 | `useReviews` hook                      | Not Started | —       | —         |                                         |
+| 7.2 | Review form with purchase verification | Not Started | —       | —         |                                         |
+| 7.3 | Reviews list on product detail         | Done        | —       | —         | ReviewCard + RatingBreakdown in Phase 3 |
+| 7.4 | `useWishlist` hook                     | Not Started | —       | —         |                                         |
+| 7.5 | Wishlist page                          | Not Started | —       | —         |                                         |
+| 7.6 | "Add to Wishlist" button               | Done        | —       | —         | Used in product detail page             |
 
-**Phase 7 Status:** `Not Started`
+**Phase 7 Status:** `Partially Done` (2/6 tasks complete)
 
 ---
 
@@ -211,15 +211,15 @@
 
 ## Phase 9: Analytics & Admin Overview
 
-| ID  | Task                      | Status      | Started | Completed | Notes |
-| --- | ------------------------- | ----------- | ------- | --------- | ----- |
-| 9.1 | Admin dashboard home page | Not Started | —       | —         |       |
-| 9.2 | Revenue chart (day/week)  | Not Started | —       | —         |       |
-| 9.3 | Top products widget       | Not Started | —       | —         |       |
-| 9.4 | Recent orders widget      | Not Started | —       | —         |       |
-| 9.5 | Low stock alerts widget   | Not Started | —       | —         |       |
+| ID  | Task                      | Status      | Started    | Completed | Notes                                |
+| --- | ------------------------- | ----------- | ---------- | --------- | ------------------------------------ |
+| 9.1 | Admin dashboard home page | In Progress | 2026-09-06 | —         | Building real dashboard with metrics |
+| 9.2 | Revenue chart (day/week)  | Not Started | —          | —         |                                      |
+| 9.3 | Top products widget       | Not Started | —          | —         |                                      |
+| 9.4 | Recent orders widget      | Not Started | —          | —         |                                      |
+| 9.5 | Low stock alerts widget   | Not Started | —          | —         |                                      |
 
-**Phase 9 Status:** `Not Started`
+**Phase 9 Status:** `In Progress`
 
 ---
 
@@ -258,6 +258,14 @@
 ---
 
 ## Daily Log
+
+### 2026-09-06
+
+- Completed Phase 5: All 9 tasks verified and committed (order management, admin orders, edge function)
+- Completed Phase 6: All 9 tasks verified and committed (admin products, variants, images, categories, coupons)
+- Added `restore_stock.sql` migration for stock restoration on order cancellation
+- Updated admin dashboard from placeholder to real metrics view
+- Updated progress tracker to reflect actual completion status
 
 ### 2026-09-05
 
