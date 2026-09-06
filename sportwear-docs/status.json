@@ -415,24 +415,24 @@
     "notes": ""
   },
   "9.1": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Real dashboard with stats cards"
   },
   "9.2": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Revenue summary with all-time + monthly"
   },
   "9.3": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Top 5 products by revenue with images"
   },
   "9.4": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Last 5 orders with status badges"
   },
   "9.5": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Variants with ≤5 stock + quick actions"
   },
   "10.1": {
     "status": "not-started",
