@@ -101,11 +101,12 @@ const AuthVerifyRoute = AuthVerifyRouteImport.update({
   path: '/verify',
   getParentRoute: () => AuthRoute,
 } as any)
-const OrderConfirmationOrderIdRoute = OrderConfirmationOrderIdRouteImport.update({
-  id: '/order-confirmation/$orderId',
-  path: '/order-confirmation/$orderId',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const OrderConfirmationOrderIdRoute =
+  OrderConfirmationOrderIdRouteImport.update({
+    id: '/order-confirmation/$orderId',
+    path: '/order-confirmation/$orderId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const OrdersOrderIdRoute = OrdersOrderIdRouteImport.update({
   id: '/$orderId',
   path: '/$orderId',
@@ -141,11 +142,12 @@ const AdminAdminOrdersOrderIdRoute = AdminAdminOrdersOrderIdRouteImport.update({
   path: '/$orderId',
   getParentRoute: () => AdminAdminOrdersRoute,
 } as any)
-const AdminAdminProductsProductIdRoute = AdminAdminProductsProductIdRouteImport.update({
-  id: '/$productId',
-  path: '/$productId',
-  getParentRoute: () => AdminAdminProductsRoute,
-} as any)
+const AdminAdminProductsProductIdRoute =
+  AdminAdminProductsProductIdRouteImport.update({
+    id: '/$productId',
+    path: '/$productId',
+    getParentRoute: () => AdminAdminProductsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -479,9 +481,8 @@ const AdminAdminOrdersRouteChildren: AdminAdminOrdersRouteChildren = {
   AdminAdminOrdersOrderIdRoute: AdminAdminOrdersOrderIdRoute,
 }
 
-const AdminAdminOrdersRouteWithChildren = AdminAdminOrdersRoute._addFileChildren(
-  AdminAdminOrdersRouteChildren
-)
+const AdminAdminOrdersRouteWithChildren =
+  AdminAdminOrdersRoute._addFileChildren(AdminAdminOrdersRouteChildren)
 
 interface AdminAdminProductsRouteChildren {
   AdminAdminProductsProductIdRoute: typeof AdminAdminProductsProductIdRoute
@@ -491,9 +492,8 @@ const AdminAdminProductsRouteChildren: AdminAdminProductsRouteChildren = {
   AdminAdminProductsProductIdRoute: AdminAdminProductsProductIdRoute,
 }
 
-const AdminAdminProductsRouteWithChildren = AdminAdminProductsRoute._addFileChildren(
-  AdminAdminProductsRouteChildren
-)
+const AdminAdminProductsRouteWithChildren =
+  AdminAdminProductsRoute._addFileChildren(AdminAdminProductsRouteChildren)
 
 interface AdminRouteRouteChildren {
   AdminDashboardRoute: typeof AdminDashboardRoute
@@ -511,7 +511,9 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminAdminProductsRoute: AdminAdminProductsRouteWithChildren,
 }
 
-const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(AdminRouteRouteChildren)
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
 
 interface AuthRouteChildren {
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
@@ -539,7 +541,8 @@ const OrdersRouteChildren: OrdersRouteChildren = {
   OrdersOrderIdRoute: OrdersOrderIdRoute,
 }
 
-const OrdersRouteWithChildren = OrdersRoute._addFileChildren(OrdersRouteChildren)
+const OrdersRouteWithChildren =
+  OrdersRoute._addFileChildren(OrdersRouteChildren)
 
 interface ProductsRouteChildren {
   ProductsSlugRoute: typeof ProductsSlugRoute
@@ -549,7 +552,9 @@ const ProductsRouteChildren: ProductsRouteChildren = {
   ProductsSlugRoute: ProductsSlugRoute,
 }
 
-const ProductsRouteWithChildren = ProductsRoute._addFileChildren(ProductsRouteChildren)
+const ProductsRouteWithChildren = ProductsRoute._addFileChildren(
+  ProductsRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
