@@ -76,6 +76,35 @@ serve(async (req: Request) => {
 
     if (histErr) throw histErr
 
+    // ─── Trigger Email Notification ──────────────────────────────────────────
+    if (['shipped', 'delivered', 'cancelled'].includes(status)) {
+      // We need to fetch the customer email
+      const { data: orderData } = await supabase
+        .from('orders')
+        .select('profile:profiles(email)')
+        .eq('id', orderId)
+        .single()
+
+      const customerEmail = (orderData?.profile as unknown as { email?: string })?.email
+
+      if (customerEmail) {
+        // Invoke the send-email function
+        // We do this asynchronously so it doesn't block the admin's request
+        supabase.functions
+          .invoke('send-email', {
+            body: {
+              eventType: `order_${status}`,
+              to: customerEmail,
+              data: {
+                orderId,
+                trackingNumber,
+              },
+            },
+          })
+          .catch((err) => console.error('Failed to invoke send-email:', err))
+      }
+    }
+
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
