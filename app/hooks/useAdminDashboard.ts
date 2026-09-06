@@ -118,7 +118,8 @@ export function useDashboardRecentOrders() {
         status: o.status as OrderStatus,
         total: o.total,
         created_at: o.created_at,
-        customerName: (o.profile as { full_name: string | null } | null)?.full_name ?? null,
+        customerName:
+          (o.profile as unknown as { full_name: string | null } | null)?.full_name ?? null,
       }))
     },
     staleTime: 1000 * 30,
@@ -233,7 +234,7 @@ export function useDashboardLowStock() {
 
       return (data ?? []).map((v) => ({
         id: v.id,
-        product_name: (v.product as { name: string } | null)?.name ?? 'Unknown',
+        product_name: (v.product as unknown as { name: string } | null)?.name ?? 'Unknown',
         variant_info: `${v.color} / ${v.size}`,
         stock_qty: v.stock_qty,
       }))
