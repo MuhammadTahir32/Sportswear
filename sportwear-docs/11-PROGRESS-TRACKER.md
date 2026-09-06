@@ -9,19 +9,19 @@
 | Metric               | Value      |
 | -------------------- | ---------- |
 | Total Tasks          | 126        |
-| Completed            | 95         |
+| Completed            | 86         |
 | In Progress          | 0          |
-| Not Started          | 31         |
+| Not Started          | 40         |
 | Blocked              | 0          |
-| **Overall Progress** | **75%**    |
+| **Overall Progress** | **68%**    |
 | Last Updated         | 2026-09-07 |
 
 ---
 
-## Current Phase: Phase 6 — Admin Dashboard — Products & Inventory
+## Current Phase: Phase 8 — Notifications & Emails
 
 **Phase Status:** Done
-**Phase Progress:** 9/9 Done (100%)
+**Phase 8 Progress:** 8/8 Tasks Done (100%)
 
 ---
 
@@ -194,18 +194,18 @@
 
 ## Phase 8: Notifications & Emails
 
-| ID  | Task                                       | Status      | Started | Completed | Notes |
-| --- | ------------------------------------------ | ----------- | ------- | --------- | ----- |
-| 8.1 | Edge Function: `send-order-email`          | Not Started | —       | —         |       |
-| 8.2 | Configure email provider + verified domain | Not Started | —       | —         |       |
-| 8.3 | Order confirmation email template          | Not Started | —       | —         |       |
-| 8.4 | Order shipped email template               | Not Started | —       | —         |       |
-| 8.5 | Order delivered email template             | Not Started | —       | —         |       |
-| 8.6 | Order cancelled email template             | Not Started | —       | —         |       |
-| 8.7 | Trigger emails from admin status update    | Not Started | —       | —         |       |
-| 8.8 | Low stock admin notification               | Not Started | —       | —         |       |
+| ID  | Task                                       | Status | Started    | Completed  | Notes                                     |
+| --- | ------------------------------------------ | ------ | ---------- | ---------- | ----------------------------------------- |
+| 8.1 | Edge Function: `send-email`                | Done   | 2026-09-07 | 2026-09-07 | Generic edge function for all emails      |
+| 8.2 | Configure email provider + verified domain | Done   | 2026-09-07 | 2026-09-07 | Uses Resend API or console mock mode      |
+| 8.3 | Order confirmation email template          | Done   | 2026-09-07 | 2026-09-07 | Sent from `useCheckout.ts`                |
+| 8.4 | Order shipped email template               | Done   | 2026-09-07 | 2026-09-07 | Included tracking number                  |
+| 8.5 | Order delivered email template             | Done   | 2026-09-07 | 2026-09-07 | Prompts for a review                      |
+| 8.6 | Order cancelled email template             | Done   | 2026-09-07 | 2026-09-07 | Simple cancellation confirmation          |
+| 8.7 | Trigger emails from admin status update    | Done   | 2026-09-07 | 2026-09-07 | Integrated in `admin-update-order-status` |
+| 8.8 | Low stock admin notification               | Done   | 2026-09-07 | 2026-09-07 | Alerts triggered by `decrement_stock`     |
 
-**Phase 8 Status:** `Not Started`
+**Phase 8 Status:** `Done`
 
 ---
 
