@@ -17,6 +17,7 @@ import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as AdminDashboardRouteImport } from './routes/_admin/dashboard'
 import { Route as AuthForgotPasswordRouteImport } from './routes/_auth.forgot-password'
 import { Route as AuthResetPasswordRouteImport } from './routes/_auth.reset-password'
@@ -71,6 +72,11 @@ const ProfileRoute = ProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WishlistRoute = WishlistRouteImport.update({
+  id: '/wishlist',
+  path: '/wishlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminDashboardRoute = AdminDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -101,12 +107,11 @@ const AuthVerifyRoute = AuthVerifyRouteImport.update({
   path: '/verify',
   getParentRoute: () => AuthRoute,
 } as any)
-const OrderConfirmationOrderIdRoute =
-  OrderConfirmationOrderIdRouteImport.update({
-    id: '/order-confirmation/$orderId',
-    path: '/order-confirmation/$orderId',
-    getParentRoute: () => rootRouteImport,
-  } as any)
+const OrderConfirmationOrderIdRoute = OrderConfirmationOrderIdRouteImport.update({
+  id: '/order-confirmation/$orderId',
+  path: '/order-confirmation/$orderId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OrdersOrderIdRoute = OrdersOrderIdRouteImport.update({
   id: '/$orderId',
   path: '/$orderId',
@@ -142,12 +147,11 @@ const AdminAdminOrdersOrderIdRoute = AdminAdminOrdersOrderIdRouteImport.update({
   path: '/$orderId',
   getParentRoute: () => AdminAdminOrdersRoute,
 } as any)
-const AdminAdminProductsProductIdRoute =
-  AdminAdminProductsProductIdRouteImport.update({
-    id: '/$productId',
-    path: '/$productId',
-    getParentRoute: () => AdminAdminProductsRoute,
-  } as any)
+const AdminAdminProductsProductIdRoute = AdminAdminProductsProductIdRouteImport.update({
+  id: '/$productId',
+  path: '/$productId',
+  getParentRoute: () => AdminAdminProductsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -156,6 +160,7 @@ export interface FileRoutesByFullPath {
   '/orders': typeof OrdersRouteWithChildren
   '/products': typeof ProductsRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/wishlist': typeof WishlistRoute
   '/dashboard': typeof AdminDashboardRoute
   '/forgot-password': typeof AuthForgotPasswordRoute
   '/reset-password': typeof AuthResetPasswordRoute
@@ -179,6 +184,7 @@ export interface FileRoutesByTo {
   '/orders': typeof OrdersRouteWithChildren
   '/products': typeof ProductsRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/wishlist': typeof WishlistRoute
   '/dashboard': typeof AdminDashboardRoute
   '/forgot-password': typeof AuthForgotPasswordRoute
   '/reset-password': typeof AuthResetPasswordRoute
@@ -205,6 +211,7 @@ export interface FileRoutesById {
   '/orders': typeof OrdersRouteWithChildren
   '/products': typeof ProductsRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/wishlist': typeof WishlistRoute
   '/_admin/dashboard': typeof AdminDashboardRoute
   '/_auth/forgot-password': typeof AuthForgotPasswordRoute
   '/_auth/reset-password': typeof AuthResetPasswordRoute
@@ -230,6 +237,7 @@ export interface FileRouteTypes {
     | '/orders'
     | '/products'
     | '/profile'
+    | '/wishlist'
     | '/dashboard'
     | '/forgot-password'
     | '/reset-password'
@@ -253,6 +261,7 @@ export interface FileRouteTypes {
     | '/orders'
     | '/products'
     | '/profile'
+    | '/wishlist'
     | '/dashboard'
     | '/forgot-password'
     | '/reset-password'
@@ -278,6 +287,7 @@ export interface FileRouteTypes {
     | '/orders'
     | '/products'
     | '/profile'
+    | '/wishlist'
     | '/_admin/dashboard'
     | '/_auth/forgot-password'
     | '/_auth/reset-password'
@@ -304,6 +314,7 @@ export interface RootRouteChildren {
   OrdersRoute: typeof OrdersRouteWithChildren
   ProductsRoute: typeof ProductsRouteWithChildren
   ProfileRoute: typeof ProfileRoute
+  WishlistRoute: typeof WishlistRoute
   OrderConfirmationOrderIdRoute: typeof OrderConfirmationOrderIdRoute
 }
 
@@ -363,6 +374,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wishlist': {
+      id: '/wishlist'
+      path: '/wishlist'
+      fullPath: '/wishlist'
+      preLoaderRoute: typeof WishlistRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_admin/dashboard': {
@@ -481,8 +499,9 @@ const AdminAdminOrdersRouteChildren: AdminAdminOrdersRouteChildren = {
   AdminAdminOrdersOrderIdRoute: AdminAdminOrdersOrderIdRoute,
 }
 
-const AdminAdminOrdersRouteWithChildren =
-  AdminAdminOrdersRoute._addFileChildren(AdminAdminOrdersRouteChildren)
+const AdminAdminOrdersRouteWithChildren = AdminAdminOrdersRoute._addFileChildren(
+  AdminAdminOrdersRouteChildren
+)
 
 interface AdminAdminProductsRouteChildren {
   AdminAdminProductsProductIdRoute: typeof AdminAdminProductsProductIdRoute
@@ -492,8 +511,9 @@ const AdminAdminProductsRouteChildren: AdminAdminProductsRouteChildren = {
   AdminAdminProductsProductIdRoute: AdminAdminProductsProductIdRoute,
 }
 
-const AdminAdminProductsRouteWithChildren =
-  AdminAdminProductsRoute._addFileChildren(AdminAdminProductsRouteChildren)
+const AdminAdminProductsRouteWithChildren = AdminAdminProductsRoute._addFileChildren(
+  AdminAdminProductsRouteChildren
+)
 
 interface AdminRouteRouteChildren {
   AdminDashboardRoute: typeof AdminDashboardRoute
@@ -511,9 +531,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminAdminProductsRoute: AdminAdminProductsRouteWithChildren,
 }
 
-const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
-  AdminRouteRouteChildren,
-)
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(AdminRouteRouteChildren)
 
 interface AuthRouteChildren {
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
@@ -541,8 +559,7 @@ const OrdersRouteChildren: OrdersRouteChildren = {
   OrdersOrderIdRoute: OrdersOrderIdRoute,
 }
 
-const OrdersRouteWithChildren =
-  OrdersRoute._addFileChildren(OrdersRouteChildren)
+const OrdersRouteWithChildren = OrdersRoute._addFileChildren(OrdersRouteChildren)
 
 interface ProductsRouteChildren {
   ProductsSlugRoute: typeof ProductsSlugRoute
@@ -552,9 +569,7 @@ const ProductsRouteChildren: ProductsRouteChildren = {
   ProductsSlugRoute: ProductsSlugRoute,
 }
 
-const ProductsRouteWithChildren = ProductsRoute._addFileChildren(
-  ProductsRouteChildren,
-)
+const ProductsRouteWithChildren = ProductsRoute._addFileChildren(ProductsRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -565,6 +580,7 @@ const rootRouteChildren: RootRouteChildren = {
   OrdersRoute: OrdersRouteWithChildren,
   ProductsRoute: ProductsRouteWithChildren,
   ProfileRoute: ProfileRoute,
+  WishlistRoute: WishlistRoute,
   OrderConfirmationOrderIdRoute: OrderConfirmationOrderIdRoute,
 }
 export const routeTree = rootRouteImport
