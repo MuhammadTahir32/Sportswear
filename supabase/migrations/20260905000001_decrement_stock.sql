@@ -6,16 +6,19 @@
 -- ═══════════════════════════════════════════════════════════════════
 
 CREATE OR REPLACE FUNCTION public.decrement_stock(items jsonb)
-RETURNS void
+RETURNS jsonb
 LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 DECLARE
+  low_stock_alerts jsonb := '[]'::jsonb;
   item jsonb;
   v_id uuid;
   v_qty int;
   current_stock int;
   product_name text;
+  v_size text;
+  v_color text;
 BEGIN
   -- Loop through each item in the JSON array
   FOR item IN SELECT * FROM jsonb_array_elements(items)
@@ -24,8 +27,8 @@ BEGIN
     v_qty := (item ->> 'quantity')::int;
 
     -- Lock the row and fetch current stock
-    SELECT pv.stock_qty, p.name
-    INTO current_stock, product_name
+    SELECT pv.stock_qty, p.name, pv.size, pv.color
+    INTO current_stock, product_name, v_size, v_color
     FROM product_variants pv
     JOIN products p ON p.id = pv.product_id
     WHERE pv.id = v_id
@@ -44,7 +47,19 @@ BEGIN
     UPDATE product_variants
     SET stock_qty = stock_qty - v_qty
     WHERE id = v_id;
+
+    -- Check if it just dropped to 5 or below
+    IF (current_stock - v_qty) <= 5 AND current_stock > 5 THEN
+      low_stock_alerts := low_stock_alerts || jsonb_build_object(
+        'variant_id', v_id,
+        'product_name', product_name,
+        'variant_info', v_color || ' / ' || v_size,
+        'stock_qty', current_stock - v_qty
+      );
+    END IF;
   END LOOP;
+
+  RETURN low_stock_alerts;
 END;
 $$;
 
