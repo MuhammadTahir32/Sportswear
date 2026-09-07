@@ -38,7 +38,10 @@ export function Footer(): React.JSX.Element {
     <footer id="main-footer" className="bg-[#0D0D0D] text-white lime-glow-top">
       <div className="max-w-[1440px] mx-auto px-6 pt-16 pb-8">
         {/* Top Row: Logo + Social */}
-        <div className="flex items-center justify-between mb-12 border-b border-white/10 pb-10">
+        <div
+          className="flex items-center justify-between mb-12 border-b border-white/10 pb-10"
+          style={{ marginLeft: '50px' }}
+        >
           <a href="/" aria-label="StrideWear home" className="group">
             <span className="font-[Anton,sans-serif] text-[30px] uppercase tracking-tight text-white group-hover:text-[#C6FF3D] transition-colors duration-200">
               StrideWear
@@ -69,7 +72,10 @@ export function Footer(): React.JSX.Element {
         </div>
 
         {/* Link Grid (3-col + brand blurb) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12"
+          style={{ marginLeft: '50px', marginBottom: '100px', marginTop: '20px' }}
+        >
           {Object.entries(FOOTER_LINKS).map(([category, links]) => (
             <div key={category}>
               <h3 className="font-[Anton,sans-serif] text-[14px] uppercase tracking-widest text-white mb-4">
@@ -107,13 +113,13 @@ export function Footer(): React.JSX.Element {
             </a>
           </div>
         </div>
+      </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-[#EFEFEF] pt-8 pb-4 bg-[#1A1A1A] -mx-6 md:-mx-10 px-6 md:px-10 text-center mt-8">
-          <p className="text-[13px] text-[#9A9A9A] uppercase tracking-widest font-medium">
-            © {new Date().getFullYear()} StrideWear. All rights reserved.
-          </p>
-        </div>
+      {/* Full-width bottom bar */}
+      <div className="border-t border-[#EFEFEF] bg-[#1A1A1A] py-6 text-center">
+        <p className="text-[13px] text-[#9A9A9A] uppercase tracking-widest font-medium">
+          © {new Date().getFullYear()} StrideWear. All rights reserved.
+        </p>
       </div>
     </footer>
   )
