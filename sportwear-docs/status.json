@@ -383,36 +383,36 @@
     "notes": "Heart button on product detail connected to DB + navbar link"
   },
   "8.1": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "send-email edge function with Resend API integration"
   },
   "8.2": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Configured Resend API + console mock mode"
   },
   "8.3": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Order confirmation email template"
   },
   "8.4": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Order shipped email template with tracking"
   },
   "8.5": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Order delivered email template"
   },
   "8.6": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Order cancelled email template"
   },
   "8.7": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Trigger emails from admin-update-order-status"
   },
   "8.8": {
-    "status": "not-started",
-    "notes": ""
+    "status": "done",
+    "notes": "Low stock admin notification via decrement_stock"
   },
   "9.1": {
     "status": "done",
