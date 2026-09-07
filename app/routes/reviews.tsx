@@ -22,9 +22,11 @@ function ReviewsPage() {
           See why thousands of sneakerheads trust StrideWear for their replacement laces. We're
           currently migrating our reviews system. Check back soon!
         </p>
-        <Button as="a" href="/products" variant="primary" size="lg">
-          Shop Top Rated
-        </Button>
+        <a href="/products">
+          <Button variant="primary" size="lg">
+            Shop Top Rated
+          </Button>
+        </a>
       </div>
     </div>
   )
