@@ -116,7 +116,7 @@ export function Navbar({ cartCount: _cartCount }: NavbarProps): React.JSX.Elemen
 
           {/* Account */}
           <a
-            href="/account"
+            href="/profile"
             id="nav-account"
             className="p-2 hover:bg-[#F7F7F7] rounded-full transition-colors duration-200"
             aria-label="My account"

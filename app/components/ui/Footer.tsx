@@ -2,34 +2,34 @@ import { Facebook, Instagram, ArrowUpRight } from 'lucide-react'
 
 const FOOTER_LINKS = {
   'Shoe Laces': [
-    'Round Shoelaces',
-    'Flat Shoelaces',
-    'Oval Shoelaces',
-    'Waxed Laces',
-    'No-Tie Shoelaces',
-    'Fat Shoelaces',
-    'Chunky Laces',
-    'Fun Shoelaces',
-    'Dress Shoe Laces',
-    'Boot Laces',
+    { label: 'Round Shoelaces', href: '/products?category=round-laces' },
+    { label: 'Flat Shoelaces', href: '/products?category=flat-laces' },
+    { label: 'Oval Shoelaces', href: '/products?category=oval-laces' },
+    { label: 'Waxed Laces', href: '/products?category=waxed-laces' },
+    { label: 'No-Tie Shoelaces', href: '/products?category=no-tie-laces' },
+    { label: 'Fat Shoelaces', href: '/products?category=fat-laces' },
+    { label: 'Chunky Laces', href: '/products' },
+    { label: 'Fun Shoelaces', href: '/products' },
+    { label: 'Dress Shoe Laces', href: '/products' },
+    { label: 'Boot Laces', href: '/products' },
   ],
   'Customer Service': [
-    'Contact Us',
-    'FAQ',
-    'Shipping Info',
-    'Returns & Exchanges',
-    'Order Tracking',
-    'Size Chart',
+    { label: 'Contact Us', href: '/contact' },
+    { label: 'FAQ', href: '/faq' },
+    { label: 'Shipping Info', href: '/shipping' },
+    { label: 'Returns & Exchanges', href: '/returns' },
+    { label: 'Order Tracking', href: '/tracking' },
+    { label: 'Size Chart', href: '/size-chart' },
   ],
   Information: [
-    'About StrideWear',
-    'Our Story',
-    'Blog & News',
-    'Custom Orders',
-    'Wholesale',
-    'Partnerships',
-    'Privacy Policy',
-    'Terms of Service',
+    { label: 'About StrideWear', href: '/about' },
+    { label: 'Our Story', href: '/story' },
+    { label: 'Blog & News', href: '/blog' },
+    { label: 'Custom Orders', href: '/custom' },
+    { label: 'Wholesale', href: '/wholesale' },
+    { label: 'Partnerships', href: '/partnerships' },
+    { label: 'Privacy Policy', href: '/privacy' },
+    { label: 'Terms of Service', href: '/terms' },
   ],
 }
 
@@ -83,12 +83,12 @@ export function Footer(): React.JSX.Element {
               </h3>
               <ul className="flex flex-col gap-2">
                 {links.map((link) => (
-                  <li key={link}>
+                  <li key={link.label}>
                     <a
-                      href="#"
+                      href={link.href}
                       className="text-[13px] text-[#9A9A9A] hover:text-white transition-colors duration-150"
                     >
-                      {link}
+                      {link.label}
                     </a>
                   </li>
                 ))}

@@ -12,11 +12,17 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteRouteImport } from './routes/_admin/route'
 import { Route as AuthRouteImport } from './routes/_auth'
+import { Route as AccessoriesRouteImport } from './routes/accessories'
 import { Route as AddressesRouteImport } from './routes/addresses'
+import { Route as BrandsRouteImport } from './routes/brands'
 import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as CustomRouteImport } from './routes/custom'
+import { Route as LacesRouteImport } from './routes/laces'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as ReviewsRouteImport } from './routes/reviews'
+import { Route as SizeChartRouteImport } from './routes/size-chart'
 import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as AdminDashboardRouteImport } from './routes/_admin/dashboard'
 import { Route as AuthForgotPasswordRouteImport } from './routes/_auth.forgot-password'
@@ -47,14 +53,34 @@ const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccessoriesRoute = AccessoriesRouteImport.update({
+  id: '/accessories',
+  path: '/accessories',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AddressesRoute = AddressesRouteImport.update({
   id: '/addresses',
   path: '/addresses',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BrandsRoute = BrandsRouteImport.update({
+  id: '/brands',
+  path: '/brands',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CheckoutRoute = CheckoutRouteImport.update({
   id: '/checkout',
   path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomRoute = CustomRouteImport.update({
+  id: '/custom',
+  path: '/custom',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LacesRoute = LacesRouteImport.update({
+  id: '/laces',
+  path: '/laces',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OrdersRoute = OrdersRouteImport.update({
@@ -70,6 +96,16 @@ const ProductsRoute = ProductsRouteImport.update({
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReviewsRoute = ReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SizeChartRoute = SizeChartRouteImport.update({
+  id: '/size-chart',
+  path: '/size-chart',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WishlistRoute = WishlistRouteImport.update({
@@ -157,11 +193,17 @@ const AdminAdminProductsProductIdRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/accessories': typeof AccessoriesRoute
   '/addresses': typeof AddressesRoute
+  '/brands': typeof BrandsRoute
   '/checkout': typeof CheckoutRoute
+  '/custom': typeof CustomRoute
+  '/laces': typeof LacesRoute
   '/orders': typeof OrdersRouteWithChildren
   '/products': typeof ProductsRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/reviews': typeof ReviewsRoute
+  '/size-chart': typeof SizeChartRoute
   '/wishlist': typeof WishlistRoute
   '/dashboard': typeof AdminDashboardRoute
   '/forgot-password': typeof AuthForgotPasswordRoute
@@ -181,11 +223,17 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/accessories': typeof AccessoriesRoute
   '/addresses': typeof AddressesRoute
+  '/brands': typeof BrandsRoute
   '/checkout': typeof CheckoutRoute
+  '/custom': typeof CustomRoute
+  '/laces': typeof LacesRoute
   '/orders': typeof OrdersRouteWithChildren
   '/products': typeof ProductsRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/reviews': typeof ReviewsRoute
+  '/size-chart': typeof SizeChartRoute
   '/wishlist': typeof WishlistRoute
   '/dashboard': typeof AdminDashboardRoute
   '/forgot-password': typeof AuthForgotPasswordRoute
@@ -208,11 +256,17 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_admin': typeof AdminRouteRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
+  '/accessories': typeof AccessoriesRoute
   '/addresses': typeof AddressesRoute
+  '/brands': typeof BrandsRoute
   '/checkout': typeof CheckoutRoute
+  '/custom': typeof CustomRoute
+  '/laces': typeof LacesRoute
   '/orders': typeof OrdersRouteWithChildren
   '/products': typeof ProductsRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/reviews': typeof ReviewsRoute
+  '/size-chart': typeof SizeChartRoute
   '/wishlist': typeof WishlistRoute
   '/_admin/dashboard': typeof AdminDashboardRoute
   '/_auth/forgot-password': typeof AuthForgotPasswordRoute
@@ -234,11 +288,17 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/accessories'
     | '/addresses'
+    | '/brands'
     | '/checkout'
+    | '/custom'
+    | '/laces'
     | '/orders'
     | '/products'
     | '/profile'
+    | '/reviews'
+    | '/size-chart'
     | '/wishlist'
     | '/dashboard'
     | '/forgot-password'
@@ -258,11 +318,17 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/accessories'
     | '/addresses'
+    | '/brands'
     | '/checkout'
+    | '/custom'
+    | '/laces'
     | '/orders'
     | '/products'
     | '/profile'
+    | '/reviews'
+    | '/size-chart'
     | '/wishlist'
     | '/dashboard'
     | '/forgot-password'
@@ -284,11 +350,17 @@ export interface FileRouteTypes {
     | '/'
     | '/_admin'
     | '/_auth'
+    | '/accessories'
     | '/addresses'
+    | '/brands'
     | '/checkout'
+    | '/custom'
+    | '/laces'
     | '/orders'
     | '/products'
     | '/profile'
+    | '/reviews'
+    | '/size-chart'
     | '/wishlist'
     | '/_admin/dashboard'
     | '/_auth/forgot-password'
@@ -311,11 +383,17 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
   AuthRoute: typeof AuthRouteWithChildren
+  AccessoriesRoute: typeof AccessoriesRoute
   AddressesRoute: typeof AddressesRoute
+  BrandsRoute: typeof BrandsRoute
   CheckoutRoute: typeof CheckoutRoute
+  CustomRoute: typeof CustomRoute
+  LacesRoute: typeof LacesRoute
   OrdersRoute: typeof OrdersRouteWithChildren
   ProductsRoute: typeof ProductsRouteWithChildren
   ProfileRoute: typeof ProfileRoute
+  ReviewsRoute: typeof ReviewsRoute
+  SizeChartRoute: typeof SizeChartRoute
   WishlistRoute: typeof WishlistRoute
   OrderConfirmationOrderIdRoute: typeof OrderConfirmationOrderIdRoute
 }
@@ -343,6 +421,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/accessories': {
+      id: '/accessories'
+      path: '/accessories'
+      fullPath: '/accessories'
+      preLoaderRoute: typeof AccessoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/addresses': {
       id: '/addresses'
       path: '/addresses'
@@ -350,11 +435,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AddressesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/brands': {
+      id: '/brands'
+      path: '/brands'
+      fullPath: '/brands'
+      preLoaderRoute: typeof BrandsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkout': {
       id: '/checkout'
       path: '/checkout'
       fullPath: '/checkout'
       preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/custom': {
+      id: '/custom'
+      path: '/custom'
+      fullPath: '/custom'
+      preLoaderRoute: typeof CustomRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/laces': {
+      id: '/laces'
+      path: '/laces'
+      fullPath: '/laces'
+      preLoaderRoute: typeof LacesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/orders': {
@@ -376,6 +482,20 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reviews': {
+      id: '/reviews'
+      path: '/reviews'
+      fullPath: '/reviews'
+      preLoaderRoute: typeof ReviewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/size-chart': {
+      id: '/size-chart'
+      path: '/size-chart'
+      fullPath: '/size-chart'
+      preLoaderRoute: typeof SizeChartRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/wishlist': {
@@ -580,11 +700,17 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRouteRoute: AdminRouteRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
+  AccessoriesRoute: AccessoriesRoute,
   AddressesRoute: AddressesRoute,
+  BrandsRoute: BrandsRoute,
   CheckoutRoute: CheckoutRoute,
+  CustomRoute: CustomRoute,
+  LacesRoute: LacesRoute,
   OrdersRoute: OrdersRouteWithChildren,
   ProductsRoute: ProductsRouteWithChildren,
   ProfileRoute: ProfileRoute,
+  ReviewsRoute: ReviewsRoute,
+  SizeChartRoute: SizeChartRoute,
   WishlistRoute: WishlistRoute,
   OrderConfirmationOrderIdRoute: OrderConfirmationOrderIdRoute,
 }
