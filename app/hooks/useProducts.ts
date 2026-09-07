@@ -8,6 +8,9 @@ export function getProductImageUrl(storagePath: string): string {
   if (!storagePath) return '/placeholder-product.jpg'
   // If already a full URL, return as-is
   if (storagePath.startsWith('http')) return storagePath
+  if (storagePath.endsWith('.jpg') || storagePath.endsWith('.png')) {
+    return `/${storagePath}`
+  }
   const { data } = supabase.storage.from('products').getPublicUrl(storagePath)
   return data.publicUrl
 }
