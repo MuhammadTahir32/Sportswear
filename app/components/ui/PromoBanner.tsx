@@ -40,7 +40,10 @@ export function PromoBanner({
           <span className="promo-banner__headline-word promo-banner__headline-word--white">
             Custom
           </span>
-          <span className="promo-banner__headline-word promo-banner__headline-word--lime">
+          <span
+            className="promo-banner__headline-word promo-banner__headline-word--lime"
+            style={{ marginBottom: '20px', marginTop: '20px' }}
+          >
             Sneaker
           </span>
           <span className="promo-banner__headline-word promo-banner__headline-word--white">
