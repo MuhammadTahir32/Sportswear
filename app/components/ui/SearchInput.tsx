@@ -18,7 +18,6 @@ export function SearchInput({
 }: SearchInputProps): React.JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null)
 
-  // Sync external value to DOM input (for URL-driven state)
   useEffect(() => {
     if (inputRef.current && inputRef.current.value !== value) {
       inputRef.current.value = value
@@ -35,8 +34,15 @@ export function SearchInput({
   }
 
   return (
-    <div className={cn('relative flex items-center', className)}>
-      <Search size={15} className="absolute left-3.5 text-[#9A9A9A] pointer-events-none" />
+    <div
+      className={cn(
+        'flex items-center gap-2 rounded-[10px] border border-[#EFEFEF] bg-white',
+        'pl-3.5 pr-2 py-2.5 transition-all duration-200',
+        'focus-within:border-[#C6FF3D] focus-within:ring-2 focus-within:ring-[#C6FF3D]/20',
+        className
+      )}
+    >
+      <Search size={16} className="shrink-0 text-[#9A9A9A]" />
       <input
         ref={inputRef}
         id="product-search"
@@ -45,17 +51,12 @@ export function SearchInput({
         onChange={handleChange}
         placeholder={placeholder}
         autoComplete="off"
-        className={cn(
-          'w-full rounded-[10px] border border-[#EFEFEF] bg-white text-sm text-[#0D0D0D]',
-          'pl-10 pr-9 py-2.5 outline-none transition-all duration-200',
-          'placeholder:text-[#9A9A9A]',
-          'focus:border-[#C6FF3D] focus:ring-2 focus:ring-[#C6FF3D]/20'
-        )}
+        className="min-w-0 flex-1 bg-transparent text-sm text-[#0D0D0D] outline-none placeholder:text-[#9A9A9A]"
       />
       {value && (
         <button
           onClick={handleClear}
-          className="absolute right-3 text-[#9A9A9A] hover:text-[#0D0D0D] transition-colors"
+          className="shrink-0 p-0.5 text-[#9A9A9A] hover:text-[#0D0D0D] transition-colors"
           aria-label="Clear search"
         >
           <X size={14} />
