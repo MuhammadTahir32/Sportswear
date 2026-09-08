@@ -23,6 +23,7 @@ const SAMPLE_SWATCHES = [
 const BEST_SELLERS = [
   {
     id: '1',
+    slug: 'nike-waxed-brown',
     name: 'Premium Flat Waxed Shoelaces',
     price: 12.99,
     originalPrice: 18.99,
@@ -34,6 +35,7 @@ const BEST_SELLERS = [
   },
   {
     id: '2',
+    slug: 'nike-round-black',
     name: 'Round Athletic Sneaker Laces — 45"',
     price: 9.99,
     rating: 4.6,
@@ -44,6 +46,7 @@ const BEST_SELLERS = [
   },
   {
     id: '3',
+    slug: 'hoka-notie-black',
     name: 'No-Tie Elastic Curly Shoelaces',
     price: 14.99,
     originalPrice: 19.99,
@@ -55,6 +58,7 @@ const BEST_SELLERS = [
   },
   {
     id: '4',
+    slug: 'puma-fat-white',
     name: 'Fat Chunky Oval Boot Laces',
     price: 16.99,
     rating: 4.9,
@@ -68,6 +72,7 @@ const BEST_SELLERS = [
 const NEW_ARRIVALS = [
   {
     id: '5',
+    slug: 'adidas-flat-lime',
     name: 'Reflective 3M Safety Laces',
     price: 11.99,
     rating: 4.7,
@@ -78,6 +83,7 @@ const NEW_ARRIVALS = [
   },
   {
     id: '6',
+    slug: 'vans-classic-white',
     name: 'Heavy Duty Work Boot Laces',
     price: 13.99,
     originalPrice: 17.99,
@@ -89,6 +95,7 @@ const NEW_ARRIVALS = [
   },
   {
     id: '7',
+    slug: 'jordan-flat-red',
     name: 'Silk Luxury Dress Shoe Laces',
     price: 15.99,
     rating: 4.9,
@@ -99,6 +106,7 @@ const NEW_ARRIVALS = [
   },
   {
     id: '8',
+    slug: 'converse-round-multi',
     name: 'Colorful Oval Cotton Laces',
     price: 8.99,
     rating: 4.3,
@@ -437,7 +445,7 @@ function HomePage(): React.JSX.Element {
           style={{ marginLeft: '65px', marginBottom: '90px' }}
         >
           {BEST_SELLERS.map((product) => (
-            <ProductCard key={product.id} {...product} href={`/products/${product.id}`} />
+            <ProductCard key={product.id} {...product} href={`/products/${product.slug}`} />
           ))}
         </div>
       </section>
@@ -481,7 +489,7 @@ function HomePage(): React.JSX.Element {
               key={`new-${product.id}`}
               {...product}
               id={`new-${product.id}`}
-              href={`/products/${product.id}`}
+              href={`/products/${product.slug}`}
             />
           ))}
         </div>
