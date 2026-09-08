@@ -92,15 +92,21 @@ export function useProducts(filters: ProductFilters = {}) {
 
       if (category) {
         // Join via categories table to filter by slug
-        const { data: cat, error: catError } = await supabase
-          .from('categories')
-          .select('id')
-          .eq('slug', category)
-          .single()
-        if (catError) {
-          console.warn('Category lookup failed:', catError.message)
-        } else if (cat) {
-          query = query.eq('category_id', cat.id)
+        try {
+          const { data: cat } = await supabase
+            .from('categories')
+            .select('id')
+            .eq('slug', category)
+            .single()
+
+          if (cat) {
+            query = query.eq('category_id', cat.id)
+          }
+        } catch (catError: unknown) {
+          console.warn(
+            'Category lookup failed:',
+            catError instanceof Error ? catError.message : String(catError)
+          )
         }
       }
 

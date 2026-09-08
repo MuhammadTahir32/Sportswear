@@ -365,7 +365,7 @@ function HomePage(): React.JSX.Element {
             <p className="text-white text-[13px] font-semibold uppercase tracking-[3px] mt-10 mb-8">
               <span style={{ marginLeft: '65px' }}>Replacement Laces for Sneakers</span>
             </p>
-            <a href="/products?category=laces-by-brand">
+            <a href="/products">
               <Button
                 variant="primary"
                 size="lg"
@@ -400,13 +400,13 @@ function HomePage(): React.JSX.Element {
           <CategoryTile
             label="Laces by Brand"
             image="/cat_brand.jpg"
-            href="/products?category=laces-by-brand"
+            href="/products"
             aspectRatio="4/5"
           />
           <CategoryTile
             label="Laces by Sport"
             image="/cat_sport.jpg"
-            href="/products?category=laces-by-sport"
+            href="/products"
             aspectRatio="4/5"
             imageStyle={{ objectPosition: 'center' }}
           />

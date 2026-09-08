@@ -38,7 +38,7 @@ function FilterPanel({
 }): React.JSX.Element {
   const [open, setOpen] = useState(defaultOpen)
   return (
-    <div className="border-b border-[#EFEFEF] pb-5">
+    <div className="border-b border-[#EFEFEF] py-5" style={{ marginTop: '20px' }}>
       <button
         onClick={() => setOpen((v) => !v)}
         className="flex w-full items-center justify-between py-3 text-left"
@@ -93,7 +93,7 @@ export function FilterSidebar({
         )}
       </div>
 
-      <div className="space-y-5">
+      <div className="space-y-2">
         {/* Category */}
         <FilterPanel title="Category">
           <button
