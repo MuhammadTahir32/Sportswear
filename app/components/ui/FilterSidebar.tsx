@@ -38,7 +38,7 @@ function FilterPanel({
 }): React.JSX.Element {
   const [open, setOpen] = useState(defaultOpen)
   return (
-    <div className="border-b border-[#EFEFEF] py-5" style={{ marginTop: '20px' }}>
+    <div className="border-b border-[#EFEFEF] py-5" style={{ marginBottom: '20px' }}>
       <button
         onClick={() => setOpen((v) => !v)}
         className="flex w-full items-center justify-between py-3 text-left"
