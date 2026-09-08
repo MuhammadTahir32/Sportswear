@@ -8,12 +8,11 @@ interface SizeGuideModalProps {
 }
 
 const SIZE_CHART = [
-  { size: 'XS', chest: '32–34"', waist: '24–26"', hip: '34–36"', inseam: '30"' },
-  { size: 'S', chest: '35–37"', waist: '27–29"', hip: '37–39"', inseam: '30"' },
-  { size: 'M', chest: '38–40"', waist: '30–32"', hip: '40–42"', inseam: '31"' },
-  { size: 'L', chest: '41–43"', waist: '33–35"', hip: '43–45"', inseam: '32"' },
-  { size: 'XL', chest: '44–46"', waist: '36–38"', hip: '46–48"', inseam: '32"' },
-  { size: 'XXL', chest: '47–49"', waist: '39–41"', hip: '49–51"', inseam: '33"' },
+  { size: '3–5', length: '36" (91 cm)', recommended: 'Kids / Low-top sneakers' },
+  { size: '5–8', length: '45" (114 cm)', recommended: 'Low-top sneakers (Vans, Converse)' },
+  { size: '7–10', length: '54" (137 cm)', recommended: 'Mid-top sneakers (Nike, Adidas)' },
+  { size: '9–12', length: '63" (160 cm)', recommended: 'High-top sneakers, boots' },
+  { size: '11–14', length: '72" (183 cm)', recommended: 'Large boots, hiking shoes' },
 ]
 
 export function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps): React.JSX.Element | null {
@@ -44,7 +43,7 @@ export function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps): React.
             >
               Size Guide
             </h2>
-            <p className="text-xs text-[#9A9A9A] mt-0.5">Measurements in inches</p>
+            <p className="text-xs text-[#9A9A9A] mt-0.5">Shoelace length by US shoe size</p>
           </div>
           <button
             onClick={onClose}
@@ -60,7 +59,7 @@ export function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps): React.
           <table className="w-full text-sm border-collapse">
             <thead>
               <tr>
-                {['Size', 'Chest', 'Waist', 'Hip', 'Inseam'].map((col) => (
+                {['Shoe Size (US)', 'Lace Length', 'Recommended For'].map((col) => (
                   <th
                     key={col}
                     className="text-left py-2.5 px-3 text-[10px] font-bold uppercase tracking-widest text-[#9A9A9A] border-b-2 border-[#EFEFEF]"
@@ -81,10 +80,8 @@ export function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps): React.
                   )}
                 >
                   <td className="py-3 px-3 font-black text-[#0D0D0D]">{row.size}</td>
-                  <td className="py-3 px-3 text-[#4A4A4A]">{row.chest}</td>
-                  <td className="py-3 px-3 text-[#4A4A4A]">{row.waist}</td>
-                  <td className="py-3 px-3 text-[#4A4A4A]">{row.hip}</td>
-                  <td className="py-3 px-3 text-[#4A4A4A]">{row.inseam}</td>
+                  <td className="py-3 px-3 text-[#4A4A4A]">{row.length}</td>
+                  <td className="py-3 px-3 text-[#4A4A4A]">{row.recommended}</td>
                 </tr>
               ))}
             </tbody>
@@ -95,10 +92,11 @@ export function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps): React.
         <div className="px-6 pb-6">
           <div className="bg-[#F7F7F7] rounded-[10px] p-4">
             <p className="text-xs text-[#4A4A4A] leading-relaxed">
-              <span className="font-bold text-[#0D0D0D]">How to measure:</span> Chest — measure
-              around the fullest part. Waist — measure around your natural waistline. Hip — measure
-              around the fullest part of your hips. If you're between sizes, size up for a relaxed
-              fit.
+              <span className="font-bold text-[#0D0D0D]">How to measure:</span> The easiest way to
+              find your perfect lace length is to remove your current shoelaces and measure them
+              from tip to tip. Alternatively, you can use the number of eyelets (holes) on your shoe
+              as a guide. If you're between sizes, choose the shorter length for a cleaner look or
+              the longer length if you prefer larger bows.
             </p>
           </div>
         </div>

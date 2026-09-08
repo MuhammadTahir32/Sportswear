@@ -92,12 +92,16 @@ export function useProducts(filters: ProductFilters = {}) {
 
       if (category) {
         // Join via categories table to filter by slug
-        const { data: cat } = await supabase
+        const { data: cat, error: catError } = await supabase
           .from('categories')
           .select('id')
           .eq('slug', category)
           .single()
-        if (cat) query = query.eq('category_id', cat.id)
+        if (catError) {
+          console.warn('Category lookup failed:', catError.message)
+        } else if (cat) {
+          query = query.eq('category_id', cat.id)
+        }
       }
 
       // ── Sort ──

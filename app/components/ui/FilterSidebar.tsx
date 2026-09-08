@@ -93,7 +93,7 @@ export function FilterSidebar({
         )}
       </div>
 
-      <div className="space-y-0">
+      <div className="space-y-5">
         {/* Category */}
         <FilterPanel title="Category">
           <button

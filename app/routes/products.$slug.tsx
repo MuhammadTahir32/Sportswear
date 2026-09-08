@@ -18,6 +18,7 @@ import {
 } from '@/hooks/useProducts'
 import { useReviewEligibility } from '@/hooks/useReviews'
 import { useToggleWishlist } from '@/hooks/useWishlist'
+import { useCart } from '@/hooks/useCart'
 import { ImageGallery } from '@/components/ui/ImageGallery'
 import { VariantSelector } from '@/components/ui/VariantSelector'
 import { SizeGuideModal } from '@/components/ui/SizeGuideModal'
@@ -152,6 +153,8 @@ function ProductInfoPanel({
   const toggleWishlist = useToggleWishlist()
   const [isWishlisted, setIsWishlisted] = useState(false)
 
+  const { addToCart } = useCart()
+
   const selectedVariant = product.variants?.find((v) => v.id === selectedVariantId) ?? null
   const price = selectedVariant?.price_override ?? product.sale_price ?? product.base_price
   const originalPrice = isOnSale ? product.base_price : undefined
@@ -159,6 +162,7 @@ function ProductInfoPanel({
 
   const handleAddToCart = () => {
     if (!selectedVariantId || isOutOfStock) return
+    addToCart(selectedVariantId, quantity)
     setAddedToCart(true)
     setTimeout(() => setAddedToCart(false), 2000)
   }
