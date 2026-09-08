@@ -4,7 +4,7 @@ import { StarRating } from '@/components/ui/StarRating'
 import { SwatchGroup } from '@/components/ui/SwatchGroup'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
-import { useCart } from '@/hooks/useCart'
+import { useCartContext } from '@/components/CartProvider'
 
 type Swatch = {
   id: string
@@ -43,7 +43,7 @@ export function ProductCard({
   className,
 }: ProductCardProps): React.JSX.Element {
   const [selectedSwatch, setSelectedSwatch] = useState<string | undefined>(swatches[0]?.id)
-  const { addToCart } = useCart()
+  const { addToCart } = useCartContext()
 
   return (
     <article id={`product-card-${id}`} className={cn('group flex flex-col gap-3', className)}>

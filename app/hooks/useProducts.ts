@@ -91,7 +91,6 @@ export function useProducts(filters: ProductFilters = {}) {
       }
 
       if (category) {
-        // Join via categories table to filter by slug
         try {
           const { data: cat } = await supabase
             .from('categories')
@@ -101,12 +100,12 @@ export function useProducts(filters: ProductFilters = {}) {
 
           if (cat) {
             query = query.eq('category_id', cat.id)
+          } else {
+            return { products: [], total: 0, page, pageSize, totalPages: 0 }
           }
         } catch (catError: unknown) {
-          console.warn(
-            'Category lookup failed:',
-            catError instanceof Error ? catError.message : String(catError)
-          )
+          console.warn('Category lookup failed:', catError)
+          return { products: [], total: 0, page, pageSize, totalPages: 0 }
         }
       }
 

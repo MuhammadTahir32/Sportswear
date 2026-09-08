@@ -18,7 +18,7 @@ import {
 } from '@/hooks/useProducts'
 import { useReviewEligibility } from '@/hooks/useReviews'
 import { useToggleWishlist } from '@/hooks/useWishlist'
-import { useCart } from '@/hooks/useCart'
+import { useCartContext } from '@/components/CartProvider'
 import { ImageGallery } from '@/components/ui/ImageGallery'
 import { VariantSelector } from '@/components/ui/VariantSelector'
 import { SizeGuideModal } from '@/components/ui/SizeGuideModal'
@@ -153,7 +153,7 @@ function ProductInfoPanel({
   const toggleWishlist = useToggleWishlist()
   const [isWishlisted, setIsWishlisted] = useState(false)
 
-  const { addToCart } = useCart()
+  const { addToCart } = useCartContext()
 
   const selectedVariant = product.variants?.find((v) => v.id === selectedVariantId) ?? null
   const price = selectedVariant?.price_override ?? product.sale_price ?? product.base_price
