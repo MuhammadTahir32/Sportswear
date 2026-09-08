@@ -92,7 +92,7 @@ function ProductsPage(): React.JSX.Element {
   )
 
   // ── Data ────────────────────────────────────────────────────────────────
-  const { data, isLoading, isError } = useProducts(filters)
+  const { data, isLoading, isError, error } = useProducts(filters)
   const { data: categories = [] } = useCategories()
 
   const products = data?.products ?? []
@@ -243,6 +243,10 @@ function ProductsPage(): React.JSX.Element {
               <div className="py-16 text-center">
                 <p className="text-red-500 text-sm font-medium mb-4">
                   Failed to load products. Please try again.
+                  <br />
+                  <span className="text-xs text-red-400">
+                    Error: {error instanceof Error ? error.message : String(error)}
+                  </span>
                 </p>
                 <Button variant="secondary" size="sm" onClick={() => window.location.reload()}>
                   Retry

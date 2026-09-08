@@ -3,12 +3,19 @@ create policy "rls_profiles_select_own"
   on public.profiles for select
   using (auth.uid() = id);
 
+create or replace function public.is_admin()
+returns boolean
+language sql security definer set search_path = public
+as $$
+  select exists (
+    select 1 from public.profiles
+    where id = auth.uid() and role in ('admin', 'super_admin')
+  );
+$$;
+
 create policy "rls_profiles_select_admin"
   on public.profiles for select
-  using (exists (
-    select 1 from public.profiles p
-    where p.id = auth.uid() and p.role in ('admin', 'super_admin')
-  ));
+  using (public.is_admin());
 
 create policy "rls_profiles_update_own"
   on public.profiles for update
