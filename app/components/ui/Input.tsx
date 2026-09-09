@@ -28,44 +28,49 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {label}
           </label>
         )}
-        <div
-          className={cn(
-            'flex items-center gap-2 rounded-[8px] border',
-            'transition-all duration-200',
-            isDark
-              ? 'bg-black border-[#1A1A1A] focus-within:border-[#C6FF3D] focus-within:ring-1 focus-within:ring-[#C6FF3D]'
-              : 'bg-white border-[#EFEFEF] focus-within:border-[#C6FF3D] focus-within:ring-2 focus-within:ring-[#C6FF3D]/20',
-            error && !isDark
-              ? 'border-red-400 focus-within:border-red-400 focus-within:ring-red-200'
-              : '',
-            error && isDark
-              ? 'border-red-500 focus-within:border-red-500 focus-within:ring-red-500'
-              : ''
-          )}
-        >
+        <div className="flex items-center">
           {icon && iconPosition === 'left' && (
-            <span className="shrink-0 pl-4 text-[#9A9A9A]">{icon}</span>
+            <span className="shrink-0 flex items-center justify-center w-12 h-[52px] bg-[#0D0D0D] border border-[#1A1A1A] rounded-l-[8px] text-[#9A9A9A]">
+              {icon}
+            </span>
           )}
-          <input
-            ref={ref}
-            id={id}
-            style={{ padding: '10px', borderRadius: '8px' }}
+          <div
             className={cn(
-              'min-w-0 flex-1 bg-transparent text-sm font-[Inter,sans-serif]',
+              'flex-1 flex items-center border',
+              'transition-all duration-200',
               isDark
-                ? 'text-white placeholder:text-[#4A4A4A]'
-                : 'text-[#0D0D0D] placeholder:text-[#9A9A9A]',
-              'outline-none',
-              'py-14 ',
-              icon && iconPosition === 'left' ? 'pr-14' : '',
-              icon && iconPosition === 'right' ? 'pl-14' : '',
-              !icon ? 'px-14' : '',
-              className
+                ? 'bg-black border-[#1A1A1A] focus-within:border-[#C6FF3D] focus-within:ring-1 focus-within:ring-[#C6FF3D]'
+                : 'bg-white border-[#EFEFEF] focus-within:border-[#C6FF3D] focus-within:ring-2 focus-within:ring-[#C6FF3D]/20',
+              error && !isDark
+                ? 'border-red-400 focus-within:border-red-400 focus-within:ring-red-200'
+                : '',
+              error && isDark
+                ? 'border-red-500 focus-within:border-red-500 focus-within:ring-red-500'
+                : '',
+              icon && iconPosition === 'left' ? 'rounded-l-none' : 'rounded-[8px]',
+              icon && iconPosition === 'right' ? 'rounded-r-none' : ''
             )}
-            {...props}
-          />
+          >
+            <input
+              ref={ref}
+              id={id}
+              style={{ padding: '14px' }}
+              className={cn(
+                'min-w-0 flex-1 bg-transparent text-sm font-[Inter,sans-serif]',
+                isDark
+                  ? 'text-white placeholder:text-[#4A4A4A]'
+                  : 'text-[#0D0D0D] placeholder:text-[#9A9A9A]',
+                'outline-none',
+                !icon ? 'px-4' : '',
+                className
+              )}
+              {...props}
+            />
+          </div>
           {icon && iconPosition === 'right' && (
-            <span className="shrink-0 pr-4 text-[#9A9A9A]">{icon}</span>
+            <span className="shrink-0 flex items-center justify-center w-12 h-[52px] bg-[#0D0D0D] border border-[#1A1A1A] rounded-r-[8px] text-[#9A9A9A]">
+              {icon}
+            </span>
           )}
         </div>
         {error && <p className="text-xs text-red-500 font-medium">{error}</p>}
