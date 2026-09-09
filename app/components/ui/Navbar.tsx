@@ -1,10 +1,21 @@
-import { useState, useEffect } from 'react'
-import { Search, User, ShoppingBag, Heart, ChevronDown, X, Menu } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+import {
+  Search,
+  User,
+  ShoppingBag,
+  Heart,
+  ChevronDown,
+  X,
+  Menu,
+  LogOut,
+  UserCircle,
+} from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { CartDrawer } from '@/components/ui/CartDrawer'
 import { useCartContext } from '@/components/CartProvider'
+import { useAuth } from '@/hooks/useAuth'
 
 type NavLink = {
   label: string
@@ -30,15 +41,36 @@ export function Navbar({ cartCount: _cartCount }: NavbarProps): React.JSX.Elemen
   const [searchOpen, setSearchOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const userMenuRef = useRef<HTMLDivElement>(null)
 
   const { itemCount } = useCartContext()
   const cartCount = itemCount || _cartCount || 0
+  const { isAuthenticated, user, profile, signOut } = useAuth()
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const handleScroll = (): void => setScrolled(window.scrollY > 8)
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Close user menu on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setUserMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const handleSignOut = async () => {
+    await signOut()
+    setUserMenuOpen(false)
+  }
+
+  const userInitial = (profile?.full_name?.charAt(0) || user?.email?.charAt(0) || '?').toUpperCase()
 
   return (
     <header
@@ -114,15 +146,94 @@ export function Navbar({ cartCount: _cartCount }: NavbarProps): React.JSX.Elemen
             {searchOpen ? <X size={20} /> : <Search size={20} />}
           </button>
 
-          {/* Account */}
-          <a
-            href="/profile"
-            id="nav-account"
-            className="p-2 hover:bg-[#F7F7F7] rounded-full transition-colors duration-200"
-            aria-label="My account"
-          >
-            <User size={20} />
-          </a>
+          {/* Account - with dropdown when authenticated */}
+          {isAuthenticated ? (
+            <div className="relative" ref={userMenuRef}>
+              <button
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                className="flex items-center gap-1.5 p-1.5 pr-3 hover:bg-[#F7F7F7] rounded-full transition-colors duration-200"
+                aria-label="Account menu"
+                aria-expanded={userMenuOpen}
+              >
+                <div className="w-7 h-7 rounded-full bg-[#C6FF3D] flex items-center justify-center">
+                  <span
+                    className="text-[#0D0D0D] text-[11px] font-black uppercase"
+                    style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
+                  >
+                    {userInitial}
+                  </span>
+                </div>
+                <ChevronDown
+                  size={14}
+                  className={cn(
+                    'text-[#9A9A9A] transition-transform duration-200',
+                    userMenuOpen && 'rotate-180'
+                  )}
+                />
+              </button>
+
+              {/* Dropdown menu */}
+              {userMenuOpen && (
+                <div className="absolute right-0 top-full mt-2 w-56 bg-white border border-[#EFEFEF] rounded-[12px] shadow-lg py-2 z-50">
+                  {/* User info */}
+                  <div className="px-4 py-3 border-b border-[#EFEFEF]">
+                    <p className="text-sm font-semibold text-[#0D0D0D] truncate">
+                      {profile?.full_name || 'Account'}
+                    </p>
+                    <p className="text-xs text-[#9A9A9A] truncate">{user?.email}</p>
+                  </div>
+
+                  {/* Menu items */}
+                  <div className="py-1">
+                    <a
+                      href="/profile"
+                      className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[#0D0D0D] hover:bg-[#F7F7F7] transition-colors"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      <UserCircle size={16} className="text-[#9A9A9A]" />
+                      My Profile
+                    </a>
+                    <a
+                      href="/orders"
+                      className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[#0D0D0D] hover:bg-[#F7F7F7] transition-colors"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      <ShoppingBag size={16} className="text-[#9A9A9A]" />
+                      My Orders
+                    </a>
+                    <a
+                      href="/wishlist"
+                      className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[#0D0D0D] hover:bg-[#F7F7F7] transition-colors"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      <Heart size={16} className="text-[#9A9A9A]" />
+                      Wishlist
+                    </a>
+                  </div>
+
+                  {/* Sign out */}
+                  <div className="border-t border-[#EFEFEF] pt-1">
+                    <button
+                      onClick={handleSignOut}
+                      className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors"
+                    >
+                      <LogOut size={16} />
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <a
+              href="/sign-in"
+              id="nav-account"
+              className="p-2 hover:bg-[#F7F7F7] rounded-full transition-colors duration-200"
+              aria-label="Sign in"
+            >
+              <User size={20} />
+            </a>
+          )}
 
           {/* Wishlist */}
           <a
@@ -214,6 +325,19 @@ export function Navbar({ cartCount: _cartCount }: NavbarProps): React.JSX.Elemen
             <Heart size={16} />
             My Wishlist
           </a>
+          {/* Mobile sign out */}
+          {isAuthenticated && (
+            <button
+              onClick={() => {
+                handleSignOut()
+                setMobileOpen(false)
+              }}
+              className="flex items-center gap-2 py-3 text-[14px] font-[500] uppercase tracking-wide text-red-500 hover:text-red-600 transition-colors"
+            >
+              <LogOut size={16} />
+              Sign Out
+            </button>
+          )}
         </nav>
       </div>
     </header>

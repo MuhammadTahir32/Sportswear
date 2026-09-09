@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
-import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react'
+import { Mail, Lock, ArrowRight } from 'lucide-react'
 
 export const Route = createFileRoute('/_auth/sign-in')({
   component: SignInPage,
@@ -71,28 +71,28 @@ function SignInPage(): React.JSX.Element {
   return (
     <div className="w-full">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-8 text-center">
         <h1
-          className="text-3xl font-black text-[#0D0D0D] uppercase tracking-tight mb-1"
+          className="text-4xl xl:text-5xl font-black uppercase tracking-tight mb-2"
           style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
         >
-          Welcome Back
+          <span className="text-white">WELCOME</span> <span className="text-[#C6FF3D]">BACK</span>
         </h1>
         <p className="text-[#9A9A9A] text-sm">
           No account?{' '}
           <Link
             to="/sign-up"
-            className="text-[#0D0D0D] font-semibold underline underline-offset-2 hover:text-[#C6FF3D] transition-colors"
+            className="text-[#C6FF3D] font-medium hover:text-white transition-colors flex items-center gap-1 inline-flex"
           >
-            Create one free
+            Create one free <ArrowRight size={14} />
           </Link>
         </p>
       </div>
 
       {/* Form error banner */}
       {errors.form && (
-        <div className="mb-5 px-4 py-3 bg-red-50 border border-red-200 rounded-[8px]">
-          <p className="text-red-600 text-sm font-medium">{errors.form}</p>
+        <div className="mb-5 px-4 py-3 bg-red-900/20 border border-red-800 rounded-[8px]">
+          <p className="text-red-400 text-sm font-medium">{errors.form}</p>
         </div>
       )}
 
@@ -107,6 +107,7 @@ function SignInPage(): React.JSX.Element {
           onChange={handleChange('email')}
           error={errors.email}
           icon={<Mail size={16} />}
+          variant="dark"
         />
 
         <div>
@@ -120,19 +121,25 @@ function SignInPage(): React.JSX.Element {
             onChange={handleChange('password')}
             error={errors.password}
             icon={<Lock size={16} />}
+            iconPosition="left"
+            variant="dark"
           />
-          <div className="mt-1.5 flex items-center justify-between">
-            <button
-              type="button"
-              onClick={() => setShowPassword((v) => !v)}
-              className="flex items-center gap-1 text-xs text-[#9A9A9A] hover:text-[#0D0D0D] transition-colors"
-            >
-              {showPassword ? <EyeOff size={12} /> : <Eye size={12} />}
-              {showPassword ? 'Hide' : 'Show'} password
-            </button>
+          <div className="mt-3 flex items-center justify-between">
+            <label className="flex items-center gap-2 cursor-pointer group">
+              <div className="w-4 h-4 rounded-[4px] border border-[#1A1A1A] bg-[#0D0D0D] group-hover:border-[#C6FF3D] flex items-center justify-center transition-colors">
+                {showPassword && <div className="w-2.5 h-2.5 rounded-[2px] bg-[#C6FF3D]" />}
+              </div>
+              <input
+                type="checkbox"
+                className="hidden"
+                checked={showPassword}
+                onChange={(e) => setShowPassword(e.target.checked)}
+              />
+              <span className="text-xs text-white font-medium">Show password</span>
+            </label>
             <Link
               to="/forgot-password"
-              className="text-xs text-[#9A9A9A] font-medium hover:text-[#0D0D0D] transition-colors underline underline-offset-2"
+              className="text-xs text-[#C6FF3D] font-medium hover:text-white transition-colors"
             >
               Forgot password?
             </Link>
@@ -145,35 +152,13 @@ function SignInPage(): React.JSX.Element {
             variant="primary"
             size="lg"
             loading={loading}
-            className="w-full"
+            className="w-full bg-[#C6FF3D] text-[#0D0D0D] hover:bg-[#b3ff00]"
             icon={<ArrowRight size={18} />}
           >
             Sign In
           </Button>
         </div>
       </form>
-
-      {/* Divider */}
-      <div className="relative my-6">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-[#EFEFEF]" />
-        </div>
-        <div className="relative flex justify-center">
-          <span className="bg-white px-3 text-[11px] text-[#9A9A9A] uppercase tracking-wider font-medium">
-            Secure sign-in
-          </span>
-        </div>
-      </div>
-
-      {/* Trust badges */}
-      <div className="flex items-center justify-center gap-6 text-[10px] text-[#9A9A9A] uppercase tracking-wider">
-        {['256-bit SSL', 'GDPR Compliant', 'Never Spammed'].map((badge) => (
-          <span key={badge} className="flex items-center gap-1">
-            <span className="w-1 h-1 rounded-full bg-[#C6FF3D] inline-block" />
-            {badge}
-          </span>
-        ))}
-      </div>
     </div>
   )
 }

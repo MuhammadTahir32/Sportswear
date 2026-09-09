@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { supabase } from '@/lib/supabase'
+import { ShieldCheck, Truck, Award } from 'lucide-react'
 
 export const Route = createFileRoute('/_auth')({
   // Redirect authenticated users away from auth pages (sign-in, sign-up, etc.)
@@ -19,10 +20,17 @@ export const Route = createFileRoute('/_auth')({
 
 function AuthLayout(): React.JSX.Element {
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex bg-[#090909] text-white">
       {/* ── Left: Brand Panel ─────────────────────────────────────── */}
-      <div className="hidden lg:flex lg:w-[45%] xl:w-[40%] bg-[#0D0D0D] flex-col justify-between p-12 relative overflow-hidden">
-        {/* Lime radial glow */}
+      <div
+        className="hidden lg:flex lg:w-[45%] xl:w-[40%] flex-col justify-between p-12 relative overflow-hidden"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgba(13,13,13,0.2), rgba(9,9,9,1)), url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
         <div
           className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full opacity-20 pointer-events-none"
           style={{
@@ -52,39 +60,58 @@ function AuthLayout(): React.JSX.Element {
         </div>
 
         {/* Middle: tagline */}
-        <div className="relative z-10 flex flex-col items-center text-center mt-12">
+        <div className="relative z-10 flex flex-col items-start text-left mt-12">
+          <p className="text-[10px] tracking-[0.2em] text-[#9A9A9A] uppercase mb-4 font-semibold">
+            GEAR UP <span className="text-[#C6FF3D]">/</span> MOVE FORWARD{' '}
+            <span className="text-[#C6FF3D]">/</span> BE BETTER
+          </p>
           <h2
-            className="text-white text-5xl xl:text-6xl font-black uppercase leading-none tracking-tight"
+            className="text-white text-6xl xl:text-7xl font-black uppercase leading-none tracking-tight"
             style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
           >
             LEVEL UP
             <br />
             <span className="text-[#C6FF3D]">YOUR GAME</span>
           </h2>
-          <p className="text-[#9A9A9A] text-sm mt-6 leading-relaxed max-w-md">
+          <p className="text-[#9A9A9A] text-sm mt-6 leading-relaxed max-w-sm">
             Join thousands of athletes who trust StrideWear for performance gear that moves with
-            you. Experience premium quality, advanced moisture-wicking technology, and designs that
-            keep you looking sharp whether you're at the gym or on the streets.
+            you.
           </p>
         </div>
 
         {/* Bottom: social proof */}
-        <div className="relative z-10 flex gap-12 justify-center w-full">
+        <div className="relative z-10 flex gap-10 justify-start w-full mt-12">
           {[
-            { value: '50K+', label: 'Athletes' },
-            { value: '4.9★', label: 'Rating' },
-            { value: 'Free', label: 'Returns' },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <p className="text-[#C6FF3D] font-black text-xl">{stat.value}</p>
-              <p className="text-[#4A4A4A] text-xs uppercase tracking-wider mt-1">{stat.label}</p>
+            { icon: <ShieldCheck size={28} />, label: 'PREMIUM\nQUALITY' },
+            { icon: <Truck size={28} />, label: 'FAST & RELIABLE\nSHIPPING' },
+            { icon: <Award size={28} />, label: 'ATHLETE\nAPPROVED' },
+          ].map((stat, i) => (
+            <div key={i} className="flex flex-col items-center text-center gap-2.5">
+              <div className="w-14 h-14 rounded-full border border-[#C6FF3D]/30 flex items-center justify-center text-[#C6FF3D]">
+                {stat.icon}
+              </div>
+              <p className="text-white text-[10px] uppercase font-bold tracking-wider leading-tight whitespace-pre-line">
+                {stat.label}
+              </p>
             </div>
           ))}
+        </div>
+
+        {/* "Stronger Every Day" script text */}
+        <div className="absolute bottom-10 left-10 z-10 pointer-events-none">
+          <p
+            className="text-[#C6FF3D] text-3xl xl:text-4xl leading-tight opacity-80"
+            style={{ fontFamily: '"Dancing Script", "Brush Script MT", cursive' }}
+          >
+            Stronger
+            <br />
+            Every Day
+          </p>
         </div>
       </div>
 
       {/* ── Right: Form Panel ──────────────────────────────────────── */}
-      <div className="flex-1 flex flex-col justify-center items-center px-6 py-12 bg-white">
+      <div className="flex-1 flex flex-col justify-center items-center px-6 py-12 bg-[#090909] border-l border-[#1A1A1A]">
         {/* Mobile logo */}
         <div className="flex lg:hidden items-baseline gap-1 mb-8">
           <span

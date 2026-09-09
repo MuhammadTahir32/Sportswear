@@ -87,28 +87,28 @@ function SignUpPage(): React.JSX.Element {
   return (
     <div className="w-full">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-8 text-center">
         <h1
-          className="text-3xl font-black text-[#0D0D0D] uppercase tracking-tight mb-1"
+          className="text-4xl xl:text-5xl font-black uppercase tracking-tight mb-2"
           style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
         >
-          Create Account
+          <span className="text-white">CREATE</span> <span className="text-[#C6FF3D]">ACCOUNT</span>
         </h1>
         <p className="text-[#9A9A9A] text-sm">
           Already have an account?{' '}
           <Link
             to="/sign-in"
-            className="text-[#0D0D0D] font-semibold underline underline-offset-2 hover:text-[#C6FF3D] transition-colors"
+            className="text-[#C6FF3D] font-medium hover:text-white transition-colors flex items-center gap-1 inline-flex"
           >
-            Sign in
+            Sign in <ArrowRight size={14} />
           </Link>
         </p>
       </div>
 
       {/* Form error banner */}
       {errors.form && (
-        <div className="mb-5 px-4 py-3 bg-red-50 border border-red-200 rounded-[8px]">
-          <p className="text-red-600 text-sm font-medium">{errors.form}</p>
+        <div className="mb-5 px-4 py-3 bg-red-900/20 border border-red-800 rounded-[8px]">
+          <p className="text-red-400 text-sm font-medium">{errors.form}</p>
         </div>
       )}
 
@@ -205,11 +205,11 @@ function SignUpPage(): React.JSX.Element {
 
         <p className="text-center text-[10px] text-[#9A9A9A] leading-relaxed">
           By creating an account you agree to our{' '}
-          <a href="/terms" className="underline hover:text-[#0D0D0D]">
+          <a href="/terms" className="underline hover:text-white transition-colors">
             Terms of Service
           </a>{' '}
           and{' '}
-          <a href="/privacy" className="underline hover:text-[#0D0D0D]">
+          <a href="/privacy" className="underline hover:text-white transition-colors">
             Privacy Policy
           </a>
           .
@@ -245,7 +245,7 @@ function PasswordStrength({ password }: { password: string }): React.JSX.Element
         {[1, 2, 3, 4].map((i) => (
           <div
             key={i}
-            className={`h-1 flex-1 rounded-full transition-colors duration-300 ${i <= score ? barColor : 'bg-[#EFEFEF]'}`}
+            className={`h-1 flex-1 rounded-full transition-colors duration-300 ${i <= score ? barColor : 'bg-[#1A1A1A]'}`}
           />
         ))}
       </div>
@@ -253,7 +253,7 @@ function PasswordStrength({ password }: { password: string }): React.JSX.Element
         {checks.map((c) => (
           <span
             key={c.label}
-            className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${c.met ? 'text-[#0D0D0D] bg-[#C6FF3D]' : 'text-[#9A9A9A] bg-[#F7F7F7]'}`}
+            className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${c.met ? 'text-[#0D0D0D] bg-[#C6FF3D]' : 'text-[#9A9A9A] bg-[#1A1A1A]'}`}
           >
             {c.label}
           </span>

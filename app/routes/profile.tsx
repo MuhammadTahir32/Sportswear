@@ -4,7 +4,7 @@ import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/hooks/useAuth'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
-import { User, Phone, Lock, Eye, EyeOff, Save, CheckCircle2 } from 'lucide-react'
+import { User, Phone, Lock, Eye, EyeOff, Save, CheckCircle2, LogOut } from 'lucide-react'
 import { cn } from '@/lib/cn'
 
 export const Route = createFileRoute('/profile')({
@@ -23,18 +23,34 @@ type Tab = 'account' | 'security'
 
 function ProfilePage(): React.JSX.Element {
   const [activeTab, setActiveTab] = useState<Tab>('account')
+  const { signOut } = useAuth()
+  const navigate = useNavigate()
+
+  const handleSignOut = async () => {
+    await signOut()
+    navigate({ to: '/' })
+  }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-10">
+    <div className="max-w-[720px] mx-auto px-4 sm:px-6 py-10 sm:py-14">
+      {/* Breadcrumb */}
+      <nav className="flex items-center gap-2 text-xs text-[#9A9A9A] mb-6">
+        <a href="/" className="hover:text-[#0D0D0D] transition-colors">
+          Home
+        </a>
+        <span>/</span>
+        <span className="text-[#0D0D0D] font-medium">Profile</span>
+      </nav>
+
       {/* Page header */}
       <div className="mb-8">
         <h1
-          className="text-3xl font-black text-[#0D0D0D] uppercase tracking-tight"
+          className="text-4xl sm:text-5xl font-black text-[#0D0D0D] uppercase tracking-tight"
           style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
         >
           My Profile
         </h1>
-        <p className="text-[#9A9A9A] text-sm mt-1">Manage your account details and password.</p>
+        <p className="text-[#9A9A9A] text-sm mt-2">Manage your account details and password.</p>
       </div>
 
       {/* Tab navigation */}
@@ -44,7 +60,7 @@ function ProfilePage(): React.JSX.Element {
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={cn(
-              'px-5 py-2 rounded-[8px] text-sm font-semibold capitalize transition-all duration-200',
+              'px-6 py-2.5 rounded-[8px] text-sm font-semibold capitalize transition-all duration-200',
               activeTab === tab
                 ? 'bg-[#0D0D0D] text-white shadow-sm'
                 : 'text-[#9A9A9A] hover:text-[#0D0D0D]'
@@ -55,8 +71,22 @@ function ProfilePage(): React.JSX.Element {
         ))}
       </div>
 
-      {activeTab === 'account' && <AccountTab />}
-      {activeTab === 'security' && <SecurityTab />}
+      {/* Tab content */}
+      <div className="bg-white border border-[#EFEFEF] rounded-[16px] p-6 sm:p-8">
+        {activeTab === 'account' && <AccountTab />}
+        {activeTab === 'security' && <SecurityTab />}
+      </div>
+
+      {/* Sign out */}
+      <div className="mt-8 pt-6 border-t border-[#EFEFEF]">
+        <button
+          onClick={handleSignOut}
+          className="flex items-center gap-2 text-sm font-medium text-[#9A9A9A] hover:text-red-500 transition-colors"
+        >
+          <LogOut size={16} />
+          Sign Out
+        </button>
+      </div>
     </div>
   )
 }
@@ -99,7 +129,7 @@ function AccountTab(): React.JSX.Element {
   }
 
   return (
-    <form onSubmit={handleSave} className="space-y-5">
+    <form onSubmit={handleSave} className="space-y-6">
       {/* Avatar */}
       <div className="flex items-center gap-4 p-4 bg-[#F7F7F7] rounded-[12px]">
         <div className="w-14 h-14 rounded-full bg-[#C6FF3D] flex items-center justify-center shrink-0">
@@ -146,7 +176,7 @@ function AccountTab(): React.JSX.Element {
         </label>
         <div className="flex items-center gap-2 w-full rounded-[8px] border border-[#EFEFEF] bg-[#F7F7F7] px-4 py-2.5 text-sm text-[#9A9A9A]">
           <span className="flex-1 truncate">{user?.email}</span>
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#9A9A9A] bg-[#EFEFEF] px-2 py-0.5 rounded">
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-green-700 bg-green-50 px-2 py-0.5 rounded">
             Verified
           </span>
         </div>
@@ -235,7 +265,7 @@ function SecurityTab(): React.JSX.Element {
 
   if (saved) {
     return (
-      <div className="text-center py-10">
+      <div className="text-center py-12">
         <div className="w-16 h-16 rounded-full bg-[#C6FF3D]/15 border-2 border-[#C6FF3D]/40 flex items-center justify-center mx-auto mb-4">
           <CheckCircle2 size={32} className="text-[#0D0D0D]" strokeWidth={1.5} />
         </div>
@@ -254,7 +284,7 @@ function SecurityTab(): React.JSX.Element {
   }
 
   return (
-    <form onSubmit={handleSave} className="space-y-5">
+    <form onSubmit={handleSave} className="space-y-6">
       {errors.form && (
         <div className="px-4 py-3 bg-red-50 border border-red-200 rounded-[8px]">
           <p className="text-red-600 text-sm font-medium">{errors.form}</p>
