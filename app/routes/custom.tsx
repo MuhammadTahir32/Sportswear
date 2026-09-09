@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/Button'
 
 export const Route = createFileRoute('/custom')({
@@ -16,9 +16,11 @@ function CustomPage() {
           Design your own unique shoelaces. Choose your exact length, color, material, and aglet
           style. The customizer tool is currently in beta and will be available to everyone shortly.
         </p>
-        <Button as="a" href="/contact" variant="primary" size="lg">
-          Contact for Custom Order
-        </Button>
+        <Link to="/products">
+          <Button variant="primary" size="lg">
+            Contact for Custom Order
+          </Button>
+        </Link>
       </div>
     </div>
   )

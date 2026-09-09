@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/Button'
 
 export const Route = createFileRoute('/brands')({
@@ -16,9 +16,11 @@ function BrandsPage() {
           Find the perfect replacement laces tailored for Nike, Adidas, New Balance, and more. We're
           working hard to categorize all our laces by brand. Stay tuned!
         </p>
-        <Button as="a" href="/products" variant="primary" size="lg">
-          Shop All Laces
-        </Button>
+        <Link to="/products">
+          <Button variant="primary" size="lg">
+            Shop All Laces
+          </Button>
+        </Link>
       </div>
     </div>
   )

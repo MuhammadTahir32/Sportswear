@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/Button'
 
 export const Route = createFileRoute('/laces')({
@@ -16,9 +16,11 @@ function LacesPage() {
           Browse our entire collection of premium shoelaces. From classic flat to performance no-tie
           laces.
         </p>
-        <Button as="a" href="/products" variant="primary" size="lg">
-          View Collection
-        </Button>
+        <Link to="/products">
+          <Button variant="primary" size="lg">
+            View Collection
+          </Button>
+        </Link>
       </div>
     </div>
   )

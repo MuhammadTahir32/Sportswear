@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/Button'
 
 export const Route = createFileRoute('/accessories')({
@@ -16,9 +16,11 @@ function AccessoriesPage() {
           Upgrade your look with custom lace locks, premium aglets, and cleaning kits. Our
           accessories collection is dropping soon.
         </p>
-        <Button as="a" href="/products" variant="primary" size="lg">
-          Back to Shop
-        </Button>
+        <Link to="/products">
+          <Button variant="primary" size="lg">
+            Back to Shop
+          </Button>
+        </Link>
       </div>
     </div>
   )
