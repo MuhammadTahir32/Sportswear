@@ -39,8 +39,8 @@ function AuthLayout(): React.JSX.Element {
           }}
         />
         {/* Top: Logo */}
-        <div className="relative z-10">
-          <div className="flex items-baseline gap-1.5">
+        <div className="relative z-10" style={{ marginLeft: '60px', marginTop: '10px' }}>
+          <div className="flex items-baseline gap-1.5" style={{ marginBottom: '5px' }}>
             <span
               className="text-[#C6FF3D] font-black text-3xl tracking-tight uppercase"
               style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
@@ -60,7 +60,10 @@ function AuthLayout(): React.JSX.Element {
         </div>
 
         {/* Middle: tagline */}
-        <div className="relative z-10 flex flex-col items-start text-left mt-12">
+        <div
+          className="relative z-10 flex flex-col items-start text-left mt-12"
+          style={{ marginLeft: '200px', marginTop: '70px' }}
+        >
           <p className="text-[10px] tracking-[0.2em] text-[#9A9A9A] uppercase mb-4 font-semibold">
             GEAR UP <span className="text-[#C6FF3D]">/</span> MOVE FORWARD{' '}
             <span className="text-[#C6FF3D]">/</span> BE BETTER
@@ -73,14 +76,20 @@ function AuthLayout(): React.JSX.Element {
             <br />
             <span className="text-[#C6FF3D]">YOUR GAME</span>
           </h2>
-          <p className="text-[#9A9A9A] text-sm mt-6 leading-relaxed max-w-sm">
+          <p
+            className="text-[#9A9A9A] text-sm mt-6 leading-relaxed max-w-sm"
+            style={{ marginTop: '20px' }}
+          >
             Join thousands of athletes who trust StrideWear for performance gear that moves with
             you.
           </p>
         </div>
 
         {/* Bottom: social proof */}
-        <div className="relative z-10 flex gap-10 justify-start w-full mt-12">
+        <div
+          className="relative z-10 flex gap-10 justify-start w-full mt-12"
+          style={{ marginLeft: '220px', marginBottom: '200px' }}
+        >
           {[
             { icon: <ShieldCheck size={28} />, label: 'PREMIUM\nQUALITY' },
             { icon: <Truck size={28} />, label: 'FAST & RELIABLE\nSHIPPING' },
