@@ -112,7 +112,7 @@ function SignUpPage(): React.JSX.Element {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} noValidate className="space-y-4">
+      <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
         <Input
           id="fullName"
           label="Full Name"
@@ -137,50 +137,54 @@ function SignUpPage(): React.JSX.Element {
           icon={<Mail size={16} />}
         />
 
-        <Input
-          id="password"
-          label="Password"
-          type={showPassword ? 'text' : 'password'}
-          placeholder="Min. 8 characters"
-          autoComplete="new-password"
-          value={form.password}
-          onChange={handleChange('password')}
-          error={errors.password}
-          icon={<Lock size={16} />}
-          iconPosition="left"
-        />
-        {/* Toggle password visibility */}
-        <div className="-mt-2 flex justify-end">
-          <button
-            type="button"
-            onClick={() => setShowPassword((v) => !v)}
-            className="flex items-center gap-1 text-xs text-[#9A9A9A] hover:text-[#0D0D0D] transition-colors"
-          >
-            {showPassword ? <EyeOff size={12} /> : <Eye size={12} />}
-            {showPassword ? 'Hide' : 'Show'}
-          </button>
+        <div className="flex flex-col gap-1">
+          <Input
+            id="password"
+            label="Password"
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Min. 8 characters"
+            autoComplete="new-password"
+            value={form.password}
+            onChange={handleChange('password')}
+            error={errors.password}
+            icon={<Lock size={16} />}
+            iconPosition="left"
+          />
+          {/* Toggle password visibility */}
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={() => setShowPassword((v) => !v)}
+              className="flex items-center gap-1 text-xs text-[#9A9A9A] hover:text-[#0D0D0D] transition-colors"
+            >
+              {showPassword ? <EyeOff size={12} /> : <Eye size={12} />}
+              {showPassword ? 'Hide' : 'Show'}
+            </button>
+          </div>
         </div>
 
-        <Input
-          id="confirmPassword"
-          label="Confirm Password"
-          type={showConfirm ? 'text' : 'password'}
-          placeholder="Repeat your password"
-          autoComplete="new-password"
-          value={form.confirmPassword}
-          onChange={handleChange('confirmPassword')}
-          error={errors.confirmPassword}
-          icon={<Lock size={16} />}
-        />
-        <div className="-mt-2 flex justify-end">
-          <button
-            type="button"
-            onClick={() => setShowConfirm((v) => !v)}
-            className="flex items-center gap-1 text-xs text-[#9A9A9A] hover:text-[#0D0D0D] transition-colors"
-          >
-            {showConfirm ? <EyeOff size={12} /> : <Eye size={12} />}
-            {showConfirm ? 'Hide' : 'Show'}
-          </button>
+        <div className="flex flex-col gap-1">
+          <Input
+            id="confirmPassword"
+            label="Confirm Password"
+            type={showConfirm ? 'text' : 'password'}
+            placeholder="Repeat your password"
+            autoComplete="new-password"
+            value={form.confirmPassword}
+            onChange={handleChange('confirmPassword')}
+            error={errors.confirmPassword}
+            icon={<Lock size={16} />}
+          />
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={() => setShowConfirm((v) => !v)}
+              className="flex items-center gap-1 text-xs text-[#9A9A9A] hover:text-[#0D0D0D] transition-colors"
+            >
+              {showConfirm ? <EyeOff size={12} /> : <Eye size={12} />}
+              {showConfirm ? 'Hide' : 'Show'}
+            </button>
+          </div>
         </div>
 
         {/* Password strength hint */}

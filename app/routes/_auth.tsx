@@ -52,7 +52,7 @@ function AuthLayout(): React.JSX.Element {
         </div>
 
         {/* Middle: tagline */}
-        <div className="relative z-10">
+        <div className="relative z-10 flex flex-col items-center text-center mt-12">
           <h2
             className="text-white text-5xl xl:text-6xl font-black uppercase leading-none tracking-tight"
             style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
@@ -61,22 +61,23 @@ function AuthLayout(): React.JSX.Element {
             <br />
             <span className="text-[#C6FF3D]">YOUR GAME</span>
           </h2>
-          <p className="text-[#9A9A9A] text-sm mt-4 leading-relaxed max-w-xs">
+          <p className="text-[#9A9A9A] text-sm mt-6 leading-relaxed max-w-md">
             Join thousands of athletes who trust StrideWear for performance gear that moves with
-            you.
+            you. Experience premium quality, advanced moisture-wicking technology, and designs that
+            keep you looking sharp whether you're at the gym or on the streets.
           </p>
         </div>
 
         {/* Bottom: social proof */}
-        <div className="relative z-10 flex gap-8">
+        <div className="relative z-10 flex gap-12 justify-center w-full">
           {[
             { value: '50K+', label: 'Athletes' },
             { value: '4.9★', label: 'Rating' },
             { value: 'Free', label: 'Returns' },
           ].map((stat) => (
-            <div key={stat.label}>
-              <p className="text-[#C6FF3D] font-black text-lg">{stat.value}</p>
-              <p className="text-[#4A4A4A] text-xs uppercase tracking-wider">{stat.label}</p>
+            <div key={stat.label} className="text-center">
+              <p className="text-[#C6FF3D] font-black text-xl">{stat.value}</p>
+              <p className="text-[#4A4A4A] text-xs uppercase tracking-wider mt-1">{stat.label}</p>
             </div>
           ))}
         </div>
