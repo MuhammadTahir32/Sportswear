@@ -73,8 +73,8 @@ function SignInPage(): React.JSX.Element {
       {/* Header */}
       <div className="mb-8 text-center">
         <h1
-          className="text-4xl xl:text-5xl font-black uppercase tracking-tight mb-2"
-          style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
+          className="text-4xl xl:text-5xl font-black uppercase tracking-tight mb-2 "
+          style={{ fontFamily: '"Anton", "Archivo Black", sans-serif', marginTop: '30px' }}
         >
           <span className="text-white">WELCOME</span> <span className="text-[#C6FF3D]">BACK</span>
         </h1>
@@ -96,17 +96,22 @@ function SignInPage(): React.JSX.Element {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+      <form
+        onSubmit={handleSubmit}
+        noValidate
+        className="flex flex-col gap-5"
+        style={{ marginTop: '30px' }}
+      >
         <Input
           id="email"
           label="Email Address"
           type="email"
-          placeholder="jane@example.com"
+          placeholder="Email Address"
           autoComplete="email"
           value={form.email}
           onChange={handleChange('email')}
           error={errors.email}
-          icon={<Mail size={16} />}
+          icon={<Mail size={20} />}
           variant="dark"
         />
 
@@ -120,11 +125,11 @@ function SignInPage(): React.JSX.Element {
             value={form.password}
             onChange={handleChange('password')}
             error={errors.password}
-            icon={<Lock size={16} />}
+            icon={<Lock size={20} />}
             iconPosition="left"
             variant="dark"
           />
-          <div className="mt-3 flex items-center justify-between">
+          <div className="mt-3 flex items-center justify-between" style={{ marginTop: '10px' }}>
             <label className="flex items-center gap-2 cursor-pointer group">
               <div className="w-4 h-4 rounded-[4px] border border-[#1A1A1A] bg-[#0D0D0D] group-hover:border-[#C6FF3D] flex items-center justify-center transition-colors">
                 {showPassword && <div className="w-2.5 h-2.5 rounded-[2px] bg-[#C6FF3D]" />}
