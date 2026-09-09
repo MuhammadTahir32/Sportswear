@@ -49,16 +49,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <input
             ref={ref}
             id={id}
+            style={{ padding: '10px', borderRadius: '8px' }}
             className={cn(
               'min-w-0 flex-1 bg-transparent text-sm font-[Inter,sans-serif]',
               isDark
                 ? 'text-white placeholder:text-[#4A4A4A]'
                 : 'text-[#0D0D0D] placeholder:text-[#9A9A9A]',
               'outline-none',
-              'py-3.5',
-              icon && iconPosition === 'left' ? 'pr-4' : '',
-              icon && iconPosition === 'right' ? 'pl-4' : '',
-              !icon ? 'px-4' : '',
+              'py-14 ',
+              icon && iconPosition === 'left' ? 'pr-14' : '',
+              icon && iconPosition === 'right' ? 'pl-14' : '',
+              !icon ? 'px-14' : '',
               className
             )}
             {...props}
