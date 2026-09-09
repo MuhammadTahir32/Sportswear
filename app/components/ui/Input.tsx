@@ -33,7 +33,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             'flex items-center gap-2 rounded-[8px] border',
             'transition-all duration-200',
             isDark
-              ? 'bg-[#0D0D0D] border-[#1A1A1A] focus-within:border-[#C6FF3D] focus-within:ring-1 focus-within:ring-[#C6FF3D]'
+              ? 'bg-black border-[#1A1A1A] focus-within:border-[#C6FF3D] focus-within:ring-1 focus-within:ring-[#C6FF3D]'
               : 'bg-white border-[#EFEFEF] focus-within:border-[#C6FF3D] focus-within:ring-2 focus-within:ring-[#C6FF3D]/20',
             error && !isDark
               ? 'border-red-400 focus-within:border-red-400 focus-within:ring-red-200'
@@ -44,7 +44,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
         >
           {icon && iconPosition === 'left' && (
-            <span className="shrink-0 pl-3 text-[#9A9A9A]">{icon}</span>
+            <span className="shrink-0 pl-4 text-[#9A9A9A]">{icon}</span>
           )}
           <input
             ref={ref}
@@ -55,7 +55,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                 ? 'text-white placeholder:text-[#4A4A4A]'
                 : 'text-[#0D0D0D] placeholder:text-[#9A9A9A]',
               'outline-none',
-              'py-2.5',
+              'py-3.5',
               icon && iconPosition === 'left' ? 'pr-4' : '',
               icon && iconPosition === 'right' ? 'pl-4' : '',
               !icon ? 'px-4' : '',
@@ -64,7 +64,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
           {icon && iconPosition === 'right' && (
-            <span className="shrink-0 pr-3 text-[#9A9A9A]">{icon}</span>
+            <span className="shrink-0 pr-4 text-[#9A9A9A]">{icon}</span>
           )}
         </div>
         {error && <p className="text-xs text-red-500 font-medium">{error}</p>}

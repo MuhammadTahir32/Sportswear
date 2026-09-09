@@ -20,10 +20,13 @@ export const Route = createFileRoute('/_auth')({
 
 function AuthLayout(): React.JSX.Element {
   return (
-    <div className="min-h-screen flex bg-[#090909] text-white">
+    <div className="min-h-screen flex bg-[#090909] text-white relative">
+      {/* ── Center Dividing Line ───────────────────────────────────── */}
+      <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-[#1A1A1A] z-20" />
+
       {/* ── Left: Brand Panel ─────────────────────────────────────── */}
       <div
-        className="hidden lg:flex lg:w-[45%] xl:w-[40%] flex-col justify-between p-12 relative overflow-hidden"
+        className="hidden lg:flex lg:w-1/2 flex-col justify-between p-12 relative overflow-hidden"
         style={{
           backgroundImage:
             "linear-gradient(to right, rgba(13,13,13,0.2), rgba(9,9,9,1)), url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80')",
@@ -31,6 +34,14 @@ function AuthLayout(): React.JSX.Element {
           backgroundPosition: 'center',
         }}
       >
+        {/* Green gradient glow - top left */}
+        <div
+          className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full opacity-30 pointer-events-none"
+          style={{
+            background: 'radial-gradient(circle, #C6FF3D 0%, transparent 70%)',
+          }}
+        />
+        {/* Green gradient glow - bottom left */}
         <div
           className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full opacity-20 pointer-events-none"
           style={{
@@ -42,13 +53,13 @@ function AuthLayout(): React.JSX.Element {
         <div className="relative z-10" style={{ marginLeft: '60px', marginTop: '10px' }}>
           <div className="flex items-baseline gap-1.5" style={{ marginBottom: '5px' }}>
             <span
-              className="text-[#C6FF3D] font-black text-3xl tracking-tight uppercase"
+              className="text-[#C6FF3D] font-black text-3xl tracking-tight uppercase opacity-60 hover:opacity-100 transition-all duration-700 ease-out hover:drop-shadow-[0_0_15px_rgba(198,255,61,0.8)]"
               style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
             >
               STRIDE
             </span>
             <span
-              className="text-white font-black text-3xl tracking-tight uppercase"
+              className="text-white font-black text-3xl tracking-tight uppercase opacity-60 hover:opacity-100 transition-all duration-700 ease-out hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"
               style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
             >
               WEAR
@@ -69,12 +80,14 @@ function AuthLayout(): React.JSX.Element {
             <span className="text-[#C6FF3D]">/</span> BE BETTER
           </p>
           <h2
-            className="text-white text-6xl xl:text-7xl font-black uppercase leading-none tracking-tight"
+            className="text-white text-6xl xl:text-7xl font-black uppercase leading-none tracking-tight opacity-60 hover:opacity-100 transition-all duration-700 ease-out hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]"
             style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
           >
             LEVEL UP
             <br />
-            <span className="text-[#C6FF3D]">YOUR GAME</span>
+            <span className="text-[#C6FF3D] hover:drop-shadow-[0_0_18px_rgba(198,255,61,0.7)]">
+              YOUR GAME
+            </span>
           </h2>
           <p
             className="text-[#9A9A9A] text-sm mt-6 leading-relaxed max-w-sm"
@@ -120,7 +133,7 @@ function AuthLayout(): React.JSX.Element {
       </div>
 
       {/* ── Right: Form Panel ──────────────────────────────────────── */}
-      <div className="flex-1 flex flex-col justify-center items-center px-6 py-12 bg-[#090909] border-l border-[#1A1A1A]">
+      <div className="flex-1 lg:w-1/2 flex flex-col justify-center items-center px-6 py-12 bg-[#090909]">
         {/* Mobile logo */}
         <div className="flex lg:hidden items-baseline gap-1 mb-8">
           <span
