@@ -53,13 +53,13 @@ function AuthLayout(): React.JSX.Element {
         <div className="relative z-10" style={{ marginLeft: '60px', marginTop: '10px' }}>
           <div className="flex items-baseline gap-1.5" style={{ marginBottom: '5px' }}>
             <span
-              className="text-[#C6FF3D] font-black text-3xl tracking-tight uppercase opacity-60 hover:opacity-100 transition-all duration-700 ease-out hover:drop-shadow-[0_0_15px_rgba(198,255,61,0.8)]"
+              className="text-[#C6FF3D] font-black text-3xl tracking-tight uppercase transition-all duration-700 ease-out hover:drop-shadow-[0_0_15px_rgba(198,255,61,0.8)]"
               style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
             >
               STRIDE
             </span>
             <span
-              className="text-white font-black text-3xl tracking-tight uppercase opacity-60 hover:opacity-100 transition-all duration-700 ease-out hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"
+              className="text-white font-black text-3xl tracking-tight uppercase transition-all duration-700 ease-out hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"
               style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
             >
               WEAR
@@ -73,14 +73,14 @@ function AuthLayout(): React.JSX.Element {
         {/* Middle: tagline */}
         <div
           className="relative z-10 flex flex-col items-start text-left mt-12"
-          style={{ marginLeft: '200px', marginTop: '70px' }}
+          style={{ marginLeft: '300px', marginTop: '70px' }}
         >
           <p className="text-[10px] tracking-[0.2em] text-[#9A9A9A] uppercase mb-4 font-semibold">
             GEAR UP <span className="text-[#C6FF3D]">/</span> MOVE FORWARD{' '}
             <span className="text-[#C6FF3D]">/</span> BE BETTER
           </p>
           <h2
-            className="text-white text-6xl xl:text-7xl font-black uppercase leading-none tracking-tight opacity-60 hover:opacity-100 transition-all duration-700 ease-out hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]"
+            className="text-white text-6xl xl:text-7xl font-black uppercase leading-none tracking-tight transition-all duration-700 ease-out hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]"
             style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
           >
             LEVEL UP
@@ -101,7 +101,7 @@ function AuthLayout(): React.JSX.Element {
         {/* Bottom: social proof */}
         <div
           className="relative z-10 flex gap-10 justify-start w-full mt-12"
-          style={{ marginLeft: '220px', marginBottom: '200px' }}
+          style={{ marginLeft: '300px', marginBottom: '200px' }}
         >
           {[
             { icon: <ShieldCheck size={28} />, label: 'PREMIUM\nQUALITY' },
@@ -133,7 +133,21 @@ function AuthLayout(): React.JSX.Element {
       </div>
 
       {/* ── Right: Form Panel ──────────────────────────────────────── */}
-      <div className="flex-1 lg:w-1/2 flex flex-col justify-center items-center px-6 py-12 bg-[#090909]">
+      <div className="flex-1 lg:w-1/2 flex flex-col justify-center items-center px-6 py-12 bg-[#090909] relative overflow-hidden">
+        {/* Green glow - top right corner */}
+        <div
+          className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full opacity-20 pointer-events-none"
+          style={{
+            background: 'radial-gradient(circle, #C6FF3D 0%, transparent 70%)',
+          }}
+        />
+        {/* Green glow - bottom right corner */}
+        <div
+          className="absolute -bottom-32 -right-32 w-[400px] h-[400px] rounded-full opacity-10 pointer-events-none"
+          style={{
+            background: 'radial-gradient(circle, #C6FF3D 0%, transparent 70%)',
+          }}
+        />
         {/* Mobile logo */}
         <div className="flex lg:hidden items-baseline gap-1 mb-8">
           <span

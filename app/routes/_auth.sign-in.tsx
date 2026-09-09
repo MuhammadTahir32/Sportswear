@@ -73,7 +73,7 @@ function SignInPage(): React.JSX.Element {
       {/* Header */}
       <div className="mb-8 text-center">
         <h1
-          className="text-4xl xl:text-5xl font-black uppercase tracking-tight mb-2 opacity-60 hover:opacity-100 transition-all duration-700 ease-out"
+          className="text-4xl xl:text-5xl font-black uppercase tracking-tight mb-2 transition-all duration-700 ease-out"
           style={{ fontFamily: '"Anton", "Archivo Black", sans-serif', marginTop: '30px' }}
         >
           <span className="text-white hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.6)]">
