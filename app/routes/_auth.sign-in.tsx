@@ -162,7 +162,7 @@ function SignInPage(): React.JSX.Element {
             variant="primary"
             size="lg"
             loading={loading}
-            className="w-full bg-[#C6FF3D] text-[#0D0D0D] hover:bg-[#b3ff00]"
+            className="w-full bg-[#C6FF3D] text-[#0D0D0D] hover:bg-[#b3ff00] !py-3"
             icon={<ArrowRight size={18} />}
           >
             Sign In
