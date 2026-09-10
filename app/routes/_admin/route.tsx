@@ -82,16 +82,16 @@ function AdminLayout(): React.JSX.Element {
         {/* Logo */}
         <div className="p-6 pb-2 flex items-center justify-between">
           <div className="flex flex-col">
-            <div className="flex items-baseline gap-1.5">
+            <div className="flex items-baseline gap-1">
               <span
-                className="text-[#C6FF3D] font-black text-[24px] uppercase tracking-tight leading-none"
-                style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
+                className="text-[#C6FF3D] font-black text-[26px] uppercase tracking-tighter leading-none"
+                style={{ fontFamily: '"Anton", Impact, "Arial Black", sans-serif' }}
               >
                 STRIDE
               </span>
               <span
-                className="text-white font-black text-[24px] uppercase tracking-tight leading-none"
-                style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
+                className="text-white font-black text-[26px] uppercase tracking-tighter leading-none"
+                style={{ fontFamily: '"Anton", Impact, "Arial Black", sans-serif' }}
               >
                 WEAR
               </span>
@@ -109,38 +109,37 @@ function AdminLayout(): React.JSX.Element {
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 py-6 space-y-2 overflow-y-auto z-10">
+        <nav className="flex-1 py-6 space-y-1.5 overflow-y-auto z-10">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.to}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               to={item.to as any}
-              className={cn(
-                'flex items-center gap-3 mx-4 px-4 py-3 text-[13px] font-semibold transition-all duration-300 rounded-[12px] border border-transparent',
-                'text-[#9A9A9A] hover:text-white hover:bg-white/5',
-                '[&.active]:border-[#C6FF3D] [&.active]:text-[#C6FF3D] [&.active]:bg-gradient-to-r [&.active]:from-[#C6FF3D]/10 [&.active]:to-transparent [&.active]:shadow-[0_0_15px_rgba(198,255,61,0.15)]'
-              )}
+              className="flex items-center gap-3 mx-4 px-4 py-3 text-[14px] font-semibold transition-all duration-300 rounded-[12px] border border-transparent text-[#9A9A9A] hover:text-white hover:bg-white/5"
+              activeProps={{
+                className:
+                  '!text-[#C6FF3D] !border-[#C6FF3D] !bg-gradient-to-r from-[#C6FF3D]/10 to-transparent !shadow-[0_0_15px_rgba(198,255,61,0.15)] hover:!bg-none',
+              }}
             >
-              <item.icon size={18} className={cn('stroke-[1.5]')} />
+              <item.icon size={18} className="stroke-[2px]" />
               {item.label}
             </Link>
           ))}
         </nav>
 
         {/* Stronger Every Day Graphic */}
-        <div className="mt-auto relative z-0">
+        <div className="mt-auto relative z-0 h-[160px] overflow-hidden">
           {/* Neon Glow Aura */}
-          <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-[radial-gradient(circle_at_bottom_left,rgba(198,255,61,0.25)_0%,transparent_70%)] pointer-events-none"></div>
+          <div className="absolute bottom-[-30px] left-[-30px] w-[200px] h-[200px] bg-[radial-gradient(circle_at_center,rgba(198,255,61,0.15)_0%,transparent_60%)] pointer-events-none"></div>
 
-          <div className="p-6 pb-12 pt-16 relative">
+          <div className="absolute bottom-6 left-6 pointer-events-none">
             <div
-              className="text-[#C6FF3D] font-bold leading-[1.1] ml-4 pointer-events-none"
+              className="text-[#C6FF3D] font-bold leading-[1]"
               style={{
-                fontSize: '34px',
-                fontFamily: '"Caveat", "Dancing Script", cursive',
-                transform: 'rotate(-12deg)',
-                transformOrigin: 'bottom left',
-                textShadow: '0 0 15px rgba(198,255,61,0.5)',
+                fontSize: '26px',
+                fontFamily: '"Caveat", "Dancing Script", cursive, sans-serif',
+                transform: 'rotate(-10deg)',
+                textShadow: '0 0 15px rgba(198,255,61,0.6)',
               }}
             >
               Stronger
