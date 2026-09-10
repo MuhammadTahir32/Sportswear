@@ -1,11 +1,4 @@
-import {
-  createFileRoute,
-  Outlet,
-  redirect,
-  Link,
-  useNavigate,
-  useLocation,
-} from '@tanstack/react-router'
+import { createFileRoute, Outlet, redirect, Link, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/hooks/useAuth'
@@ -17,7 +10,6 @@ import {
   Tag,
   Star,
   Settings,
-  LogOut,
   Menu,
   X,
   Search,
@@ -69,11 +61,6 @@ function AdminLayout(): React.JSX.Element {
     navigate({ to: '/sign-in' })
   }
 
-  const location = useLocation()
-  const currentPath = location.pathname
-  const currentRouteName =
-    NAV_ITEMS.find((item) => currentPath.startsWith(item.to))?.label || 'Dashboard'
-
   return (
     <div className="flex h-screen bg-[#000000] overflow-hidden text-white">
       {/* ── Sidebar ──────────────────────────────────────────────── */}
@@ -93,19 +80,24 @@ function AdminLayout(): React.JSX.Element {
         )}
       >
         {/* Logo */}
-        <div className="flex items-center justify-between px-6 py-6 border-b border-white/5">
-          <div className="flex items-baseline gap-1">
-            <span
-              className="text-[#C6FF3D] font-black text-xl uppercase tracking-tight"
-              style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
-            >
-              STRIDE
-            </span>
-            <span
-              className="text-white font-black text-xl uppercase tracking-tight"
-              style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
-            >
-              WEAR
+        <div className="p-6 pb-2 flex items-center justify-between">
+          <div className="flex flex-col">
+            <div className="flex items-baseline gap-1.5">
+              <span
+                className="text-[#C6FF3D] font-black text-[22px] uppercase tracking-tight leading-none"
+                style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
+              >
+                STRIDE
+              </span>
+              <span
+                className="text-white font-black text-[22px] uppercase tracking-tight leading-none"
+                style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
+              >
+                WEAR
+              </span>
+            </div>
+            <span className="text-[#9A9A9A] text-[8px] uppercase tracking-widest font-bold mt-1">
+              Premium Sportswear
             </span>
           </div>
           <button
@@ -116,21 +108,17 @@ function AdminLayout(): React.JSX.Element {
           </button>
         </div>
 
-        <p className="px-6 py-4 text-[10px] uppercase tracking-widest text-white/40 font-semibold">
-          Admin Panel
-        </p>
-
         {/* Nav */}
-        <nav className="flex-1 px-3 py-2 space-y-0.5 overflow-y-auto">
+        <nav className="flex-1 py-6 space-y-1 overflow-y-auto">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.to}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               to={item.to as any}
               className={cn(
-                'flex items-center gap-3 px-3 py-2.5 rounded-[8px] text-sm font-medium transition-all duration-150',
-                'text-white/60 hover:text-white hover:bg-white/10',
-                '[&.active]:text-[#0D0D0D] [&.active]:bg-[#C6FF3D] [&.active]:font-bold'
+                'flex items-center gap-3 mx-4 px-4 py-3 text-[13px] font-semibold transition-all duration-150 rounded-[12px]',
+                'text-[#9A9A9A] hover:text-white hover:bg-white/5',
+                '[&.active]:text-[#C6FF3D] [&.active]:bg-[#C6FF3D]/10'
               )}
             >
               <item.icon size={18} />
@@ -139,67 +127,75 @@ function AdminLayout(): React.JSX.Element {
           ))}
         </nav>
 
-        {/* User / Logout */}
-        <div className="mt-auto border-t border-white/5 p-4">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-9 h-9 rounded-full bg-[#C6FF3D] flex items-center justify-center shrink-0">
-              <span className="text-[#0D0D0D] text-sm font-black uppercase">
-                {profile?.full_name?.charAt(0) ?? '?'}
-              </span>
-            </div>
-            <div className="min-w-0">
-              <p className="text-white text-xs font-semibold truncate">
-                {profile?.full_name ?? 'Admin'}
-              </p>
-              <p className="text-white/40 text-[10px] uppercase tracking-wider">{profile?.role}</p>
-            </div>
-          </div>
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center gap-2 px-3 py-2 rounded-[8px] text-sm text-white/60 hover:text-white hover:bg-white/10 transition-colors duration-150"
+        {/* Stronger Every Day Graphic */}
+        <div className="mt-auto p-6 pb-8 pointer-events-none">
+          <svg
+            viewBox="0 0 200 80"
+            className="w-full opacity-80"
+            style={{ filter: 'drop-shadow(0 0 10px rgba(198,255,61,0.2))' }}
           >
-            <LogOut size={16} />
-            Sign out
-          </button>
+            <path id="curve" d="M 10 60 Q 100 20 190 60" fill="transparent" />
+            <text
+              className="fill-[#C6FF3D] font-bold"
+              style={{
+                fontSize: '24px',
+                fontFamily: '"Caveat", "Dancing Script", cursive',
+                transform: 'rotate(-10deg)',
+                transformOrigin: 'center',
+              }}
+            >
+              <tspan x="10" y="40">
+                Stronger
+              </tspan>
+              <tspan x="30" y="70">
+                Every Day
+              </tspan>
+            </text>
+          </svg>
         </div>
       </aside>
 
       {/* ── Main Content ─────────────────────────────────────────── */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#000000]">
         {/* Topbar */}
-        <header className="h-[72px] flex items-center px-4 lg:px-8 shrink-0 justify-between">
+        <header className="h-[64px] flex items-center px-4 lg:px-8 shrink-0 justify-between">
           <div className="flex items-center gap-4">
+            {/* Mobile Menu Button */}
             <button
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden text-[#9A9A9A] hover:text-white"
+              className="lg:hidden p-2 text-[#9A9A9A] hover:text-white bg-white/5 rounded-[8px]"
             >
               <Menu size={20} />
             </button>
-            <h1 className="text-lg font-semibold text-white mr-2 lg:block hidden">
-              {currentRouteName}
-            </h1>
-            <div className="hidden lg:flex relative w-80">
+            <div className="hidden lg:flex relative w-64">
               <Search
                 className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9A9A9A]"
-                size={16}
+                size={14}
               />
               <input
                 type="text"
                 placeholder="Search products..."
-                className="w-full bg-[#0D0D0D] text-sm text-white rounded-full py-2 pl-10 pr-4 outline-none border border-white/5 focus:border-[#C6FF3D]/50 transition-colors"
+                className="w-full bg-[#111111] text-[13px] text-white rounded-full py-2 pl-9 pr-4 outline-none border border-transparent focus:border-[#C6FF3D]/50 transition-colors"
               />
             </div>
           </div>
-          <div className="flex items-center gap-5">
-            <button className="relative text-[#9A9A9A] hover:text-white transition-colors">
+
+          {/* Right actions */}
+          <div className="flex items-center gap-4">
+            <button className="text-[#9A9A9A] hover:text-white transition-colors relative">
               <Bell size={20} />
-              <span className="absolute top-0 right-0 w-2 h-2 bg-[#C6FF3D] rounded-full border-2 border-black" />
+              <span className="absolute top-0 right-0 w-2 h-2 bg-[#C6FF3D] rounded-full border-2 border-[#000000]" />
             </button>
-            <div className="w-8 h-8 rounded-full bg-[#C6FF3D] flex items-center justify-center">
-              <span className="text-[#0D0D0D] text-xs font-black uppercase">
-                {profile?.full_name?.charAt(0) ?? '?'}
+
+            <button
+              onClick={handleLogout}
+              title="Logout"
+              className="w-8 h-8 rounded-full bg-[#C6FF3D] flex items-center justify-center hover:opacity-90 transition-opacity"
+            >
+              <span className="text-[#0D0D0D] text-[13px] font-black uppercase">
+                {profile?.full_name?.charAt(0) ?? 'A'}
               </span>
-            </div>
+            </button>
           </div>
         </header>
 
