@@ -42,7 +42,7 @@ export const Route = createFileRoute('/_admin')({
 })
 
 const NAV_ITEMS = [
-  { label: 'Dashboard', icon: LayoutDashboard, to: '/dashboard' },
+  { label: 'Dashboard', icon: LayoutDashboard, to: '/admin/dashboard' },
   { label: 'Products', icon: Package, to: '/admin/products' },
   { label: 'Orders', icon: ShoppingCart, to: '/admin/orders' },
   { label: 'Customers', icon: Users, to: '/admin/customers' },

@@ -20,7 +20,7 @@ import {
 import { formatCurrency } from '@/lib/cartCalculations'
 import type { OrderStatus } from '@/lib/types'
 
-export const Route = createFileRoute('/_admin/dashboard')({
+export const Route = createFileRoute('/_admin/admin/dashboard')({
   component: AdminDashboardPage,
 })
 

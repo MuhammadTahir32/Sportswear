@@ -4,7 +4,17 @@ import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/hooks/useAuth'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
-import { User, Phone, Lock, Eye, EyeOff, Save, CheckCircle2, LogOut } from 'lucide-react'
+import {
+  User,
+  Phone,
+  Lock,
+  Eye,
+  EyeOff,
+  Save,
+  CheckCircle2,
+  LogOut,
+  LayoutDashboard,
+} from 'lucide-react'
 import { cn } from '@/lib/cn'
 
 export const Route = createFileRoute('/profile')({
@@ -23,7 +33,7 @@ type Tab = 'account' | 'security'
 
 function ProfilePage(): React.JSX.Element {
   const [activeTab, setActiveTab] = useState<Tab>('account')
-  const { signOut } = useAuth()
+  const { signOut, isAdmin } = useAuth()
   const navigate = useNavigate()
 
   const handleSignOut = async () => {
@@ -87,6 +97,19 @@ function ProfilePage(): React.JSX.Element {
           Sign Out
         </button>
       </div>
+
+      {/* Admin dashboard link */}
+      {isAdmin && (
+        <div className="mt-6">
+          <a
+            href="/admin/dashboard"
+            className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-[#0D0D0D] text-white text-sm font-semibold rounded-[10px] hover:bg-[#1a1a1a] transition-colors"
+          >
+            <LayoutDashboard size={18} />
+            Go to Admin Dashboard
+          </a>
+        </div>
+      )}
     </div>
   )
 }

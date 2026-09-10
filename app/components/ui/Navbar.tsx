@@ -9,6 +9,7 @@ import {
   Menu,
   LogOut,
   UserCircle,
+  LayoutDashboard,
 } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { Button } from '@/components/ui/Button'
@@ -46,7 +47,7 @@ export function Navbar({ cartCount: _cartCount }: NavbarProps): React.JSX.Elemen
 
   const { itemCount } = useCartContext()
   const cartCount = itemCount || _cartCount || 0
-  const { isAuthenticated, user, profile, signOut } = useAuth()
+  const { isAuthenticated, isAdmin, user, profile, signOut } = useAuth()
 
   useEffect(() => {
     const handleScroll = (): void => setScrolled(window.scrollY > 8)
@@ -209,6 +210,16 @@ export function Navbar({ cartCount: _cartCount }: NavbarProps): React.JSX.Elemen
                       <Heart size={16} className="text-[#9A9A9A]" />
                       Wishlist
                     </a>
+                    {isAdmin && (
+                      <a
+                        href="/admin/dashboard"
+                        className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[#0D0D0D] hover:bg-[#F7F7F7] transition-colors"
+                        onClick={() => setUserMenuOpen(false)}
+                      >
+                        <LayoutDashboard size={16} className="text-[#9A9A9A]" />
+                        Admin Panel
+                      </a>
+                    )}
                   </div>
 
                   {/* Sign out */}
@@ -325,6 +336,16 @@ export function Navbar({ cartCount: _cartCount }: NavbarProps): React.JSX.Elemen
             <Heart size={16} />
             My Wishlist
           </a>
+          {isAdmin && (
+            <a
+              href="/admin/dashboard"
+              className="flex items-center gap-2 py-3 text-[14px] font-[500] uppercase tracking-wide text-[#0D0D0D] hover:text-[#C6FF3D] transition-colors"
+              onClick={() => setMobileOpen(false)}
+            >
+              <LayoutDashboard size={16} />
+              Admin Panel
+            </a>
+          )}
           {/* Mobile sign out */}
           {isAuthenticated && (
             <button

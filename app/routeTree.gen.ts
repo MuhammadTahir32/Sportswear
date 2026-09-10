@@ -24,7 +24,6 @@ import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as SizeChartRouteImport } from './routes/size-chart'
 import { Route as WishlistRouteImport } from './routes/wishlist'
-import { Route as AdminDashboardRouteImport } from './routes/_admin/dashboard'
 import { Route as AuthForgotPasswordRouteImport } from './routes/_auth.forgot-password'
 import { Route as AuthResetPasswordRouteImport } from './routes/_auth.reset-password'
 import { Route as AuthSignInRouteImport } from './routes/_auth.sign-in'
@@ -35,6 +34,7 @@ import { Route as OrdersOrderIdRouteImport } from './routes/orders.$orderId'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 import { Route as AdminAdminCategoriesRouteImport } from './routes/_admin/admin.categories'
 import { Route as AdminAdminCouponsRouteImport } from './routes/_admin/admin.coupons'
+import { Route as AdminAdminDashboardRouteImport } from './routes/_admin/admin.dashboard'
 import { Route as AdminAdminOrdersRouteImport } from './routes/_admin/admin.orders'
 import { Route as AdminAdminProductsRouteImport } from './routes/_admin/admin.products'
 import { Route as AdminAdminOrdersOrderIdRouteImport } from './routes/_admin/admin.orders.$orderId'
@@ -113,11 +113,6 @@ const WishlistRoute = WishlistRouteImport.update({
   path: '/wishlist',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminDashboardRoute = AdminDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
 const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
   id: '/forgot-password',
   path: '/forgot-password',
@@ -169,6 +164,11 @@ const AdminAdminCouponsRoute = AdminAdminCouponsRouteImport.update({
   path: '/admin/coupons',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminAdminDashboardRoute = AdminAdminDashboardRouteImport.update({
+  id: '/admin/dashboard',
+  path: '/admin/dashboard',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminAdminOrdersRoute = AdminAdminOrdersRouteImport.update({
   id: '/admin/orders',
   path: '/admin/orders',
@@ -205,7 +205,6 @@ export interface FileRoutesByFullPath {
   '/reviews': typeof ReviewsRoute
   '/size-chart': typeof SizeChartRoute
   '/wishlist': typeof WishlistRoute
-  '/dashboard': typeof AdminDashboardRoute
   '/forgot-password': typeof AuthForgotPasswordRoute
   '/reset-password': typeof AuthResetPasswordRoute
   '/sign-in': typeof AuthSignInRoute
@@ -216,6 +215,7 @@ export interface FileRoutesByFullPath {
   '/products/$slug': typeof ProductsSlugRoute
   '/admin/categories': typeof AdminAdminCategoriesRoute
   '/admin/coupons': typeof AdminAdminCouponsRoute
+  '/admin/dashboard': typeof AdminAdminDashboardRoute
   '/admin/orders': typeof AdminAdminOrdersRouteWithChildren
   '/admin/products': typeof AdminAdminProductsRouteWithChildren
   '/admin/orders/$orderId': typeof AdminAdminOrdersOrderIdRoute
@@ -235,7 +235,6 @@ export interface FileRoutesByTo {
   '/reviews': typeof ReviewsRoute
   '/size-chart': typeof SizeChartRoute
   '/wishlist': typeof WishlistRoute
-  '/dashboard': typeof AdminDashboardRoute
   '/forgot-password': typeof AuthForgotPasswordRoute
   '/reset-password': typeof AuthResetPasswordRoute
   '/sign-in': typeof AuthSignInRoute
@@ -246,6 +245,7 @@ export interface FileRoutesByTo {
   '/products/$slug': typeof ProductsSlugRoute
   '/admin/categories': typeof AdminAdminCategoriesRoute
   '/admin/coupons': typeof AdminAdminCouponsRoute
+  '/admin/dashboard': typeof AdminAdminDashboardRoute
   '/admin/orders': typeof AdminAdminOrdersRouteWithChildren
   '/admin/products': typeof AdminAdminProductsRouteWithChildren
   '/admin/orders/$orderId': typeof AdminAdminOrdersOrderIdRoute
@@ -268,7 +268,6 @@ export interface FileRoutesById {
   '/reviews': typeof ReviewsRoute
   '/size-chart': typeof SizeChartRoute
   '/wishlist': typeof WishlistRoute
-  '/_admin/dashboard': typeof AdminDashboardRoute
   '/_auth/forgot-password': typeof AuthForgotPasswordRoute
   '/_auth/reset-password': typeof AuthResetPasswordRoute
   '/_auth/sign-in': typeof AuthSignInRoute
@@ -279,6 +278,7 @@ export interface FileRoutesById {
   '/products/$slug': typeof ProductsSlugRoute
   '/_admin/admin/categories': typeof AdminAdminCategoriesRoute
   '/_admin/admin/coupons': typeof AdminAdminCouponsRoute
+  '/_admin/admin/dashboard': typeof AdminAdminDashboardRoute
   '/_admin/admin/orders': typeof AdminAdminOrdersRouteWithChildren
   '/_admin/admin/products': typeof AdminAdminProductsRouteWithChildren
   '/_admin/admin/orders/$orderId': typeof AdminAdminOrdersOrderIdRoute
@@ -300,7 +300,6 @@ export interface FileRouteTypes {
     | '/reviews'
     | '/size-chart'
     | '/wishlist'
-    | '/dashboard'
     | '/forgot-password'
     | '/reset-password'
     | '/sign-in'
@@ -311,6 +310,7 @@ export interface FileRouteTypes {
     | '/products/$slug'
     | '/admin/categories'
     | '/admin/coupons'
+    | '/admin/dashboard'
     | '/admin/orders'
     | '/admin/products'
     | '/admin/orders/$orderId'
@@ -330,7 +330,6 @@ export interface FileRouteTypes {
     | '/reviews'
     | '/size-chart'
     | '/wishlist'
-    | '/dashboard'
     | '/forgot-password'
     | '/reset-password'
     | '/sign-in'
@@ -341,6 +340,7 @@ export interface FileRouteTypes {
     | '/products/$slug'
     | '/admin/categories'
     | '/admin/coupons'
+    | '/admin/dashboard'
     | '/admin/orders'
     | '/admin/products'
     | '/admin/orders/$orderId'
@@ -362,7 +362,6 @@ export interface FileRouteTypes {
     | '/reviews'
     | '/size-chart'
     | '/wishlist'
-    | '/_admin/dashboard'
     | '/_auth/forgot-password'
     | '/_auth/reset-password'
     | '/_auth/sign-in'
@@ -373,6 +372,7 @@ export interface FileRouteTypes {
     | '/products/$slug'
     | '/_admin/admin/categories'
     | '/_admin/admin/coupons'
+    | '/_admin/admin/dashboard'
     | '/_admin/admin/orders'
     | '/_admin/admin/products'
     | '/_admin/admin/orders/$orderId'
@@ -505,13 +505,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WishlistRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_admin/dashboard': {
-      id: '/_admin/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AdminDashboardRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
     '/_auth/forgot-password': {
       id: '/_auth/forgot-password'
       path: '/forgot-password'
@@ -582,6 +575,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminCouponsRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/_admin/admin/dashboard': {
+      id: '/_admin/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminAdminDashboardRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/_admin/admin/orders': {
       id: '/_admin/admin/orders'
       path: '/admin/orders'
@@ -636,17 +636,17 @@ const AdminAdminProductsRouteWithChildren =
   AdminAdminProductsRoute._addFileChildren(AdminAdminProductsRouteChildren)
 
 interface AdminRouteRouteChildren {
-  AdminDashboardRoute: typeof AdminDashboardRoute
   AdminAdminCategoriesRoute: typeof AdminAdminCategoriesRoute
   AdminAdminCouponsRoute: typeof AdminAdminCouponsRoute
+  AdminAdminDashboardRoute: typeof AdminAdminDashboardRoute
   AdminAdminOrdersRoute: typeof AdminAdminOrdersRouteWithChildren
   AdminAdminProductsRoute: typeof AdminAdminProductsRouteWithChildren
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
-  AdminDashboardRoute: AdminDashboardRoute,
   AdminAdminCategoriesRoute: AdminAdminCategoriesRoute,
   AdminAdminCouponsRoute: AdminAdminCouponsRoute,
+  AdminAdminDashboardRoute: AdminAdminDashboardRoute,
   AdminAdminOrdersRoute: AdminAdminOrdersRouteWithChildren,
   AdminAdminProductsRoute: AdminAdminProductsRouteWithChildren,
 }
