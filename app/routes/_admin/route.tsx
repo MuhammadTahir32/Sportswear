@@ -11,7 +11,6 @@ import {
   Star,
   Settings,
   Menu,
-  X,
   Search,
   Bell,
 } from 'lucide-react'
@@ -62,7 +61,7 @@ function AdminLayout(): React.JSX.Element {
   }
 
   return (
-    <div className="flex h-screen bg-[#000000] overflow-hidden text-white">
+    <div className="flex h-screen overflow-hidden text-white" style={{ background: '#0A0F0A' }}>
       {/* ── Sidebar ──────────────────────────────────────────────── */}
       {/* Mobile overlay */}
       {sidebarOpen && (
@@ -74,72 +73,72 @@ function AdminLayout(): React.JSX.Element {
 
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-30 w-64 bg-[#0A0A0A] flex flex-col transition-transform duration-300 border-r border-white/5',
+          'fixed inset-y-0 left-0 z-30 w-[260px] flex flex-col transition-transform duration-300',
           'lg:relative lg:translate-x-0',
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         )}
+        style={{
+          background: 'linear-gradient(180deg, #0A0F0A 0%, #0D120D 50%, #111A11 100%)',
+        }}
       >
         {/* Logo */}
-        <div className="p-6 pb-2 flex items-center justify-between">
-          <div className="flex flex-col">
-            <div className="flex items-baseline gap-1">
-              <span
-                className="text-[#C6FF3D] font-black text-[26px] uppercase tracking-tighter leading-none"
-                style={{ fontFamily: '"Anton", Impact, "Arial Black", sans-serif' }}
-              >
-                STRIDE
-              </span>
-              <span
-                className="text-white font-black text-[26px] uppercase tracking-tighter leading-none"
-                style={{ fontFamily: '"Anton", Impact, "Arial Black", sans-serif' }}
-              >
-                WEAR
-              </span>
-            </div>
-            <span className="text-[#9A9A9A] text-[9px] uppercase tracking-widest font-bold mt-1">
-              Premium Sportswear
+        <div className="px-7 pt-7 pb-2">
+          <div className="flex items-baseline gap-1.5">
+            <span
+              className="text-[#C6FF3D] font-black text-[28px] uppercase tracking-tight leading-none"
+              style={{ fontFamily: '"Anton", Impact, "Arial Black", sans-serif' }}
+            >
+              STRIDE
+            </span>
+            <span
+              className="text-white font-black text-[28px] uppercase tracking-tight leading-none"
+              style={{ fontFamily: '"Anton", Impact, "Arial Black", sans-serif' }}
+            >
+              WEAR
             </span>
           </div>
-          <button
-            onClick={() => setSidebarOpen(false)}
-            className="lg:hidden text-[#9A9A9A] hover:text-white"
-          >
-            <X size={20} />
-          </button>
+          <span className="text-[#6A6A6A] text-[9px] uppercase tracking-[3px] font-bold mt-1 block">
+            Premium Sportswear
+          </span>
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 py-6 space-y-1.5 overflow-y-auto z-10">
+        <nav className="flex-1 py-8 space-y-1 overflow-y-auto z-10">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.to}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               to={item.to as any}
-              className="flex items-center gap-3 mx-4 px-4 py-3 text-[14px] font-semibold transition-all duration-300 rounded-[12px] border border-transparent text-[#9A9A9A] hover:text-white hover:bg-white/5"
+              className="flex items-center gap-3.5 mx-5 px-4 py-3 text-[14px] font-semibold transition-all duration-200 rounded-[10px] text-[#8A8A8A] hover:text-white hover:bg-white/5"
               activeProps={{
-                className:
-                  '!text-[#C6FF3D] !border-[#C6FF3D] !bg-gradient-to-r from-[#C6FF3D]/10 to-transparent !shadow-[0_0_15px_rgba(198,255,61,0.15)] hover:!bg-none',
+                className: '!text-[#0D0D0D] !bg-[#C6FF3D] !font-bold hover:!bg-[#b8e830]',
               }}
             >
-              <item.icon size={18} className="stroke-[2px]" />
+              <item.icon size={18} strokeWidth={2} />
               {item.label}
             </Link>
           ))}
         </nav>
 
         {/* Stronger Every Day Graphic */}
-        <div className="mt-auto relative z-0 h-[160px] overflow-hidden">
-          {/* Neon Glow Aura */}
-          <div className="absolute bottom-[-30px] left-[-30px] w-[200px] h-[200px] bg-[radial-gradient(circle_at_center,rgba(198,255,61,0.15)_0%,transparent_60%)] pointer-events-none"></div>
+        <div className="mt-auto relative z-0 h-[180px] overflow-hidden">
+          {/* Green Glow Aura */}
+          <div
+            className="absolute bottom-[-40px] left-[-40px] w-[220px] h-[220px] pointer-events-none"
+            style={{
+              background:
+                'radial-gradient(circle at center, rgba(198,255,61,0.12) 0%, rgba(198,255,61,0.04) 40%, transparent 70%)',
+            }}
+          />
 
-          <div className="absolute bottom-6 left-6 pointer-events-none">
+          <div className="absolute bottom-8 left-7 pointer-events-none">
             <div
-              className="text-[#C6FF3D] font-bold leading-[1]"
+              className="text-[#C6FF3D] font-bold leading-[0.95]"
               style={{
-                fontSize: '26px',
+                fontSize: '30px',
                 fontFamily: '"Caveat", "Dancing Script", cursive, sans-serif',
-                transform: 'rotate(-10deg)',
-                textShadow: '0 0 15px rgba(198,255,61,0.6)',
+                transform: 'rotate(-8deg)',
+                textShadow: '0 0 20px rgba(198,255,61,0.5), 0 0 40px rgba(198,255,61,0.2)',
               }}
             >
               Stronger
@@ -151,9 +150,15 @@ function AdminLayout(): React.JSX.Element {
       </aside>
 
       {/* ── Main Content ─────────────────────────────────────────── */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#000000]">
+      <div
+        className="flex-1 flex flex-col min-w-0 overflow-hidden"
+        style={{ background: '#0A0F0A' }}
+      >
         {/* Topbar */}
-        <header className="h-[64px] flex items-center px-4 lg:px-8 shrink-0 justify-between">
+        <header
+          className="h-[64px] flex items-center px-4 lg:px-8 shrink-0 justify-between"
+          style={{ background: '#0A0F0A' }}
+        >
           <div className="flex items-center gap-4">
             {/* Mobile Menu Button */}
             <button
@@ -170,7 +175,7 @@ function AdminLayout(): React.JSX.Element {
               <input
                 type="text"
                 placeholder="Search products..."
-                className="w-full bg-[#111111] text-[13px] text-white rounded-full py-2 pl-9 pr-4 outline-none border border-transparent focus:border-[#C6FF3D]/50 transition-colors"
+                className="w-full bg-[#111811] text-[13px] text-white rounded-full py-2.5 pl-9 pr-4 outline-none border border-white/10 focus:border-[#C6FF3D]/50 transition-colors placeholder:text-[#6A6A6A]"
               />
             </div>
           </div>
@@ -179,7 +184,7 @@ function AdminLayout(): React.JSX.Element {
           <div className="flex items-center gap-4">
             <button className="text-[#9A9A9A] hover:text-white transition-colors relative">
               <Bell size={20} />
-              <span className="absolute top-0 right-0 w-2 h-2 bg-[#C6FF3D] rounded-full border-2 border-[#000000]" />
+              <span className="absolute top-0 right-0 w-2 h-2 bg-[#C6FF3D] rounded-full border-2 border-[#0A0F0A]" />
             </button>
 
             <button
