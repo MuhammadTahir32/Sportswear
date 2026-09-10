@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { Package, Plus, Search, Filter, ArrowUpDown, Edit, Trash2, Loader2 } from 'lucide-react'
+import { Package, Plus, Search, Edit, Trash2, Loader2 } from 'lucide-react'
 import {
   useAdminProducts,
   useDeleteProduct,
@@ -15,14 +15,6 @@ import type { ProductStatus } from '@/lib/types'
 export const Route = createFileRoute('/_admin/admin/products')({
   component: AdminProductListPage,
 })
-
-const STATUS_COLORS: Record<ProductStatus, string> = {
-  active: 'bg-green-500/10 text-green-500',
-  draft: 'bg-yellow-500/10 text-yellow-500',
-  archived: 'bg-white/10 text-[#9A9A9A]',
-}
-
-const LOW_STOCK_THRESHOLD = 5
 
 function AdminProductListPage(): React.JSX.Element {
   const [filters, setFilters] = useState<AdminProductFilters>({
@@ -40,25 +32,10 @@ function AdminProductListPage(): React.JSX.Element {
     setFilters((prev) => ({ ...prev, search: searchInput || undefined }))
   }
 
-  function toggleSort(field: 'created_at' | 'name' | 'base_price') {
-    setFilters((prev) => ({
-      ...prev,
-      sortBy: field,
-      sortDir: prev.sortBy === field && prev.sortDir === 'desc' ? 'asc' : 'desc',
-    }))
-  }
-
   async function handleDelete(id: string) {
     await deleteProduct.mutateAsync(id)
     setDeleteId(null)
   }
-
-  // Stats
-  const totalProducts = products.length
-  const activeCount = products.filter((p) => p.status === 'active').length
-  const lowStockCount = products.filter((p) =>
-    p.variants.some((v) => v.stock_qty <= LOW_STOCK_THRESHOLD)
-  ).length
 
   return (
     <div>
@@ -66,94 +43,89 @@ function AdminProductListPage(): React.JSX.Element {
         <div>
           <h2 className="text-xl font-bold text-white mb-1">Products</h2>
           <p className="text-[13px] text-[#9A9A9A]">Manage your product inventory and details.</p>
+          <h2 className="text-2xl font-bold text-white">Products</h2>
+          <p className="text-[14px] text-[#9A9A9A] mt-1">
+            Manage your product inventory and details.
+          </p>
         </div>
         <Link
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           to={'/admin/products/new' as any}
         >
-          <Button className="bg-[#C6FF3D] hover:bg-[#b0e633] text-[#0D0D0D] text-[13px] font-bold px-4 py-2 rounded-[8px] h-auto flex items-center">
-            <Plus size={16} className="mr-1.5" />
+          <Button className="bg-[#C6FF3D] hover:bg-[#b0e633] text-[#0D0D0D] text-[13px] font-bold px-4 py-2 rounded-[8px] h-auto flex items-center shadow-[0_0_15px_rgba(198,255,61,0.2)]">
+            <Plus size={16} className="mr-1.5 stroke-[3px]" />
             Add Product
           </Button>
         </Link>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-[#0D0D0D] border border-white/5 rounded-[12px] p-5 border-l-2 border-l-[#C6FF3D]">
-          <p className="text-[12px] text-[#9A9A9A] mb-1">Total Products</p>
-          <p className="text-[24px] font-bold text-white leading-none">{totalProducts}</p>
-        </div>
-        <div className="bg-[#0D0D0D] border border-white/5 rounded-[12px] p-5 border-l-2 border-l-green-500">
-          <p className="text-[12px] text-[#9A9A9A] mb-1">Active</p>
-          <p className="text-[24px] font-bold text-white leading-none">{activeCount}</p>
-        </div>
-        <div
-          className={`bg-[#0D0D0D] border rounded-[12px] p-5 border-l-2 ${lowStockCount > 0 ? 'border-l-red-500 border-white/5' : 'border-l-white/5 border-white/5'}`}
-        >
-          <p className="text-[12px] text-[#9A9A9A] mb-1">Low Stock</p>
-          <p
-            className={`text-[24px] font-bold leading-none ${lowStockCount > 0 ? 'text-red-500' : 'text-white'}`}
-          >
-            {lowStockCount}
-          </p>
-        </div>
-      </div>
+      {/* Main Container */}
+      <div className="bg-[#0A0A0A] border border-white/5 rounded-[16px] overflow-hidden flex flex-col min-h-[500px]">
+        {/* Filters */}
+        <div className="flex flex-wrap items-center justify-between p-6 pb-2">
+          <div className="flex items-center gap-4 w-full md:w-auto">
+            <div className="relative w-full md:w-[320px]">
+              <Search
+                size={16}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9A9A9A]"
+              />
+              <input
+                type="text"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                placeholder="Search products..."
+                className="w-full h-[40px] pl-10 pr-4 bg-[#111] rounded-full text-[13px] text-white placeholder:text-[#9A9A9A] focus:outline-none border border-transparent focus:border-[#C6FF3D]/50 transition-colors"
+              />
+            </div>
+          </div>
 
-      {/* Filters */}
-      <div className="flex flex-wrap items-center gap-3 mb-5">
-        <div className="flex-1 min-w-[200px] relative">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9A9A9A]" />
-          <input
-            type="text"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-            placeholder="Search products…"
-            className="w-full h-[40px] pl-10 pr-4 bg-[#0D0D0D] border border-white/5 rounded-[8px] text-[13px] text-white placeholder:text-[#9A9A9A] focus:outline-none focus:border-[#C6FF3D]/50 transition-colors"
-          />
+          <div className="flex items-center gap-4 mt-4 md:mt-0">
+            <select
+              value={filters.category ?? ''}
+              onChange={(e) =>
+                setFilters((prev) => ({
+                  ...prev,
+                  category: e.target.value || undefined,
+                }))
+              }
+              className="h-[40px] px-4 bg-transparent border-none text-[13px] font-bold text-white focus:outline-none focus:ring-0 appearance-none cursor-pointer"
+            >
+              <option value="" className="bg-[#111]">
+                All Categories
+              </option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+
+            <select
+              value={filters.status ?? ''}
+              onChange={(e) =>
+                setFilters((prev) => ({
+                  ...prev,
+                  status: (e.target.value || undefined) as ProductStatus | undefined,
+                }))
+              }
+              className="h-[40px] px-4 bg-transparent border-none text-[13px] font-bold text-white focus:outline-none focus:ring-0 appearance-none cursor-pointer"
+            >
+              <option value="" className="bg-[#111]">
+                All Status
+              </option>
+              <option value="active" className="bg-[#111]">
+                Published
+              </option>
+              <option value="draft" className="bg-[#111]">
+                Draft
+              </option>
+              <option value="archived" className="bg-[#111]">
+                Archived
+              </option>
+            </select>
+          </div>
         </div>
-
-        <div className="relative">
-          <Filter size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9A9A9A]" />
-          <select
-            value={filters.status ?? ''}
-            onChange={(e) =>
-              setFilters((prev) => ({
-                ...prev,
-                status: (e.target.value || undefined) as ProductStatus | undefined,
-              }))
-            }
-            className="h-[40px] pl-9 pr-8 bg-[#0D0D0D] border border-white/5 rounded-[8px] text-[13px] text-white focus:outline-none focus:border-[#C6FF3D]/50 appearance-none cursor-pointer"
-          >
-            <option value="">All Status</option>
-            <option value="active">Active</option>
-            <option value="draft">Draft</option>
-            <option value="archived">Archived</option>
-          </select>
-        </div>
-
-        <select
-          value={filters.category ?? ''}
-          onChange={(e) =>
-            setFilters((prev) => ({
-              ...prev,
-              category: e.target.value || undefined,
-            }))
-          }
-          className="h-[40px] px-4 bg-[#0D0D0D] border border-white/5 rounded-[8px] text-[13px] text-white focus:outline-none focus:border-[#C6FF3D]/50 appearance-none cursor-pointer"
-        >
-          <option value="">All Categories</option>
-          {categories.map((cat) => (
-            <option key={cat.id} value={cat.id}>
-              {cat.name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Table */}
-      <div className="bg-[#0D0D0D] border border-white/5 rounded-[12px] overflow-hidden">
         {isLoading ? (
           <div className="flex items-center justify-center py-20">
             <Loader2 size={24} className="animate-spin text-[#9A9A9A]" />
@@ -176,131 +148,105 @@ function AdminProductListPage(): React.JSX.Element {
             </Link>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
+          <div className="overflow-x-auto mt-4">
+            <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-white/5 bg-white/5">
-                  <th className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A]">
-                    Product
+                <tr className="border-b border-white/5 text-[10px] font-bold uppercase tracking-widest text-[#9A9A9A]">
+                  <th className="px-6 py-4 w-12">
+                    <div className="w-4 h-4 border border-[#9A9A9A]/40 rounded-[4px] hover:border-[#C6FF3D] cursor-pointer transition-colors"></div>
                   </th>
-                  <th className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A]">
-                    Status
-                  </th>
-                  <th
-                    className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A] cursor-pointer hover:text-white"
-                    onClick={() => toggleSort('base_price')}
-                  >
-                    <span className="flex items-center gap-1">
-                      Price <ArrowUpDown size={12} />
-                    </span>
-                  </th>
-                  <th className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A]">
-                    Stock
-                  </th>
-                  <th className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A]">
-                    Category
-                  </th>
-                  <th className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A] text-right">
-                    Actions
-                  </th>
+                  <th className="px-6 py-4 font-semibold">Product</th>
+                  <th className="px-6 py-4 font-semibold">Price</th>
+                  <th className="px-6 py-4 font-semibold">Stock</th>
+                  <th className="px-6 py-4 font-semibold">Status</th>
+                  <th className="px-6 py-4 font-semibold text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
                 {products.map((product) => {
                   const totalStock = product.variants.reduce((sum, v) => sum + v.stock_qty, 0)
-                  const hasLowStock = product.variants.some(
-                    (v) => v.stock_qty <= LOW_STOCK_THRESHOLD
-                  )
-                  const image = product.images[0]
+                  const image = product.images?.[0]
+
+                  const isPublished = product.status === 'active'
 
                   return (
                     <tr key={product.id} className="hover:bg-white/5 transition-colors group">
-                      <td className="px-5 py-4">
+                      <td className="px-6 py-4">
+                        <div className="w-4 h-4 border border-[#9A9A9A]/40 rounded-[4px] hover:border-[#C6FF3D] cursor-pointer transition-colors"></div>
+                      </td>
+                      <td className="px-6 py-4">
                         <div className="flex items-center gap-4">
-                          <div className="w-[48px] h-[48px] bg-[#1A1A1A] rounded-[8px] overflow-hidden flex-shrink-0">
+                          <div className="w-10 h-10 bg-white/5 rounded-[8px] overflow-hidden flex-shrink-0">
                             {image ? (
                               <img
                                 src={getProductImageUrl(image.storage_path) || ''}
                                 alt=""
-                                className="w-full h-full object-contain p-0.5"
+                                className="w-full h-full object-contain p-1"
                               />
                             ) : (
-                              <div className="w-full h-full flex items-center justify-center">
-                                <Package size={16} className="text-[#9A9A9A]" />
+                              <div className="w-full h-full flex items-center justify-center text-[#9A9A9A]">
+                                <Package size={16} />
                               </div>
                             )}
                           </div>
-                          <div className="min-w-0">
-                            <p className="text-[13px] font-semibold text-white truncate max-w-[200px] mb-0.5">
+                          <div className="min-w-0 flex flex-col justify-center">
+                            <Link
+                              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                              to={`/admin/products/${product.id}` as any}
+                              className="text-[13px] font-bold text-white hover:text-[#C6FF3D] transition-colors truncate block"
+                            >
                               {product.name}
-                            </p>
-                            <p className="text-[11px] text-[#9A9A9A]">
-                              {product.variants.length} variants
+                            </Link>
+                            <p className="text-[11px] font-medium text-[#9A9A9A]">
+                              {product.category?.name ?? '—'}
                             </p>
                           </div>
                         </div>
                       </td>
-                      <td className="px-5 py-4">
-                        <span
-                          className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-[4px] ${STATUS_COLORS[product.status]}`}
-                        >
-                          {product.status}
-                        </span>
-                      </td>
-                      <td className="px-5 py-4">
+                      <td className="px-6 py-4">
                         <div className="flex flex-col">
-                          {product.sale_price ? (
-                            <>
-                              <span className="text-[13px] font-semibold text-[#C6FF3D]">
-                                {formatCurrency(product.sale_price)}
-                              </span>
-                              <span className="text-[11px] line-through text-[#9A9A9A]">
-                                {formatCurrency(product.base_price)}
-                              </span>
-                            </>
-                          ) : (
-                            <span className="text-[13px] font-semibold text-white">
-                              {formatCurrency(product.base_price)}
-                            </span>
-                          )}
-                        </div>
-                      </td>
-                      <td className="px-5 py-4">
-                        <div className="flex items-center gap-1.5">
-                          <span
-                            className={`text-[13px] font-semibold ${hasLowStock ? 'text-red-500' : 'text-white'}`}
-                          >
-                            {totalStock}
+                          <span className="text-[13px] font-bold text-white">
+                            {formatCurrency(product.sale_price ?? product.base_price)}
                           </span>
                         </div>
                       </td>
-                      <td className="px-5 py-4">
-                        <span className="text-[12px] text-[#9A9A9A]">
-                          {product.category?.name ?? '—'}
+                      <td className="px-6 py-4">
+                        <span className="text-[12px] font-medium text-[#9A9A9A]">
+                          In Stock ({totalStock})
                         </span>
                       </td>
-                      <td className="px-5 py-4 text-right">
+                      <td className="px-6 py-4">
+                        <span
+                          className={`text-[10px] font-bold tracking-widest px-2.5 py-1 rounded-[6px] ${
+                            isPublished
+                              ? 'bg-green-500/10 text-green-500'
+                              : 'bg-white/10 text-white'
+                          }`}
+                        >
+                          {isPublished ? 'Published' : 'Draft'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-right">
                         <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                           <Link
                             // eslint-disable-next-line @typescript-eslint/no-explicit-any
                             to={`/admin/products/${product.id}` as any}
-                            className="p-2 text-[#9A9A9A] hover:text-[#C6FF3D] hover:bg-white/10 rounded-[6px] transition-colors"
-                            title="Edit Product"
+                            className="p-1.5 text-[#9A9A9A] hover:text-[#C6FF3D] hover:bg-white/10 rounded-[6px] transition-colors"
                           >
-                            <Edit size={16} />
+                            <Edit size={14} />
                           </Link>
                           {deleteId === product.id ? (
-                            <div className="flex items-center gap-2 mr-2">
+                            <div className="flex items-center gap-2">
                               <button
                                 onClick={() => handleDelete(product.id)}
                                 disabled={deleteProduct.isPending}
-                                className="text-[11px] font-semibold text-red-500 hover:text-red-400"
+                                className="text-[11px] text-red-500 font-semibold hover:text-red-400"
                               >
-                                {deleteProduct.isPending ? '…' : 'Confirm'}
+                                Confirm
                               </button>
                               <button
                                 onClick={() => setDeleteId(null)}
-                                className="text-[11px] font-semibold text-[#9A9A9A] hover:text-white"
+                                className="text-[11px] text-[#9A9A9A] font-semibold hover:text-white"
                               >
                                 Cancel
                               </button>
@@ -308,10 +254,9 @@ function AdminProductListPage(): React.JSX.Element {
                           ) : (
                             <button
                               onClick={() => setDeleteId(product.id)}
-                              className="p-2 text-[#9A9A9A] hover:text-red-500 hover:bg-red-500/10 rounded-[6px] transition-colors"
-                              title="Delete Product"
+                              className="p-1.5 text-[#9A9A9A] hover:text-red-500 hover:bg-red-500/10 rounded-[6px] transition-colors"
                             >
-                              <Trash2 size={16} />
+                              <Trash2 size={14} />
                             </button>
                           )}
                         </div>
