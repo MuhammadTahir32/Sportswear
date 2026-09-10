@@ -1,4 +1,11 @@
-import { createFileRoute, Outlet, redirect, Link, useNavigate } from '@tanstack/react-router'
+import {
+  createFileRoute,
+  Outlet,
+  redirect,
+  Link,
+  useNavigate,
+  useLocation,
+} from '@tanstack/react-router'
 import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/hooks/useAuth'
@@ -11,9 +18,10 @@ import {
   Star,
   Settings,
   LogOut,
-  ChevronRight,
   Menu,
   X,
+  Search,
+  Bell,
 } from 'lucide-react'
 import { cn } from '@/lib/cn'
 
@@ -61,8 +69,13 @@ function AdminLayout(): React.JSX.Element {
     navigate({ to: '/sign-in' })
   }
 
+  const location = useLocation()
+  const currentPath = location.pathname
+  const currentRouteName =
+    NAV_ITEMS.find((item) => currentPath.startsWith(item.to))?.label || 'Dashboard'
+
   return (
-    <div className="flex h-screen bg-[#F7F7F7] overflow-hidden">
+    <div className="flex h-screen bg-[#000000] overflow-hidden text-white">
       {/* ── Sidebar ──────────────────────────────────────────────── */}
       {/* Mobile overlay */}
       {sidebarOpen && (
@@ -80,7 +93,7 @@ function AdminLayout(): React.JSX.Element {
         )}
       >
         {/* Logo */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+        <div className="flex items-center justify-between px-6 py-6 border-b border-white/5">
           <div className="flex items-baseline gap-1">
             <span
               className="text-[#C6FF3D] font-black text-xl uppercase tracking-tight"
@@ -103,7 +116,7 @@ function AdminLayout(): React.JSX.Element {
           </button>
         </div>
 
-        <p className="px-6 py-2 text-[10px] uppercase tracking-widest text-[#4A4A4A] font-semibold">
+        <p className="px-6 py-4 text-[10px] uppercase tracking-widest text-white/40 font-semibold">
           Admin Panel
         </p>
 
@@ -116,22 +129,21 @@ function AdminLayout(): React.JSX.Element {
               to={item.to as any}
               className={cn(
                 'flex items-center gap-3 px-3 py-2.5 rounded-[8px] text-sm font-medium transition-all duration-150',
-                'text-[#9A9A9A] hover:text-white hover:bg-white/10',
+                'text-white/60 hover:text-white hover:bg-white/10',
                 '[&.active]:text-[#0D0D0D] [&.active]:bg-[#C6FF3D] [&.active]:font-bold'
               )}
             >
               <item.icon size={18} />
               {item.label}
-              <ChevronRight size={14} className="ml-auto opacity-40" />
             </Link>
           ))}
         </nav>
 
         {/* User / Logout */}
-        <div className="border-t border-white/10 p-4">
+        <div className="mt-auto border-t border-white/5 p-4">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-8 h-8 rounded-full bg-[#C6FF3D] flex items-center justify-center">
-              <span className="text-[#0D0D0D] text-xs font-black uppercase">
+            <div className="w-9 h-9 rounded-full bg-[#C6FF3D] flex items-center justify-center shrink-0">
+              <span className="text-[#0D0D0D] text-sm font-black uppercase">
                 {profile?.full_name?.charAt(0) ?? '?'}
               </span>
             </div>
@@ -139,12 +151,12 @@ function AdminLayout(): React.JSX.Element {
               <p className="text-white text-xs font-semibold truncate">
                 {profile?.full_name ?? 'Admin'}
               </p>
-              <p className="text-[#4A4A4A] text-[10px] uppercase tracking-wider">{profile?.role}</p>
+              <p className="text-white/40 text-[10px] uppercase tracking-wider">{profile?.role}</p>
             </div>
           </div>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-2 px-3 py-2 rounded-[8px] text-sm text-[#9A9A9A] hover:text-white hover:bg-white/10 transition-colors duration-150"
+            className="w-full flex items-center gap-2 px-3 py-2 rounded-[8px] text-sm text-white/60 hover:text-white hover:bg-white/10 transition-colors duration-150"
           >
             <LogOut size={16} />
             Sign out
@@ -153,25 +165,45 @@ function AdminLayout(): React.JSX.Element {
       </aside>
 
       {/* ── Main Content ─────────────────────────────────────────── */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#000000]">
         {/* Topbar */}
-        <header className="h-14 bg-white border-b border-[#EFEFEF] flex items-center px-4 lg:px-6 shrink-0">
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="lg:hidden mr-3 text-[#4A4A4A] hover:text-[#0D0D0D]"
-          >
-            <Menu size={20} />
-          </button>
-          <h1 className="text-sm font-semibold text-[#0D0D0D] flex-1">Admin Dashboard</h1>
-          <Link
-            to="/"
-            className="text-xs text-[#9A9A9A] hover:text-[#0D0D0D] transition-colors font-medium"
-          >
-            ← View Store
-          </Link>
+        <header className="h-[72px] flex items-center px-4 lg:px-8 shrink-0 justify-between">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="lg:hidden text-[#9A9A9A] hover:text-white"
+            >
+              <Menu size={20} />
+            </button>
+            <h1 className="text-lg font-semibold text-white mr-2 lg:block hidden">
+              {currentRouteName}
+            </h1>
+            <div className="hidden lg:flex relative w-80">
+              <Search
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9A9A9A]"
+                size={16}
+              />
+              <input
+                type="text"
+                placeholder="Search products..."
+                className="w-full bg-[#0D0D0D] text-sm text-white rounded-full py-2 pl-10 pr-4 outline-none border border-white/5 focus:border-[#C6FF3D]/50 transition-colors"
+              />
+            </div>
+          </div>
+          <div className="flex items-center gap-5">
+            <button className="relative text-[#9A9A9A] hover:text-white transition-colors">
+              <Bell size={20} />
+              <span className="absolute top-0 right-0 w-2 h-2 bg-[#C6FF3D] rounded-full border-2 border-black" />
+            </button>
+            <div className="w-8 h-8 rounded-full bg-[#C6FF3D] flex items-center justify-center">
+              <span className="text-[#0D0D0D] text-xs font-black uppercase">
+                {profile?.full_name?.charAt(0) ?? '?'}
+              </span>
+            </div>
+          </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-4 lg:p-6">
+        <main className="flex-1 overflow-y-auto px-4 pb-4 lg:px-8 lg:pb-8">
           <Outlet />
         </main>
       </div>

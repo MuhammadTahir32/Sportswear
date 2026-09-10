@@ -18,15 +18,17 @@ function RootLayout(): React.JSX.Element {
     '/verify',
   ].some((path) => location.pathname.startsWith(path))
 
+  const isAdminPage = location.pathname.startsWith('/admin')
+
   return (
     <CartProvider>
       <div className="flex flex-col min-h-screen">
-        <AnnouncementBar />
-        <Navbar />
+        {!isAdminPage && <AnnouncementBar />}
+        {!isAdminPage && <Navbar />}
         <main className="flex-1 w-full flex flex-col">
           <Outlet />
         </main>
-        {!isAuthPage && <Footer />}
+        {!isAuthPage && !isAdminPage && <Footer />}
       </div>
     </CartProvider>
   )
