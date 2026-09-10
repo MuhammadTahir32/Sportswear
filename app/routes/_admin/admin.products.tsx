@@ -1,15 +1,6 @@
 import { useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import {
-  Plus,
-  Search,
-  Filter,
-  ArrowUpDown,
-  Edit,
-  Trash2,
-  AlertTriangle,
-  Loader2,
-} from 'lucide-react'
+import { Package, Plus, Search, Filter, ArrowUpDown, Edit, Trash2, Loader2 } from 'lucide-react'
 import {
   useAdminProducts,
   useDeleteProduct,
@@ -18,6 +9,7 @@ import {
 } from '@/hooks/useAdminProducts'
 import { Button } from '@/components/ui/Button'
 import { formatCurrency } from '@/lib/cartCalculations'
+import { getProductImageUrl } from '@/lib/supabase'
 import type { ProductStatus } from '@/lib/types'
 
 export const Route = createFileRoute('/_admin/admin/products')({
@@ -25,9 +17,9 @@ export const Route = createFileRoute('/_admin/admin/products')({
 })
 
 const STATUS_COLORS: Record<ProductStatus, string> = {
-  active: 'bg-green-50 text-green-700',
-  draft: 'bg-yellow-50 text-yellow-700',
-  archived: 'bg-gray-100 text-gray-600',
+  active: 'bg-green-500/10 text-green-500',
+  draft: 'bg-yellow-500/10 text-yellow-500',
+  archived: 'bg-white/10 text-[#9A9A9A]',
 }
 
 const LOW_STOCK_THRESHOLD = 5
@@ -71,12 +63,15 @@ function AdminProductListPage(): React.JSX.Element {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-[20px] font-bold text-[#0D0D0D]">Products</h2>
+        <div>
+          <h2 className="text-xl font-bold text-white mb-1">Products</h2>
+          <p className="text-[13px] text-[#9A9A9A]">Manage your product inventory and details.</p>
+        </div>
         <Link
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           to={'/admin/products/new' as any}
         >
-          <Button variant="primary" size="sm">
+          <Button className="bg-[#C6FF3D] hover:bg-[#b0e633] text-[#0D0D0D] text-[13px] font-bold px-4 py-2 rounded-[8px] h-auto flex items-center">
             <Plus size={16} className="mr-1.5" />
             Add Product
           </Button>
@@ -84,25 +79,21 @@ function AdminProductListPage(): React.JSX.Element {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="bg-white rounded-[10px] border border-[#E0E0E0] p-4">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A] mb-1">
-            Total Products
-          </p>
-          <p className="text-[24px] font-bold text-[#0D0D0D]">{totalProducts}</p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="bg-[#0D0D0D] border border-white/5 rounded-[12px] p-5 border-l-2 border-l-[#C6FF3D]">
+          <p className="text-[12px] text-[#9A9A9A] mb-1">Total Products</p>
+          <p className="text-[24px] font-bold text-white leading-none">{totalProducts}</p>
         </div>
-        <div className="bg-white rounded-[10px] border border-[#E0E0E0] p-4">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A] mb-1">
-            Active
-          </p>
-          <p className="text-[24px] font-bold text-green-600">{activeCount}</p>
+        <div className="bg-[#0D0D0D] border border-white/5 rounded-[12px] p-5 border-l-2 border-l-green-500">
+          <p className="text-[12px] text-[#9A9A9A] mb-1">Active</p>
+          <p className="text-[24px] font-bold text-white leading-none">{activeCount}</p>
         </div>
-        <div className="bg-white rounded-[10px] border border-[#E0E0E0] p-4">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A] mb-1">
-            Low Stock
-          </p>
+        <div
+          className={`bg-[#0D0D0D] border rounded-[12px] p-5 border-l-2 ${lowStockCount > 0 ? 'border-l-red-500 border-white/5' : 'border-l-white/5 border-white/5'}`}
+        >
+          <p className="text-[12px] text-[#9A9A9A] mb-1">Low Stock</p>
           <p
-            className={`text-[24px] font-bold ${lowStockCount > 0 ? 'text-red-500' : 'text-[#0D0D0D]'}`}
+            className={`text-[24px] font-bold leading-none ${lowStockCount > 0 ? 'text-red-500' : 'text-white'}`}
           >
             {lowStockCount}
           </p>
@@ -119,7 +110,7 @@ function AdminProductListPage(): React.JSX.Element {
             onChange={(e) => setSearchInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             placeholder="Search products…"
-            className="w-full h-[38px] pl-10 pr-4 border border-[#E0E0E0] rounded-[8px] text-[13px] text-[#0D0D0D] placeholder:text-[#9A9A9A] focus:outline-none focus:border-[#C6FF3D] transition-colors"
+            className="w-full h-[40px] pl-10 pr-4 bg-[#0D0D0D] border border-white/5 rounded-[8px] text-[13px] text-white placeholder:text-[#9A9A9A] focus:outline-none focus:border-[#C6FF3D]/50 transition-colors"
           />
         </div>
 
@@ -133,7 +124,7 @@ function AdminProductListPage(): React.JSX.Element {
                 status: (e.target.value || undefined) as ProductStatus | undefined,
               }))
             }
-            className="h-[38px] pl-9 pr-8 border border-[#E0E0E0] rounded-[8px] text-[13px] text-[#0D0D0D] bg-white focus:outline-none focus:border-[#C6FF3D] appearance-none cursor-pointer"
+            className="h-[40px] pl-9 pr-8 bg-[#0D0D0D] border border-white/5 rounded-[8px] text-[13px] text-white focus:outline-none focus:border-[#C6FF3D]/50 appearance-none cursor-pointer"
           >
             <option value="">All Status</option>
             <option value="active">Active</option>
@@ -150,7 +141,7 @@ function AdminProductListPage(): React.JSX.Element {
               category: e.target.value || undefined,
             }))
           }
-          className="h-[38px] px-4 border border-[#E0E0E0] rounded-[8px] text-[13px] text-[#0D0D0D] bg-white focus:outline-none focus:border-[#C6FF3D] appearance-none cursor-pointer"
+          className="h-[40px] px-4 bg-[#0D0D0D] border border-white/5 rounded-[8px] text-[13px] text-white focus:outline-none focus:border-[#C6FF3D]/50 appearance-none cursor-pointer"
         >
           <option value="">All Categories</option>
           {categories.map((cat) => (
@@ -162,20 +153,33 @@ function AdminProductListPage(): React.JSX.Element {
       </div>
 
       {/* Table */}
-      <div className="bg-white border border-[#E0E0E0] rounded-[12px] overflow-hidden">
+      <div className="bg-[#0D0D0D] border border-white/5 rounded-[12px] overflow-hidden">
         {isLoading ? (
           <div className="flex items-center justify-center py-20">
             <Loader2 size={24} className="animate-spin text-[#9A9A9A]" />
           </div>
         ) : products.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-[14px] text-[#9A9A9A]">No products found</p>
+          <div className="text-center py-24 flex flex-col items-center">
+            <Package size={48} className="text-white/10 mb-4" />
+            <h3 className="text-[16px] font-bold text-white mb-1">No products found</h3>
+            <p className="text-[13px] text-[#9A9A9A] mb-6">
+              Get started by adding your first product.
+            </p>
+            <Link
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              to={'/admin/products/new' as any}
+            >
+              <Button className="bg-[#C6FF3D] hover:bg-[#b0e633] text-[#0D0D0D] text-[13px] font-bold px-4 py-2 rounded-[8px] h-auto flex items-center">
+                <Plus size={16} className="mr-1.5" />
+                Add Product
+              </Button>
+            </Link>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead>
-                <tr className="border-b border-[#EFEFEF] bg-[#FAFAFA]">
+                <tr className="border-b border-white/5 bg-white/5">
                   <th className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A]">
                     Product
                   </th>
@@ -183,7 +187,7 @@ function AdminProductListPage(): React.JSX.Element {
                     Status
                   </th>
                   <th
-                    className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A] cursor-pointer hover:text-[#0D0D0D]"
+                    className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A] cursor-pointer hover:text-white"
                     onClick={() => toggleSort('base_price')}
                   >
                     <span className="flex items-center gap-1">
@@ -201,7 +205,7 @@ function AdminProductListPage(): React.JSX.Element {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#EFEFEF]">
+              <tbody className="divide-y divide-white/5">
                 {products.map((product) => {
                   const totalStock = product.variants.reduce((sum, v) => sum + v.stock_qty, 0)
                   const hasLowStock = product.variants.some(
@@ -210,24 +214,24 @@ function AdminProductListPage(): React.JSX.Element {
                   const image = product.images[0]
 
                   return (
-                    <tr key={product.id} className="hover:bg-[#FAFAFA] transition-colors">
-                      <td className="px-5 py-3">
-                        <div className="flex items-center gap-3">
-                          <div className="w-[44px] h-[44px] bg-[#F0F0F0] rounded-[6px] overflow-hidden flex-shrink-0">
+                    <tr key={product.id} className="hover:bg-white/5 transition-colors group">
+                      <td className="px-5 py-4">
+                        <div className="flex items-center gap-4">
+                          <div className="w-[48px] h-[48px] bg-[#1A1A1A] rounded-[8px] overflow-hidden flex-shrink-0">
                             {image ? (
                               <img
-                                src={image.storage_path}
+                                src={getProductImageUrl(image.storage_path) || ''}
                                 alt=""
                                 className="w-full h-full object-contain p-0.5"
                               />
                             ) : (
-                              <div className="w-full h-full flex items-center justify-center text-[9px] text-[#9A9A9A]">
-                                No img
+                              <div className="w-full h-full flex items-center justify-center">
+                                <Package size={16} className="text-[#9A9A9A]" />
                               </div>
                             )}
                           </div>
                           <div className="min-w-0">
-                            <p className="text-[13px] font-semibold text-[#0D0D0D] truncate max-w-[200px]">
+                            <p className="text-[13px] font-semibold text-white truncate max-w-[200px] mb-0.5">
                               {product.name}
                             </p>
                             <p className="text-[11px] text-[#9A9A9A]">
@@ -236,57 +240,67 @@ function AdminProductListPage(): React.JSX.Element {
                           </div>
                         </div>
                       </td>
-                      <td className="px-5 py-3">
+                      <td className="px-5 py-4">
                         <span
-                          className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${STATUS_COLORS[product.status]}`}
+                          className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-[4px] ${STATUS_COLORS[product.status]}`}
                         >
                           {product.status}
                         </span>
                       </td>
-                      <td className="px-5 py-3">
-                        <span className="text-[13px] font-semibold text-[#0D0D0D]">
-                          {formatCurrency(product.base_price)}
-                        </span>
-                        {product.sale_price && (
-                          <span className="text-[11px] text-[#5A8A00] ml-1">
-                            {formatCurrency(product.sale_price)}
-                          </span>
-                        )}
-                      </td>
-                      <td className="px-5 py-3">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-[13px] font-semibold text-[#0D0D0D]">
-                            {totalStock}
-                          </span>
-                          {hasLowStock && <AlertTriangle size={14} className="text-red-500" />}
+                      <td className="px-5 py-4">
+                        <div className="flex flex-col">
+                          {product.sale_price ? (
+                            <>
+                              <span className="text-[13px] font-semibold text-[#C6FF3D]">
+                                {formatCurrency(product.sale_price)}
+                              </span>
+                              <span className="text-[11px] line-through text-[#9A9A9A]">
+                                {formatCurrency(product.base_price)}
+                              </span>
+                            </>
+                          ) : (
+                            <span className="text-[13px] font-semibold text-white">
+                              {formatCurrency(product.base_price)}
+                            </span>
+                          )}
                         </div>
                       </td>
-                      <td className="px-5 py-3">
-                        <span className="text-[12px] text-[#4A4A4A]">
+                      <td className="px-5 py-4">
+                        <div className="flex items-center gap-1.5">
+                          <span
+                            className={`text-[13px] font-semibold ${hasLowStock ? 'text-red-500' : 'text-white'}`}
+                          >
+                            {totalStock}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-5 py-4">
+                        <span className="text-[12px] text-[#9A9A9A]">
                           {product.category?.name ?? '—'}
                         </span>
                       </td>
-                      <td className="px-5 py-3 text-right">
-                        <div className="flex items-center justify-end gap-2">
+                      <td className="px-5 py-4 text-right">
+                        <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                           <Link
                             // eslint-disable-next-line @typescript-eslint/no-explicit-any
                             to={`/admin/products/${product.id}` as any}
-                            className="p-1.5 text-[#9A9A9A] hover:text-[#C6FF3D] hover:bg-[#F0F0F0] rounded-[6px] transition-colors"
+                            className="p-2 text-[#9A9A9A] hover:text-[#C6FF3D] hover:bg-white/10 rounded-[6px] transition-colors"
+                            title="Edit Product"
                           >
-                            <Edit size={15} />
+                            <Edit size={16} />
                           </Link>
                           {deleteId === product.id ? (
-                            <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-2 mr-2">
                               <button
                                 onClick={() => handleDelete(product.id)}
                                 disabled={deleteProduct.isPending}
-                                className="text-[11px] font-semibold text-red-600 hover:underline"
+                                className="text-[11px] font-semibold text-red-500 hover:text-red-400"
                               >
                                 {deleteProduct.isPending ? '…' : 'Confirm'}
                               </button>
                               <button
                                 onClick={() => setDeleteId(null)}
-                                className="text-[11px] font-semibold text-[#9A9A9A] hover:underline"
+                                className="text-[11px] font-semibold text-[#9A9A9A] hover:text-white"
                               >
                                 Cancel
                               </button>
@@ -294,9 +308,10 @@ function AdminProductListPage(): React.JSX.Element {
                           ) : (
                             <button
                               onClick={() => setDeleteId(product.id)}
-                              className="p-1.5 text-[#9A9A9A] hover:text-red-500 hover:bg-red-50 rounded-[6px] transition-colors"
+                              className="p-2 text-[#9A9A9A] hover:text-red-500 hover:bg-red-500/10 rounded-[6px] transition-colors"
+                              title="Delete Product"
                             >
-                              <Trash2 size={15} />
+                              <Trash2 size={16} />
                             </button>
                           )}
                         </div>
