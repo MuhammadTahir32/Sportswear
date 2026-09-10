@@ -72,8 +72,16 @@ function AdminCategoriesPage(): React.JSX.Element {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-[20px] font-bold text-[#0D0D0D]">Categories</h2>
-        <Button variant="primary" size="sm" onClick={() => setShowAdd(!showAdd)}>
+        <div>
+          <h2 className="text-xl font-bold text-white mb-1">Categories</h2>
+          <p className="text-[13px] text-[#9A9A9A]">
+            Manage your product categories and hierarchy.
+          </p>
+        </div>
+        <Button
+          className="bg-[#C6FF3D] hover:bg-[#b0e633] text-[#0D0D0D] text-[13px] font-bold px-4 py-2 rounded-[8px] h-auto flex items-center"
+          onClick={() => setShowAdd(!showAdd)}
+        >
           <Plus size={16} className="mr-1.5" />
           Add Category
         </Button>
@@ -81,11 +89,9 @@ function AdminCategoriesPage(): React.JSX.Element {
 
       {/* Add form */}
       {showAdd && (
-        <div className="bg-white border border-[#E0E0E0] rounded-[12px] p-5 mb-5">
-          <h3 className="text-[13px] font-bold uppercase tracking-wider text-[#9A9A9A] mb-4">
-            New Category
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+        <div className="bg-[#0D0D0D] border border-white/5 rounded-[12px] p-5 md:p-6 mb-6">
+          <h3 className="text-[14px] font-semibold text-white mb-5">New Category</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
             <Input
               label="Name *"
               value={addForm.name}
@@ -97,21 +103,21 @@ function AdminCategoriesPage(): React.JSX.Element {
                 }))
               }
               placeholder="Flat Laces"
+              className="bg-[#1A1A1A] border-white/5 text-white focus:border-[#C6FF3D]/50"
             />
             <Input
               label="Slug *"
               value={addForm.slug}
               onChange={(e) => setAddForm((p) => ({ ...p, slug: e.target.value }))}
               placeholder="flat-laces"
+              className="bg-[#1A1A1A] border-white/5 text-white focus:border-[#C6FF3D]/50"
             />
             <div>
-              <label className="text-xs font-semibold uppercase tracking-wide text-[#4A4A4A] block mb-1.5">
-                Parent
-              </label>
+              <label className="text-[12px] font-semibold text-white block mb-2">Parent</label>
               <select
                 value={addForm.parent_id}
                 onChange={(e) => setAddForm((p) => ({ ...p, parent_id: e.target.value }))}
-                className="w-full h-[38px] px-4 border border-[#EFEFEF] rounded-[8px] text-sm text-[#0D0D0D] bg-white focus:outline-none focus:border-[#C6FF3D]"
+                className="w-full h-[40px] px-4 border border-white/5 rounded-[8px] text-[13px] text-white bg-[#1A1A1A] focus:outline-none focus:border-[#C6FF3D]/50 appearance-none"
               >
                 <option value="">No Parent (Top Level)</option>
                 {topLevel.map((cat) => (
@@ -122,16 +128,18 @@ function AdminCategoriesPage(): React.JSX.Element {
               </select>
             </div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <Button
-              variant="primary"
-              size="sm"
+              className="bg-[#C6FF3D] hover:bg-[#b0e633] text-[#0D0D0D] text-[13px] font-bold px-5 h-[40px] rounded-[8px]"
               onClick={handleAdd}
               disabled={createCategory.isPending}
             >
-              {createCategory.isPending ? 'Creating…' : 'Create'}
+              {createCategory.isPending ? 'Creating…' : 'Create Category'}
             </Button>
-            <Button variant="secondary" size="sm" onClick={() => setShowAdd(false)}>
+            <Button
+              className="bg-transparent border border-white/10 text-white hover:bg-white/5 text-[13px] font-bold px-5 h-[40px] rounded-[8px]"
+              onClick={() => setShowAdd(false)}
+            >
               Cancel
             </Button>
           </div>
@@ -139,18 +147,21 @@ function AdminCategoriesPage(): React.JSX.Element {
       )}
 
       {/* Category list */}
-      <div className="bg-white border border-[#E0E0E0] rounded-[12px] overflow-hidden">
+      <div className="bg-[#0D0D0D] border border-white/5 rounded-[12px] overflow-hidden">
         {isLoading ? (
           <div className="flex items-center justify-center py-20">
             <Loader2 size={24} className="animate-spin text-[#9A9A9A]" />
           </div>
         ) : categories.length === 0 ? (
-          <div className="text-center py-16">
-            <FolderTree size={32} className="mx-auto text-[#9A9A9A] mb-3" />
-            <p className="text-[14px] text-[#9A9A9A]">No categories yet</p>
+          <div className="text-center py-24 flex flex-col items-center">
+            <FolderTree size={48} className="text-white/10 mb-4" />
+            <h3 className="text-[16px] font-bold text-white mb-1">No categories found</h3>
+            <p className="text-[13px] text-[#9A9A9A]">
+              Get started by creating your first category.
+            </p>
           </div>
         ) : (
-          <div className="divide-y divide-[#EFEFEF]">
+          <div className="divide-y divide-white/5">
             {topLevel.map((cat) => {
               const children = getChildren(cat.id)
               const isEditing = editId === cat.id
@@ -158,74 +169,72 @@ function AdminCategoriesPage(): React.JSX.Element {
               return (
                 <div key={cat.id}>
                   {/* Parent category row */}
-                  <div className="flex items-center justify-between px-5 py-3 hover:bg-[#FAFAFA]">
+                  <div className="flex items-center justify-between px-5 py-4 hover:bg-white/5 transition-colors group">
                     {isEditing ? (
                       <div className="flex-1 flex items-center gap-3">
                         <input
                           value={editForm.name}
                           onChange={(e) => setEditForm((p) => ({ ...p, name: e.target.value }))}
-                          className="h-8 px-3 border border-[#C6FF3D] rounded-[6px] text-[13px] focus:outline-none w-40"
+                          className="h-[36px] px-3 bg-[#1A1A1A] border border-[#C6FF3D]/50 text-white rounded-[6px] text-[13px] focus:outline-none w-48"
                           autoFocus
                         />
                         <input
                           value={editForm.slug}
                           onChange={(e) => setEditForm((p) => ({ ...p, slug: e.target.value }))}
-                          className="h-8 px-3 border border-[#E0E0E0] rounded-[6px] text-[13px] focus:outline-none w-40"
+                          className="h-[36px] px-3 bg-[#1A1A1A] border border-white/5 text-white rounded-[6px] text-[13px] focus:outline-none w-48"
                         />
                         <button
                           onClick={handleUpdate}
-                          className="p-1 text-[#5A8A00] hover:bg-green-50 rounded"
+                          className="p-1.5 text-[#C6FF3D] hover:bg-[#C6FF3D]/10 rounded-[6px] transition-colors"
                         >
-                          <Save size={15} />
+                          <Save size={16} />
                         </button>
                         <button
                           onClick={() => setEditId(null)}
-                          className="p-1 text-[#9A9A9A] hover:bg-[#F0F0F0] rounded"
+                          className="p-1.5 text-[#9A9A9A] hover:bg-white/10 hover:text-white rounded-[6px] transition-colors"
                         >
-                          <X size={15} />
+                          <X size={16} />
                         </button>
                       </div>
                     ) : (
                       <>
-                        <div>
-                          <span className="text-[14px] font-semibold text-[#0D0D0D]">
-                            {cat.name}
-                          </span>
-                          <span className="text-[11px] text-[#9A9A9A] ml-2">/{cat.slug}</span>
+                        <div className="flex items-center">
+                          <span className="text-[14px] font-semibold text-white">{cat.name}</span>
+                          <span className="text-[12px] text-[#9A9A9A] ml-2">/{cat.slug}</span>
                           {children.length > 0 && (
-                            <span className="text-[10px] text-[#9A9A9A] ml-2 bg-[#F0F0F0] px-1.5 py-0.5 rounded-full">
+                            <span className="text-[10px] text-[#0D0D0D] font-bold ml-3 bg-[#C6FF3D] px-2 py-0.5 rounded-[4px]">
                               {children.length} sub
                             </span>
                           )}
                         </div>
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                           <button
                             onClick={() => startEdit(cat)}
-                            className="p-1.5 text-[#9A9A9A] hover:text-[#C6FF3D] rounded-[6px] transition-colors"
+                            className="p-2 text-[#9A9A9A] hover:text-[#C6FF3D] hover:bg-white/10 rounded-[6px] transition-colors"
                           >
-                            <Edit size={14} />
+                            <Edit size={16} />
                           </button>
                           {deleteId === cat.id ? (
-                            <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-2 mr-2">
                               <button
                                 onClick={() => handleDelete(cat.id)}
-                                className="text-[11px] text-red-600 font-semibold hover:underline"
+                                className="text-[11px] text-red-500 font-semibold hover:text-red-400"
                               >
-                                Yes
+                                Confirm
                               </button>
                               <button
                                 onClick={() => setDeleteId(null)}
-                                className="text-[11px] text-[#9A9A9A] font-semibold hover:underline"
+                                className="text-[11px] text-[#9A9A9A] font-semibold hover:text-white"
                               >
-                                No
+                                Cancel
                               </button>
                             </div>
                           ) : (
                             <button
                               onClick={() => setDeleteId(cat.id)}
-                              className="p-1.5 text-[#9A9A9A] hover:text-red-500 rounded-[6px] transition-colors"
+                              className="p-2 text-[#9A9A9A] hover:text-red-500 hover:bg-red-500/10 rounded-[6px] transition-colors"
                             >
-                              <Trash2 size={14} />
+                              <Trash2 size={16} />
                             </button>
                           )}
                         </div>
@@ -240,62 +249,71 @@ function AdminCategoriesPage(): React.JSX.Element {
                     return (
                       <div
                         key={child.id}
-                        className="flex items-center justify-between px-5 py-2.5 pl-12 bg-[#FAFAFA] hover:bg-[#F3F3F3]"
+                        className="flex items-center justify-between px-5 py-3 pl-12 bg-white/[0.02] border-t border-white/[0.02] hover:bg-white/5 transition-colors group/child"
                       >
                         {isEditingChild ? (
                           <div className="flex-1 flex items-center gap-3">
                             <input
                               value={editForm.name}
                               onChange={(e) => setEditForm((p) => ({ ...p, name: e.target.value }))}
-                              className="h-7 px-3 border border-[#C6FF3D] rounded-[6px] text-[12px] focus:outline-none w-36"
+                              className="h-[32px] px-3 bg-[#1A1A1A] border border-[#C6FF3D]/50 text-white rounded-[6px] text-[12px] focus:outline-none w-40"
                               autoFocus
                             />
                             <input
                               value={editForm.slug}
                               onChange={(e) => setEditForm((p) => ({ ...p, slug: e.target.value }))}
-                              className="h-7 px-3 border border-[#E0E0E0] rounded-[6px] text-[12px] focus:outline-none w-36"
+                              className="h-[32px] px-3 bg-[#1A1A1A] border border-white/5 text-white rounded-[6px] text-[12px] focus:outline-none w-40"
                             />
-                            <button onClick={handleUpdate} className="p-1 text-[#5A8A00]">
-                              <Save size={13} />
+                            <button
+                              onClick={handleUpdate}
+                              className="p-1.5 text-[#C6FF3D] hover:bg-[#C6FF3D]/10 rounded-[6px] transition-colors"
+                            >
+                              <Save size={14} />
                             </button>
-                            <button onClick={() => setEditId(null)} className="p-1 text-[#9A9A9A]">
-                              <X size={13} />
+                            <button
+                              onClick={() => setEditId(null)}
+                              className="p-1.5 text-[#9A9A9A] hover:bg-white/10 hover:text-white rounded-[6px] transition-colors"
+                            >
+                              <X size={14} />
                             </button>
                           </div>
                         ) : (
                           <>
-                            <div>
-                              <span className="text-[13px] text-[#4A4A4A]">↳ {child.name}</span>
-                              <span className="text-[10px] text-[#9A9A9A] ml-2">/{child.slug}</span>
+                            <div className="flex items-center">
+                              <span className="text-[13px] text-[#9A9A9A]">↳</span>
+                              <span className="text-[13px] font-medium text-white ml-2">
+                                {child.name}
+                              </span>
+                              <span className="text-[11px] text-[#9A9A9A] ml-2">/{child.slug}</span>
                             </div>
-                            <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-2 opacity-0 group-hover/child:opacity-100 transition-opacity">
                               <button
                                 onClick={() => startEdit(child)}
-                                className="p-1 text-[#9A9A9A] hover:text-[#C6FF3D] transition-colors"
+                                className="p-1.5 text-[#9A9A9A] hover:text-[#C6FF3D] hover:bg-white/10 rounded-[6px] transition-colors"
                               >
-                                <Edit size={13} />
+                                <Edit size={14} />
                               </button>
                               {deleteId === child.id ? (
-                                <div className="flex items-center gap-1">
+                                <div className="flex items-center gap-2 mr-2">
                                   <button
                                     onClick={() => handleDelete(child.id)}
-                                    className="text-[10px] text-red-600 font-semibold"
+                                    className="text-[11px] text-red-500 font-semibold hover:text-red-400"
                                   >
-                                    Yes
+                                    Confirm
                                   </button>
                                   <button
                                     onClick={() => setDeleteId(null)}
-                                    className="text-[10px] text-[#9A9A9A] font-semibold"
+                                    className="text-[11px] text-[#9A9A9A] font-semibold hover:text-white"
                                   >
-                                    No
+                                    Cancel
                                   </button>
                                 </div>
                               ) : (
                                 <button
                                   onClick={() => setDeleteId(child.id)}
-                                  className="p-1 text-[#9A9A9A] hover:text-red-500 transition-colors"
+                                  className="p-1.5 text-[#9A9A9A] hover:text-red-500 hover:bg-red-500/10 rounded-[6px] transition-colors"
                                 >
-                                  <Trash2 size={13} />
+                                  <Trash2 size={14} />
                                 </button>
                               )}
                             </div>

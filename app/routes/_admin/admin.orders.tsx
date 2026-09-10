@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { Search, Filter, ArrowUpDown, Eye, Loader2 } from 'lucide-react'
+import { Search, Filter, ArrowUpDown, Eye, Loader2, ShoppingCart } from 'lucide-react'
 import { useAdminOrders, type AdminOrderFilters } from '@/hooks/useAdminOrders'
 import { formatCurrency } from '@/lib/cartCalculations'
 import type { OrderStatus } from '@/lib/types'
@@ -21,13 +21,13 @@ const STATUS_OPTIONS: { value: OrderStatus | ''; label: string }[] = [
 ]
 
 const STATUS_COLORS: Record<OrderStatus, string> = {
-  pending: 'bg-yellow-50 text-yellow-700',
-  paid: 'bg-blue-50 text-blue-700',
-  processing: 'bg-indigo-50 text-indigo-700',
-  shipped: 'bg-purple-50 text-purple-700',
-  delivered: 'bg-green-50 text-green-700',
-  cancelled: 'bg-red-50 text-red-600',
-  refunded: 'bg-gray-100 text-gray-600',
+  pending: 'bg-yellow-500/10 text-yellow-500',
+  paid: 'bg-blue-500/10 text-blue-500',
+  processing: 'bg-indigo-500/10 text-indigo-500',
+  shipped: 'bg-purple-500/10 text-purple-500',
+  delivered: 'bg-green-500/10 text-green-500',
+  cancelled: 'bg-red-500/10 text-red-500',
+  refunded: 'bg-white/10 text-[#9A9A9A]',
 }
 
 function AdminOrderListPage(): React.JSX.Element {
@@ -61,28 +61,33 @@ function AdminOrderListPage(): React.JSX.Element {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-[20px] font-bold text-[#0D0D0D]">Orders</h2>
+        <div>
+          <h2 className="text-xl font-bold text-white mb-1">Orders</h2>
+          <p className="text-[13px] text-[#9A9A9A]">Track and manage customer orders.</p>
+        </div>
       </div>
 
       {/* Stats cards */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="bg-white rounded-[10px] border border-[#E0E0E0] p-4">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A] mb-1">
-            Total Orders
-          </p>
-          <p className="text-[24px] font-bold text-[#0D0D0D]">{totalOrders}</p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="bg-[#0D0D0D] border border-white/5 rounded-[12px] p-5 border-l-2 border-l-[#C6FF3D]">
+          <p className="text-[12px] text-[#9A9A9A] mb-1">Total Orders</p>
+          <p className="text-[24px] font-bold text-white leading-none">{totalOrders}</p>
         </div>
-        <div className="bg-white rounded-[10px] border border-[#E0E0E0] p-4">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A] mb-1">
-            Pending
+        <div
+          className={`bg-[#0D0D0D] border rounded-[12px] p-5 border-l-2 ${pendingCount > 0 ? 'border-l-yellow-500 border-white/5' : 'border-l-white/5 border-white/5'}`}
+        >
+          <p className="text-[12px] text-[#9A9A9A] mb-1">Pending</p>
+          <p
+            className={`text-[24px] font-bold leading-none ${pendingCount > 0 ? 'text-yellow-500' : 'text-white'}`}
+          >
+            {pendingCount}
           </p>
-          <p className="text-[24px] font-bold text-yellow-600">{pendingCount}</p>
         </div>
-        <div className="bg-white rounded-[10px] border border-[#E0E0E0] p-4">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A] mb-1">
-            Revenue
+        <div className="bg-[#0D0D0D] border border-white/5 rounded-[12px] p-5 border-l-2 border-l-green-500">
+          <p className="text-[12px] text-[#9A9A9A] mb-1">Revenue</p>
+          <p className="text-[24px] font-bold text-white leading-none">
+            {formatCurrency(totalRevenue)}
           </p>
-          <p className="text-[24px] font-bold text-[#5A8A00]">{formatCurrency(totalRevenue)}</p>
         </div>
       </div>
 
@@ -97,7 +102,7 @@ function AdminOrderListPage(): React.JSX.Element {
             onChange={(e) => setSearchInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             placeholder="Search by order ID or customer name…"
-            className="w-full h-[38px] pl-10 pr-4 border border-[#E0E0E0] rounded-[8px] text-[13px] text-[#0D0D0D] placeholder:text-[#9A9A9A] focus:outline-none focus:border-[#C6FF3D] transition-colors"
+            className="w-full h-[40px] pl-10 pr-4 bg-[#0D0D0D] border border-white/5 rounded-[8px] text-[13px] text-white placeholder:text-[#9A9A9A] focus:outline-none focus:border-[#C6FF3D]/50 transition-colors"
           />
         </div>
 
@@ -112,7 +117,7 @@ function AdminOrderListPage(): React.JSX.Element {
                 status: (e.target.value || undefined) as OrderStatus | undefined,
               }))
             }
-            className="h-[38px] pl-9 pr-8 border border-[#E0E0E0] rounded-[8px] text-[13px] text-[#0D0D0D] bg-white focus:outline-none focus:border-[#C6FF3D] appearance-none cursor-pointer"
+            className="h-[40px] pl-9 pr-8 bg-[#0D0D0D] border border-white/5 rounded-[8px] text-[13px] text-white focus:outline-none focus:border-[#C6FF3D]/50 appearance-none cursor-pointer"
           >
             {STATUS_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -124,20 +129,22 @@ function AdminOrderListPage(): React.JSX.Element {
       </div>
 
       {/* Table */}
-      <div className="bg-white border border-[#E0E0E0] rounded-[12px] overflow-hidden">
+      <div className="bg-[#0D0D0D] border border-white/5 rounded-[12px] overflow-hidden">
         {isLoading ? (
           <div className="flex items-center justify-center py-20">
             <Loader2 size={24} className="animate-spin text-[#9A9A9A]" />
           </div>
         ) : orders.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-[14px] text-[#9A9A9A]">No orders found</p>
+          <div className="text-center py-24 flex flex-col items-center">
+            <ShoppingCart size={48} className="text-white/10 mb-4" />
+            <h3 className="text-[16px] font-bold text-white mb-1">No orders found</h3>
+            <p className="text-[13px] text-[#9A9A9A]">You don't have any orders yet.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead>
-                <tr className="border-b border-[#EFEFEF] bg-[#FAFAFA]">
+                <tr className="border-b border-white/5 bg-white/5">
                   <th className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A]">
                     Order
                   </th>
@@ -148,7 +155,7 @@ function AdminOrderListPage(): React.JSX.Element {
                     Status
                   </th>
                   <th
-                    className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A] cursor-pointer select-none hover:text-[#0D0D0D]"
+                    className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A] cursor-pointer select-none hover:text-white"
                     onClick={() => toggleSort('total')}
                   >
                     <span className="flex items-center gap-1">
@@ -157,7 +164,7 @@ function AdminOrderListPage(): React.JSX.Element {
                     </span>
                   </th>
                   <th
-                    className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A] cursor-pointer select-none hover:text-[#0D0D0D]"
+                    className="px-5 py-3 text-[11px] font-bold uppercase tracking-wider text-[#9A9A9A] cursor-pointer select-none hover:text-white"
                     onClick={() => toggleSort('created_at')}
                   >
                     <span className="flex items-center gap-1">
@@ -170,31 +177,31 @@ function AdminOrderListPage(): React.JSX.Element {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#EFEFEF]">
+              <tbody className="divide-y divide-white/5">
                 {orders.map((order) => {
                   const date = new Date(order.created_at)
                   const customerName =
                     order.shipping_address?.full_name ?? order.profile?.full_name ?? '—'
 
                   return (
-                    <tr key={order.id} className="hover:bg-[#FAFAFA] transition-colors">
+                    <tr key={order.id} className="hover:bg-white/5 transition-colors group">
                       <td className="px-5 py-4">
-                        <span className="text-[13px] font-mono font-semibold text-[#0D0D0D]">
+                        <span className="text-[13px] font-mono font-semibold text-white">
                           #{order.id.substring(0, 8).toUpperCase()}
                         </span>
                       </td>
                       <td className="px-5 py-4">
-                        <span className="text-[13px] text-[#0D0D0D]">{customerName}</span>
+                        <span className="text-[13px] text-white font-medium">{customerName}</span>
                       </td>
                       <td className="px-5 py-4">
                         <span
-                          className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${STATUS_COLORS[order.status]}`}
+                          className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-[4px] ${STATUS_COLORS[order.status]}`}
                         >
                           {order.status}
                         </span>
                       </td>
                       <td className="px-5 py-4">
-                        <span className="text-[13px] font-semibold text-[#0D0D0D]">
+                        <span className="text-[13px] font-bold text-white">
                           {formatCurrency(order.total)}
                         </span>
                       </td>
@@ -208,14 +215,16 @@ function AdminOrderListPage(): React.JSX.Element {
                         </span>
                       </td>
                       <td className="px-5 py-4 text-right">
-                        <Link
-                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                          to={`/admin/orders/${order.id}` as any}
-                          className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#9A9A9A] hover:text-[#C6FF3D] transition-colors"
-                        >
-                          <Eye size={14} />
-                          View
-                        </Link>
+                        <div className="flex items-center justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Link
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            to={`/admin/orders/${order.id}` as any}
+                            className="p-2 text-[#9A9A9A] hover:text-[#C6FF3D] hover:bg-white/10 rounded-[6px] transition-colors"
+                            title="View Order"
+                          >
+                            <Eye size={16} />
+                          </Link>
+                        </div>
                       </td>
                     </tr>
                   )
