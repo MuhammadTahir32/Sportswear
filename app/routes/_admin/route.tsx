@@ -74,7 +74,7 @@ function AdminLayout(): React.JSX.Element {
 
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-30 w-64 bg-[#0D0D0D] flex flex-col transition-transform duration-300',
+          'fixed inset-y-0 left-0 z-30 w-64 bg-[#0A0A0A] flex flex-col transition-transform duration-300 border-r border-white/5',
           'lg:relative lg:translate-x-0',
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         )}
@@ -84,19 +84,19 @@ function AdminLayout(): React.JSX.Element {
           <div className="flex flex-col">
             <div className="flex items-baseline gap-1.5">
               <span
-                className="text-[#C6FF3D] font-black text-[22px] uppercase tracking-tight leading-none"
+                className="text-[#C6FF3D] font-black text-[24px] uppercase tracking-tight leading-none"
                 style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
               >
                 STRIDE
               </span>
               <span
-                className="text-white font-black text-[22px] uppercase tracking-tight leading-none"
+                className="text-white font-black text-[24px] uppercase tracking-tight leading-none"
                 style={{ fontFamily: '"Anton", "Archivo Black", sans-serif' }}
               >
                 WEAR
               </span>
             </div>
-            <span className="text-[#9A9A9A] text-[8px] uppercase tracking-widest font-bold mt-1">
+            <span className="text-[#9A9A9A] text-[9px] uppercase tracking-widest font-bold mt-1">
               Premium Sportswear
             </span>
           </div>
@@ -109,49 +109,45 @@ function AdminLayout(): React.JSX.Element {
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 py-6 space-y-1 overflow-y-auto">
+        <nav className="flex-1 py-6 space-y-2 overflow-y-auto z-10">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.to}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               to={item.to as any}
               className={cn(
-                'flex items-center gap-3 mx-4 px-4 py-3 text-[13px] font-semibold transition-all duration-150 rounded-[12px]',
+                'flex items-center gap-3 mx-4 px-4 py-3 text-[13px] font-semibold transition-all duration-300 rounded-[12px] border border-transparent',
                 'text-[#9A9A9A] hover:text-white hover:bg-white/5',
-                '[&.active]:text-[#C6FF3D] [&.active]:bg-[#C6FF3D]/10'
+                '[&.active]:border-[#C6FF3D] [&.active]:text-[#C6FF3D] [&.active]:bg-gradient-to-r [&.active]:from-[#C6FF3D]/10 [&.active]:to-transparent [&.active]:shadow-[0_0_15px_rgba(198,255,61,0.15)]'
               )}
             >
-              <item.icon size={18} />
+              <item.icon size={18} className={cn('stroke-[1.5]')} />
               {item.label}
             </Link>
           ))}
         </nav>
 
         {/* Stronger Every Day Graphic */}
-        <div className="mt-auto p-6 pb-8 pointer-events-none">
-          <svg
-            viewBox="0 0 200 80"
-            className="w-full opacity-80"
-            style={{ filter: 'drop-shadow(0 0 10px rgba(198,255,61,0.2))' }}
-          >
-            <path id="curve" d="M 10 60 Q 100 20 190 60" fill="transparent" />
-            <text
-              className="fill-[#C6FF3D] font-bold"
+        <div className="mt-auto relative z-0">
+          {/* Neon Glow Aura */}
+          <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-[radial-gradient(circle_at_bottom_left,rgba(198,255,61,0.25)_0%,transparent_70%)] pointer-events-none"></div>
+
+          <div className="p-6 pb-12 pt-16 relative">
+            <div
+              className="text-[#C6FF3D] font-bold leading-[1.1] ml-4 pointer-events-none"
               style={{
-                fontSize: '24px',
+                fontSize: '34px',
                 fontFamily: '"Caveat", "Dancing Script", cursive',
-                transform: 'rotate(-10deg)',
-                transformOrigin: 'center',
+                transform: 'rotate(-12deg)',
+                transformOrigin: 'bottom left',
+                textShadow: '0 0 15px rgba(198,255,61,0.5)',
               }}
             >
-              <tspan x="10" y="40">
-                Stronger
-              </tspan>
-              <tspan x="30" y="70">
-                Every Day
-              </tspan>
-            </text>
-          </svg>
+              Stronger
+              <br />
+              Every Day
+            </div>
+          </div>
         </div>
       </aside>
 
