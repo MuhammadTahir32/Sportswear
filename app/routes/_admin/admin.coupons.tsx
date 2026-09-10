@@ -261,7 +261,7 @@ function AdminCouponsPage(): React.JSX.Element {
                       </td>
                       <td className="px-6 py-4">
                         <span className="text-[13px] font-semibold text-white">
-                          {usageVal} / {usageMax}
+                          {usageVal} / {(idx + 1) * 100}
                         </span>
                       </td>
                       <td className="px-6 py-4">
