@@ -82,28 +82,34 @@ function AdminLayout(): React.JSX.Element {
         }}
       >
         {/* Logo */}
-        <div className="px-7 pt-7 pb-2">
+        <div
+          className="px-7 pt-7 pb-2"
+          style={{ marginTop: '25px', marginLeft: '40px', marginBottom: '20px' }}
+        >
           <div className="flex items-baseline gap-1.5">
             <span
-              className="text-[#C6FF3D] font-black text-[28px] uppercase tracking-tight leading-none"
+              className="text-[#C6FF3D] font-black text-[35px] uppercase tracking-tight leading-none"
               style={{ fontFamily: '"Anton", Impact, "Arial Black", sans-serif' }}
             >
               STRIDE
             </span>
             <span
-              className="text-white font-black text-[28px] uppercase tracking-tight leading-none"
+              className="text-white font-black text-[35px] uppercase tracking-tight leading-none"
               style={{ fontFamily: '"Anton", Impact, "Arial Black", sans-serif' }}
             >
               WEAR
             </span>
           </div>
-          <span className="text-[#6A6A6A] text-[9px] uppercase tracking-[3px] font-bold mt-1 block">
+          <span className="text-[#6A6A6A] text-[8px] uppercase tracking-[3px] font-bold mt-1 block">
             Premium Sportswear
           </span>
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 py-8 space-y-1 overflow-y-auto z-10">
+        <nav
+          className="flex-1 py-8 flex flex-col gap-4 overflow-y-auto z-10"
+          style={{ marginLeft: '20px', marginRight: '20px' }}
+        >
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.to}
@@ -114,7 +120,7 @@ function AdminLayout(): React.JSX.Element {
                 className: '!text-[#0D0D0D] !bg-[#C6FF3D] !font-bold hover:!bg-[#b8e830]',
               }}
             >
-              <item.icon size={18} strokeWidth={2} />
+              <item.icon size={30} strokeWidth={2} />
               {item.label}
             </Link>
           ))}
