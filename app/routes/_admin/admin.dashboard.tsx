@@ -56,10 +56,16 @@ function AdminDashboardPage(): React.JSX.Element {
     <div>
       <div className="pt-2 pb-6 flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+          <h2
+            className="text-2xl font-bold text-white flex items-center gap-2"
+            style={{ marginLeft: '30px' }}
+          >
             Good morning, Tahir 👋
           </h2>
-          <p className="text-[14px] text-[#9A9A9A] mt-1">
+          <p
+            className="text-[14px] text-[#9A9A9A] mt-1"
+            style={{ marginLeft: '30px', marginBottom: '20px' }}
+          >
             Here's what's happening with your store today.
           </p>
         </div>
@@ -67,7 +73,10 @@ function AdminDashboardPage(): React.JSX.Element {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
+        style={{ marginLeft: '30px', marginRight: '30px', marginBottom: '20px' }}
+      >
         <StatCard
           icon={<DollarSign size={18} strokeWidth={2.5} />}
           label="Total Sales"
@@ -98,11 +107,19 @@ function AdminDashboardPage(): React.JSX.Element {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6" style={{ marginLeft: '30px' }}>
         {/* Left Column - Sales Overview */}
         <div className="lg:col-span-8 flex flex-col gap-6">
           <div className="bg-[#0A0A0A] border border-white/5 rounded-[16px] p-6 h-[400px] flex flex-col">
-            <div className="flex items-center justify-between mb-8">
+            <div
+              className="flex items-center justify-between mb-8"
+              style={{
+                marginLeft: '30px',
+                marginTop: '10px',
+                marginRight: '30px',
+                marginBottom: '20px',
+              }}
+            >
               <h3 className="text-[15px] font-bold text-white">Sales Overview</h3>
               <div className="flex items-center gap-2 text-[#9A9A9A] text-[12px] font-semibold">
                 Last: <span className="text-white">7 days</span>
@@ -110,7 +127,10 @@ function AdminDashboardPage(): React.JSX.Element {
             </div>
 
             {/* Y-axis and Chart */}
-            <div className="flex-1 flex gap-4 relative">
+            <div
+              className="flex-1 flex gap-4 relative"
+              style={{ marginLeft: '30px', marginRight: '30px', marginBottom: '20px' }}
+            >
               <div className="flex flex-col justify-between text-[11px] font-bold text-[#9A9A9A] pb-6">
                 <span>$800</span>
                 <span>$600</span>
@@ -178,7 +198,10 @@ function AdminDashboardPage(): React.JSX.Element {
                   </defs>
                 </svg>
                 {/* X-axis labels */}
-                <div className="absolute -bottom-6 left-0 w-full flex justify-between text-[11px] font-bold text-[#9A9A9A]">
+                <div
+                  className="absolute -bottom-6 left-0 w-full flex justify-between text-[11px] font-bold text-[#9A9A9A]"
+                  style={{ marginBottom: '10px', marginTop: '10px' }}
+                >
                   <span>Sep 3</span>
                   <span>Sep 4</span>
                   <span>Sep 5</span>
@@ -192,8 +215,14 @@ function AdminDashboardPage(): React.JSX.Element {
           </div>
 
           {/* Top Products */}
-          <div className="bg-[#141414] rounded-[16px] flex flex-col min-h-[300px] overflow-hidden">
-            <div className="flex items-center justify-between p-5 border-b border-transparent">
+          <div
+            className="bg-[#141414] rounded-[16px] flex flex-col min-h-[300px] overflow-hidden"
+            style={{ marginBottom: '30px', paddingBottom: '50px' }}
+          >
+            <div
+              className="flex items-center justify-between p-5 border-b border-transparent"
+              style={{ marginLeft: '20px', marginRight: '20px', marginTop: '20px' }}
+            >
               <h3 className="text-[14px] font-semibold text-white">Top Products</h3>
               <Link
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -253,9 +282,12 @@ function AdminDashboardPage(): React.JSX.Element {
         </div>
 
         {/* Right Column - Recent Orders */}
-        <div className="lg:col-span-4 flex flex-col gap-6">
+        <div className="lg:col-span-4 flex flex-col gap-6" style={{ marginRight: '30px' }}>
           <div className="bg-[#0A0A0A] border border-white/5 rounded-[16px] flex flex-col h-[400px] overflow-hidden">
-            <div className="flex items-center justify-between p-6 pb-4 border-b border-transparent">
+            <div
+              className="flex items-center justify-between p-6 pb-4 border-b border-transparent"
+              style={{ marginLeft: '20px', marginRight: '20px', marginTop: '20px' }}
+            >
               <h3 className="text-[15px] font-bold text-white">Recent Orders</h3>
               <Link
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -329,8 +361,17 @@ function AdminDashboardPage(): React.JSX.Element {
           {/* Low Stock Alerts */}
           <div
             className={`bg-[#141414] ${lowStock.length > 0 ? 'border-l-2 border-l-red-500' : ''} rounded-[16px] overflow-hidden`}
+            style={{ marginBottom: '10px' }}
           >
-            <div className="flex items-center justify-between p-5 md:p-6 border-b border-white/5">
+            <div
+              className="flex items-center justify-between p-5 md:p-6 border-b border-white/5"
+              style={{
+                marginLeft: '20px',
+                marginRight: '20px',
+                marginTop: '20px',
+                marginBottom: '10px',
+              }}
+            >
               <h3 className="text-[14px] font-semibold text-white flex items-center gap-2">
                 Low Stock
               </h3>
@@ -345,7 +386,9 @@ function AdminDashboardPage(): React.JSX.Element {
             {lowStock.length === 0 ? (
               <div className="p-8 text-center flex flex-col items-center">
                 <TrendingUp size={28} className="text-[#9A9A9A] mb-3" />
-                <p className="text-[13px] text-[#9A9A9A]">All stock levels OK</p>
+                <p className="text-[13px] text-[#9A9A9A]" style={{ marginBottom: '20px' }}>
+                  All stock levels OK
+                </p>
               </div>
             ) : (
               <div className="divide-y divide-white/5">
@@ -376,15 +419,28 @@ function AdminDashboardPage(): React.JSX.Element {
           </div>
 
           {/* Quick Actions */}
-          <div className="bg-[#141414] rounded-[16px] p-5 md:p-6">
-            <h3 className="text-[14px] font-semibold text-white mb-4">Quick Actions</h3>
+          <div className="bg-[#141414] rounded-[16px] p-5 md:p-6" style={{ marginBottom: '20px' }}>
+            <h3
+              className="text-[14px] font-semibold text-white mb-4"
+              style={{
+                marginLeft: '20px',
+                marginRight: '20px',
+                marginTop: '20px',
+                marginBottom: '20px',
+              }}
+            >
+              Quick Actions
+            </h3>
             <div className="flex flex-col gap-2">
               <Link
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 to={'/admin/products/new' as any}
                 className="flex items-center gap-4 p-3 rounded-[8px] hover:bg-white/5 transition-colors border border-transparent hover:border-white/5"
               >
-                <div className="w-10 h-10 rounded-[8px] bg-[#C6FF3D]/10 flex items-center justify-center">
+                <div
+                  className="w-10 h-10 rounded-[8px] bg-[#C6FF3D]/10 flex items-center justify-center"
+                  style={{ marginLeft: '20px' }}
+                >
                   <Package size={16} className="text-[#C6FF3D]" />
                 </div>
                 <span className="text-[13px] font-semibold text-white">Add New Product</span>
@@ -394,7 +450,10 @@ function AdminDashboardPage(): React.JSX.Element {
                 to={'/admin/orders' as any}
                 className="flex items-center gap-4 p-3 rounded-[8px] hover:bg-white/5 transition-colors border border-transparent hover:border-white/5"
               >
-                <div className="w-10 h-10 rounded-[8px] bg-[#C6FF3D]/10 flex items-center justify-center">
+                <div
+                  className="w-10 h-10 rounded-[8px] bg-[#C6FF3D]/10 flex items-center justify-center"
+                  style={{ marginLeft: '20px' }}
+                >
                   <Clock size={16} className="text-[#C6FF3D]" />
                 </div>
                 <span className="text-[13px] font-semibold text-white">
@@ -406,7 +465,10 @@ function AdminDashboardPage(): React.JSX.Element {
                 to={'/admin/categories' as any}
                 className="flex items-center gap-4 p-3 rounded-[8px] hover:bg-white/5 transition-colors border border-transparent hover:border-white/5"
               >
-                <div className="w-10 h-10 rounded-[8px] bg-[#C6FF3D]/10 flex items-center justify-center">
+                <div
+                  className="w-10 h-10 rounded-[8px] bg-[#C6FF3D]/10 flex items-center justify-center"
+                  style={{ marginLeft: '20px', marginBottom: '20px' }}
+                >
                   <TrendingUp size={16} className="text-[#C6FF3D]" />
                 </div>
                 <span className="text-[13px] font-semibold text-white">Manage Categories</span>
